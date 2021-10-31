@@ -348,3 +348,10 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+*.sln
+Firmware/light_sensor/TempHumiditySensor/TempHumiditySensor/TempHumiditySensor/__vm/.TempHumiditySensor.vsarduino.h
+Firmware/light_sensor/TempHumiditySensor/TempHumiditySensor/TempHumiditySensor/__vm/Compile.vmps.xml
+Firmware/light_sensor/TempHumiditySensor/TempHumiditySensor/TempHumiditySensor/__vm/Configuration.Debug.vmps.xml
+Firmware/light_sensor/TempHumiditySensor/TempHumiditySensor/TempHumiditySensor/__vm/Upload.vmps.xml
+Firmware/light_sensor/TempHumiditySensor/TempHumiditySensor/TempHumiditySensor/TempHumiditySensor.vcxproj
+Firmware/light_sensor/TempHumiditySensor/TempHumiditySensor/TempHumiditySensor/TempHumiditySensor.vcxproj.filters
