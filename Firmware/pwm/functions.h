@@ -8,7 +8,15 @@
 #else
 	#include "WProgram.h"
 #endif
-void PWM_Calibration(uint8_t gpio_pin, uint8_t min, uint8_t max);
+
+struct PWM_Pump {
+	uint8_t pin;
+	uint8_t min;
+	uint8_t max;
+};
+
+void PWM_Calibration(PWM_Pump pwm_pump);
+void PWM_set_percent(PWM_Pump pwm_pump, uint8_t percent);
 
 #endif
 
