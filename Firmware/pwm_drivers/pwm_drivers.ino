@@ -20,14 +20,6 @@
 
 */
 
-/*
-PWM_Pump pump1 = { 33, 145, 255 };
-PWM_Pump pump2 = { 36, 180, 255 };
-PWM_Pump air_pump = { 23, 50, 200 };
-PWM_Pump LED = { 37, 145, 255 };
-String command_packet;
-*/
-
 
 //Convert this command_packet to a byte. https://www.arduino.cc/en/Tutorial/Foundations/BitMask
 
@@ -46,7 +38,7 @@ void setup() {
 	Serial.println("Initial 2 sec delay:");
 	delay(2000);
 
-	//PWM_Calibration(pump2);
+	//PWM_calibration(pump2);
 }
 
 // the loop function runs over and over again until power down or reset
@@ -55,6 +47,7 @@ void loop() {
 	//PWM_Calibration(&air_pump);
 	PWM_set_percent(&air_pump, 1);
 
+	/*
 	if (Serial.available() > 0) {
 		// read the incoming byte:
 		command_packet = Serial.readString();
@@ -83,7 +76,7 @@ void loop() {
 			if (int(command_packet[3]) == 1)
 			{
 				Serial.println(command_packet[3]);
-				Dose_food(&pump1, 10);
+				dose_food(&water_pump1, 10);
 			}
 			if (int(command_packet[4]) == 1)
 			{
@@ -105,8 +98,9 @@ void loop() {
 
 		Serial.println(command_packet);
 	}
-	
+	*/
 
+	dose_food(&food_pump, 4);
 
 	digitalWrite(13, HIGH);
 	delay(1000);

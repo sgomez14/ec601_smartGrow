@@ -9,24 +9,26 @@
 	#include "WProgram.h"
 #endif
 
+/* ml per sec, measured by running how long it takes to fill 100 ml. */
+#define FILL_RATE 10 
 
-
-struct PWM_Pump {
+typedef struct PWM_device {
 	uint8_t pin;
 	uint8_t min;
 	uint8_t max;
-};
+}PWM_device;
 
-void PWM_Calibration(PWM_Pump *pwm_pump);
-void PWM_set_percent(PWM_Pump *pwm_pump, uint8_t percent);
-void Dose_food(PWM_Pump* pwm_pump, uint8_t ml);
- 
-extern PWM_Pump pump1 = { 33, 145, 255 };
-extern PWM_Pump pump2 = { 36, 180, 255 };
-extern PWM_Pump air_pump = { 23, 50, 200 };
-extern PWM_Pump LED = { 37, 145, 255 };
-
+extern PWM_device water_pump1;
+extern PWM_device water_pump2;
+extern PWM_device food_pump;
+extern PWM_device air_pump;
+extern PWM_device LED;
 extern String command_packet;
+
+extern void PWM_calibration(PWM_device *pwm_device);
+extern void PWM_set_percent(PWM_device *pwm_device, uint8_t percent);
+extern void dose_food(PWM_device *pwm_device, uint8_t ml);
+
 
 #endif
 
