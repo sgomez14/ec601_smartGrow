@@ -355,3 +355,9 @@ Firmware/light_sensor/TempHumiditySensor/TempHumiditySensor/TempHumiditySensor/_
 Firmware/light_sensor/TempHumiditySensor/TempHumiditySensor/TempHumiditySensor/__vm/Upload.vmps.xml
 Firmware/light_sensor/TempHumiditySensor/TempHumiditySensor/TempHumiditySensor/TempHumiditySensor.vcxproj
 Firmware/light_sensor/TempHumiditySensor/TempHumiditySensor/TempHumiditySensor/TempHumiditySensor.vcxproj.filters
+Firmware/temp_humidity_sensor/__vm/.TempHumiditySensor.vsarduino.h
+Firmware/temp_humidity_sensor/__vm/Compile.vmps.xml
+Firmware/temp_humidity_sensor/__vm/Configuration.Debug.vmps.xml
+Firmware/temp_humidity_sensor/__vm/Upload.vmps.xml
+Firmware/temp_humidity_sensor/TempHumiditySensor.vcxproj
+Firmware/temp_humidity_sensor/TempHumiditySensor.vcxproj.filters
