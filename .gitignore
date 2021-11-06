@@ -356,3 +356,10 @@ Firmware/pwm/__vm/Upload.vmps.xml
 Firmware/pwm/Smart_Grow.sln
 Firmware/pwm/Smart_Grow.vcxproj
 Firmware/pwm/Smart_Grow.vcxproj.filters
+Firmware/Smart_Grow/Smart_Grow.sln
+Firmware/Smart_Grow/Smart_Grow.vcxproj
+Firmware/Smart_Grow/Smart_Grow.vcxproj.filters
+Firmware/Smart_Grow/__vm/Upload.vmps.xml
+Firmware/Smart_Grow/__vm/Configuration.Release.vmps.xml
+Firmware/Smart_Grow/__vm/Compile.vmps.xml
+Firmware/Smart_Grow/__vm/.Smart_Grow.vsarduino.h
