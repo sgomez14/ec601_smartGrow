@@ -1,6 +1,6 @@
 
 /*
-     Name:		tempSensor.cpp
+     Name:		temp_sensor.cpp
      Created:	10/22/2021 12:48:59 PM
      Author:	Santiago Gomez, santi09@bu.edu
 
