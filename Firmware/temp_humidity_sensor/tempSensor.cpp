@@ -10,7 +10,7 @@
     More info: www.www.makerguides.com/dht11-dht22-arduino-tutorial
 */
 
-#include "tempSensor.h"
+#include "temp_sensor.h"
 
 // Initialize DHT sensor for normal 16mhz Arduino:
 DHT tempSensor = DHT(DHTPIN, DHTTYPE);
