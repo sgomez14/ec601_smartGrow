@@ -348,6 +348,20 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+*.sln
+Firmware/light_sensor/TempHumiditySensor/TempHumiditySensor/TempHumiditySensor/__vm/.TempHumiditySensor.vsarduino.h
+Firmware/light_sensor/TempHumiditySensor/TempHumiditySensor/TempHumiditySensor/__vm/Compile.vmps.xml
+Firmware/light_sensor/TempHumiditySensor/TempHumiditySensor/TempHumiditySensor/__vm/Configuration.Debug.vmps.xml
+Firmware/light_sensor/TempHumiditySensor/TempHumiditySensor/TempHumiditySensor/__vm/Upload.vmps.xml
+Firmware/light_sensor/TempHumiditySensor/TempHumiditySensor/TempHumiditySensor/TempHumiditySensor.vcxproj
+Firmware/light_sensor/TempHumiditySensor/TempHumiditySensor/TempHumiditySensor/TempHumiditySensor.vcxproj.filters
+Firmware/temp_humidity_sensor/__vm/.TempHumiditySensor.vsarduino.h
+Firmware/temp_humidity_sensor/__vm/Compile.vmps.xml
+Firmware/temp_humidity_sensor/__vm/Configuration.Debug.vmps.xml
+Firmware/temp_humidity_sensor/__vm/Upload.vmps.xml
+Firmware/temp_humidity_sensor/TempHumiditySensor.vcxproj
+Firmware/temp_humidity_sensor/TempHumiditySensor.vcxproj.filters
 Firmware/pwm/__vm/.pwm.vsarduino.h
 Firmware/pwm/__vm/.Smart_Grow.vsarduino.h
 Firmware/pwm/__vm/Compile.vmps.xml
