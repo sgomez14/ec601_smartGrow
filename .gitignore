@@ -348,6 +348,7 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
 *.sln
 Firmware/light_sensor/TempHumiditySensor/TempHumiditySensor/TempHumiditySensor/__vm/.TempHumiditySensor.vsarduino.h
 Firmware/light_sensor/TempHumiditySensor/TempHumiditySensor/TempHumiditySensor/__vm/Compile.vmps.xml
@@ -361,3 +362,30 @@ Firmware/temp_humidity_sensor/__vm/Configuration.Debug.vmps.xml
 Firmware/temp_humidity_sensor/__vm/Upload.vmps.xml
 Firmware/temp_humidity_sensor/TempHumiditySensor.vcxproj
 Firmware/temp_humidity_sensor/TempHumiditySensor.vcxproj.filters
+Firmware/pwm/__vm/.pwm.vsarduino.h
+Firmware/pwm/__vm/.Smart_Grow.vsarduino.h
+Firmware/pwm/__vm/Compile.vmps.xml
+Firmware/pwm/__vm/Configuration.Release.vmps.xml
+Firmware/pwm/__vm/Upload.vmps.xml
+Firmware/pwm/Smart_Grow.sln
+Firmware/pwm/Smart_Grow.vcxproj
+Firmware/pwm/Smart_Grow.vcxproj.filters
+Firmware/Smart_Grow/Smart_Grow.sln
+Firmware/Smart_Grow/Smart_Grow.vcxproj
+Firmware/Smart_Grow/Smart_Grow.vcxproj.filters
+Firmware/Smart_Grow/__vm/Upload.vmps.xml
+Firmware/Smart_Grow/__vm/Configuration.Release.vmps.xml
+Firmware/Smart_Grow/__vm/Compile.vmps.xml
+Firmware/Smart_Grow/__vm/.Smart_Grow.vsarduino.h
+Firmware/pwm_drivers/%VM_APPDATA_LOCAL%/arduino15/library_index.json
+Firmware/pwm_drivers/%VM_APPDATA_LOCAL%/arduino15/package_chipkit_index.json
+Firmware/pwm_drivers/%VM_APPDATA_LOCAL%/arduino15/package_esp8266com_index.json
+Firmware/pwm_drivers/%VM_APPDATA_LOCAL%/arduino15/package_index.json
+Firmware/pwm_drivers/__vm/.pwm_drivers.vsarduino.h
+Firmware/pwm_drivers/__vm/Compile.vmps.xml
+Firmware/pwm_drivers/__vm/Configuration.Debug.vmps.xml
+Firmware/pwm_drivers/__vm/Configuration.Release.vmps.xml
+Firmware/pwm_drivers/__vm/Upload.vmps.xml
+Firmware/pwm_drivers/pwm_drivers.sln
+Firmware/pwm_drivers/pwm_drivers.vcxproj
+Firmware/pwm_drivers/pwm_drivers.vcxproj.filters
