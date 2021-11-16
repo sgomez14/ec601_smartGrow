@@ -389,3 +389,4 @@ Firmware/pwm_drivers/__vm/Upload.vmps.xml
 Firmware/pwm_drivers/pwm_drivers.sln
 Firmware/pwm_drivers/pwm_drivers.vcxproj
 Firmware/pwm_drivers/pwm_drivers.vcxproj.filters
+GUI/smartGrow/smartGrow.pyproject
