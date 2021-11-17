@@ -81,7 +81,7 @@
           <item>
            <widget class="QLabel" name="logoIcon">
             <property name="text">
-             <string>Ico</string>
+             <string>Icon</string>
             </property>
            </widget>
           </item>
@@ -108,6 +108,12 @@
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item alignment="Qt::AlignLeft|Qt::AlignTop">
         <widget class="QFrame" name="sidebar">
+         <property name="minimumSize">
+          <size>
+           <width>150</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
@@ -132,6 +138,12 @@
           </property>
           <item>
            <widget class="QFrame" name="sideButtons">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="minimumSize">
              <size>
               <width>150</width>
@@ -140,9 +152,14 @@
             </property>
             <property name="maximumSize">
              <size>
-              <width>150</width>
+              <width>0</width>
               <height>16777215</height>
              </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>9</pointsize>
+             </font>
             </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
@@ -168,15 +185,41 @@
              </property>
              <item>
               <widget class="QPushButton" name="addGrowPodButton">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>200</height>
+                </size>
+               </property>
                <property name="text">
-                <string>Add Grow Pod</string>
+                <string>  Add Grow Pod</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>resources/icons/plus-circle.svg</normaloff>resources/icons/plus-circle.svg</iconset>
                </property>
               </widget>
              </item>
              <item>
               <widget class="QPushButton" name="refreshGrowPodInfoButton">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>200</height>
+                </size>
+               </property>
                <property name="text">
-                <string>Refresh Grow Pod Info</string>
+                <string>  Refresh Info</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>resources/icons/refresh-cw.svg</normaloff>resources/icons/refresh-cw.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>20</width>
+                 <height>20</height>
+                </size>
                </property>
               </widget>
              </item>
@@ -203,6 +246,23 @@
          <layout class="QVBoxLayout" name="verticalLayout_2">
           <item>
            <widget class="QFrame" name="statusCluster">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>795</width>
+              <height>420</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>6</pointsize>
+             </font>
+            </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
             </property>
