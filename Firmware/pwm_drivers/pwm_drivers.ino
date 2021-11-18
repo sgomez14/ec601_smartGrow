@@ -12,18 +12,6 @@
 
 #include "pwm_functions.h"
 
-// the setup function runs once when you press reset or power the board
-
-/*  Sample data packet (8 bits command, 24 bits data): 0000000 00000000 00000000 00000000
-
-   |0.Fill|1.Empty|2.Airpump|3.Food|4.LED|5|6|7|   |8-31 data|
-
-*/
-
-
-//Convert this command_packet to a byte. https://www.arduino.cc/en/Tutorial/Foundations/BitMask
-
-
 
 void setup() {
 	Serial.begin(9600);
@@ -34,76 +22,63 @@ void setup() {
 	pinMode(13, OUTPUT);
 	pinMode(LED.pin, OUTPUT);
 	digitalWrite(13, HIGH);
+	pinMode(PLANTER_WATER_SENSOR_PIN, INPUT);
 
 	Serial.println("Initial 2 sec delay:");
 	delay(2000);
 
-	//PWM_calibration(pump2);
-}
+	/* Setting initial state */
+	//PWM_set_percent(&air_pump, 100);
 
-// the loop function runs over and over again until power down or reset
-void loop() {
 
-	//PWM_Calibration(&air_pump);
-	PWM_set_percent(&air_pump, 1);
-
+	/* Initially filling tank, if it is not full. */
 	/*
-	if (Serial.available() > 0) {
-		// read the incoming byte:
-		command_packet = Serial.readString();
-
-		//Serial.println(command_packet.length());
-		//Rough error catching. Needs to actually check input is binary, so probably just accept a character input and convert it to an 8-bit bitmask.
-		if (command_packet.length() != 8)
-		{
-			Serial.println("Incorrect Command Packet!");
-		}
-		else
-		//Enter Command Center
-		{
-			if (int(command_packet[0])==1)
-			{
-				Serial.println(command_packet[0]);
-			}
-			if (int(command_packet[1]) == 1)
-			{
-				Serial.println(command_packet[1]);
-			}
-			if (int(command_packet[2]) == 1)
-			{
-				Serial.println(command_packet[2]);
-			}
-			if (int(command_packet[3]) == 1)
-			{
-				Serial.println(command_packet[3]);
-				dose_food(&water_pump1, 10);
-			}
-			if (int(command_packet[4]) == 1)
-			{
-				Serial.println(command_packet[4]);
-			}
-			if (int(command_packet[5]) == 1)
-			{
-				Serial.println(command_packet[5]);
-			}
-			if (int(command_packet[6]) == 1)
-			{
-				Serial.println(command_packet[6]);
-			}
-			if (int(command_packet[7]) == 1)
-			{
-				Serial.println(command_packet[7]);
-			}
-		}
-
-		Serial.println(command_packet);
+	if (!digitalReadFast(PLANTER_WATER_SENSOR_PIN))
+	{
+		time_to_fill = fill_tank(&water_pump_source);
 	}
 	*/
 
-	dose_food(&food_pump, 4);
+	initialize();
 
-	digitalWrite(13, HIGH);
-	delay(1000);
-	digitalWrite(13, LOW);
+	/* Resetting timers before superloop() */
+	change_water = 0;
+	turn_off_light = 0;
+	turn_on_light = 0;
+
+#if DEBUG
+	PWM_calibration(&water_pump_source);
+	PWM_calibration(&water_pump_drain);
+	PWM_calibration(&food_pump);
+	PWM_calibration(&air_pump);
+	PWM_calibration(&LED);
+	Serial.print("Water Sensor: ");
+	Serial.println(digitalReadFast(PLANTER_WATER_SENSOR_PIN));
+	while(1){ ; }
+#endif
+}
+ 
+// the loop function runs over and over again until power down or reset
+void loop() {
+	
+	/* Receive command packet*/
+
+	/* Scheduler */
+	scheduler();
+
+	/* Send response packet*/
+
+
+	/* Printing timers for debugging */
+#if DEBUG
+	Serial.print("change_water: ");
+	Serial.println(change_water);
+	Serial.print("turn_off_light: ");
+	Serial.println(turn_off_light);
+	Serial.print("turn_on_light: ");
+	Serial.println(turn_on_light);
+	Serial.println();
+#endif
+
 	delay(1000);
 }

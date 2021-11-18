@@ -1,15 +1,31 @@
-// 
-// 
-// 
 #include "pwm_functions.h"
 
 /* {Pin Number, min voltage, max voltage} */
-PWM_device water_pump1 = { 33, 145, 255 };
-PWM_device water_pump2 = { 36, 180, 255 };
-PWM_device food_pump = { 36, 180, 255 };
-PWM_device air_pump = { 23, 50, 200 };
-PWM_device LED = { 37, 145, 255 };
+PWM_device water_pump_source = { 36, 145, 255};
+PWM_device water_pump_drain = { 15, 180, 255};
+PWM_device food_pump = { 33, 180, 255};
+PWM_device air_pump = { 14, 230, 255};
+PWM_device LED = { 37, 145, 255};
 String command_packet = "";
+
+/* Variables for timers. */
+elapsedMillis change_water;
+elapsedMillis turn_on_light;
+elapsedMillis turn_off_light;
+
+
+/* Info on multifile variables: 
+https://stackoverflow.com/questions/1433204/how-do-i-use-extern-to-share-variables-between-source-files
+
+Demo: Water changes after 1 minute, light turns off after 1.5 minutes, turns back on after 2 minutes. */
+unsigned int change_water_threshold = 15000;
+unsigned int turn_on_light_threshold = 23000; /* After how long to turn the light back on, when in off state. */
+unsigned int turn_off_light_threshold = 10000; /* After how long to turn light off, when in on state.*/
+
+unsigned long time_to_fill = 35000; /* milliseconds */
+
+bool tank_is_full_flag = 0;
+bool LED_status = 0;
 
 /* Use PWM_Calibration to find the operating range for your motors and devices. This is used to set up your PWM_device structs' min and max value. */
 void PWM_calibration(PWM_device *pwm_device)
@@ -99,3 +115,108 @@ void dose_food(PWM_device *pwm_device, uint8_t ml)
 	return;
 }	
 
+/* Starts to fill the tank. Process also includes detecting if the planter tank is full, and measures how long it took. */
+void fill_tank(PWM_device* pwm_device)
+{
+	/* Time between start and stop of pumping. */
+	PWM_set_percent(pwm_device, 80);
+	delay(time_to_fill);
+	PWM_set_percent(pwm_device, 0);
+	tank_is_full_flag = 1;
+}
+
+/* Starts to empty the tank. Uses the fill time and a constant scalar to calculate how long it will take to empty the tank.  */
+void empty_tank(PWM_device* pwm_device) 
+{
+	unsigned long time_to_empty = time_to_fill  * 1.1;
+	PWM_set_percent(pwm_device, 80);
+	delay(time_to_empty);
+	PWM_set_percent(pwm_device, 0);
+	tank_is_full_flag = 0;
+}
+
+/* Given a LED PWM_device, toggles the light on or off depending on current state of the light.  */
+void toggle_light(PWM_device* pwm_device)
+{
+	/* If pin is HIGH, i.e. light is on... */
+	if (LED_status == 1)
+	{
+		Serial.println("Turning light off...");
+		PWM_set_percent(pwm_device, 0);
+		LED_status = 0;
+	}
+
+	/* If pin is low, i.e. light is off... */
+	else if (LED_status == 0)
+	{
+		Serial.println("Turning light on...");
+		PWM_set_percent(pwm_device, 100);
+		LED_status = 1;
+	}
+
+	/* Error catch */
+	else
+	{
+		Serial.println("Error toggling LED!!");
+	}
+}
+
+/* Resets the system, setting all devices off. */
+void reset()
+{
+	PWM_set_percent(&water_pump_source, 0);
+	PWM_set_percent(&water_pump_drain, 0);
+	PWM_set_percent(&food_pump, 0);
+	PWM_set_percent(&air_pump, 0);
+	PWM_set_percent(&LED, 0);
+	change_water = 0;
+	turn_on_light = 0;
+	turn_off_light = 0;
+}
+
+/* Sets up the system. Turns LED & air pump on. */
+void initialize()
+{
+	fill_tank(&water_pump_source);
+	toggle_light(&LED);
+	PWM_set_percent(&air_pump, 100);
+}
+
+void scheduler()
+{
+	if (change_water >= change_water_threshold) {
+		Serial.println("Changing water!");
+		Serial.print("Time to fill before drain: ");
+		Serial.println(time_to_fill);
+		empty_tank(&water_pump_drain);
+		delay(1000);
+		fill_tank(&water_pump_source);
+		Serial.print("Time to fill after refilling: ");
+		Serial.println(time_to_fill);
+		delay(1000);
+		//dose_food(&food_pump, 5);
+		change_water = 0;
+	}
+	if ((turn_off_light >= turn_off_light_threshold) && LED_status) {
+		Serial.println("Turning off light!");
+		toggle_light(&LED);
+		turn_off_light = 0;
+		turn_on_light = 0;
+	}
+	if ((turn_on_light >= turn_on_light_threshold) && !LED_status) {
+		Serial.println("Turning on light!");
+		toggle_light(&LED);
+		turn_on_light = 0;
+		turn_off_light = 0;
+	}
+}
+
+void get_packet()
+{
+
+}
+
+void send_packet()
+{ 
+
+}
