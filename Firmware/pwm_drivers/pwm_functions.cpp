@@ -211,12 +211,20 @@ void scheduler()
 	}
 }
 
+/* Gets instruction packet via UDP from server. */
 void get_packet()
 {
 
 }
 
+/* Sends response packet via UDP to server. */
 void send_packet()
 { 
+
+}
+
+/* Calculates baseline power draw from various PWM devices. Used to monitor system health. */
+void calibrate_power_draw()
+{
 
 }

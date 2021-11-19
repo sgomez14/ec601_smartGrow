@@ -56,3 +56,4 @@ void initialize();
 void scheduler();
 void get_packet();
 void send_packet();
+void calibrate_power_draw();

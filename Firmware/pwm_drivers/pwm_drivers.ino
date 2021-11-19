@@ -27,18 +27,6 @@ void setup() {
 	Serial.println("Initial 2 sec delay:");
 	delay(2000);
 
-	/* Setting initial state */
-	//PWM_set_percent(&air_pump, 100);
-
-
-	/* Initially filling tank, if it is not full. */
-	/*
-	if (!digitalReadFast(PLANTER_WATER_SENSOR_PIN))
-	{
-		time_to_fill = fill_tank(&water_pump_source);
-	}
-	*/
-
 	initialize();
 
 	/* Resetting timers before superloop() */
