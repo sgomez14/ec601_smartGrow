@@ -11,7 +11,6 @@ PWM_device food_pump = { 33, 180, 255};
 PWM_device air_pump = { 14, 230, 255};
 PWM_device LED = { 37, 145, 255};
 String command_packet = "";
-DHT temp_sensor(DHTPIN, DHTTYPE);
 
 /* Variables for timers. */
 elapsedMillis change_water;
@@ -252,6 +251,10 @@ void get_packet()
 			dosage =					(uint8_t)input_packet_buffer[4];
 			response_requested = false;
 		}
+		else if ((bitRead(input_packet_buffer[0], 1) == 1))
+		{
+			reset();
+		}
 		else
 		{
 			Serial.println("ERROR: Bad UDP packet!");
@@ -268,48 +271,40 @@ void send_packet()
 	if (response_requested == true)
 	{
 		/* We need an output packet for 5 32-bit values. So 5 x 4 bytes = 20 bytes. */
-		const int output_packet_size = 21; /* bytes */
-		char output_string[21];
-		byte output_packet_buffer[output_packet_size];
-		uint32_t voltage, current, temp, humidity, luminosity;
+		char output_string[64];
+		uint32_t voltage, current, luminosity;
+		float temp, humidity;
 		uint8_t pump_status;
 
-		memset(output_packet_buffer, 0, sizeof(output_packet_buffer));
+		memset(output_string, 0, 64);
 
-		voltage =		0xBBBBBBBB;//ina260.readBusVoltage();
-		current =		0xCCCCCCCC;//ina260.readCurrent();
-		temp =			0xDDDDDDDD;//temp_sensor.readTemperature();
-		humidity =		0xEEEEEEEE;//temp_sensor.readHumidity();
-		luminosity =	0xFFFFFFFF;
+		if (!readTempSensor(&tempSensor, &tempData)) {
+			Serial.printf("ERROR! Temp sensor could not be read.");
+		}
+
+		voltage = ina260.readBusVoltage();
+		current = ina260.readCurrent();
+		temp = tempData.fahrenheit;
+		humidity = tempData.humidity;
+		luminosity =	0xFFFFFFFF;//
 		/* bit mask for pump status */
-		pump_status =	0xAA;
+		pump_status =	0b11111111;
 
-		//Serial.printf("Measured Temp: %f\nMeasured Humidity: %f\n", temp_sensor.readTemperature() , temp_sensor.readHumidity());
-		//Serial.printf("Stored Temp: %f\nStored Humidity: %f\n", temp, humidity);
-
-		memcpy((output_string + 0), &voltage, 4);
-		memcpy((output_string + 4), &current, 4);
-		memcpy((output_string + 8), &temp, 4);
-		memcpy((output_string + 12), &humidity, 4);
-		memcpy((output_string + 16), &luminosity, 4);
-		memcpy((output_string + 20), &pump_status, 1);
-
+		 
+		sprintf(output_string, "%lu,%lu,%.1f,%.1f,%lu,%u\n", voltage,current,temp, humidity,luminosity,pump_status);
 
 #if DEBUG
-		Serial.print("Output buffer: ");
-		for (int i = 0; i < output_packet_size; i++)
-		{
-			Serial.printf("%x", output_string[i]);
-		}
-		Serial.println("");
+		Serial.printf("\nMeasured Temp: %f\nMeasured Humidity: %f\n", tempData.fahrenheit, tempData.humidity);
+		Serial.printf("Stored Temp: %f\nStored Humidity: %f\n", temp, humidity);
+		Serial.printf("String buffer: %sBuffer size: %d\n", output_string,strlen(output_string));
 #endif
 
 #if ETHERNET
 		Udp.beginPacket(server_IP, server_port);
-		Udp.write(output_string, output_packet_size);
+		Udp.print(output_string);
 		Udp.endPacket();
 #endif
-		response_requested == false;
+		//response_requested = false;
 	}
 }
 

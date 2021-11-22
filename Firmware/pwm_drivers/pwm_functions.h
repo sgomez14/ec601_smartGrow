@@ -19,12 +19,11 @@
 #include <NativeEthernet.h>
 #include <NativeEthernetUdp.h>
 #include "lightsensor.h"
+#include "temp_sensor.h"
 
 /* ml per sec, measured by running how long it takes to fill 100 ml. */
 #define FILL_RATE 10 
 #define PLANTER_WATER_SENSOR_PIN 24
-#define DHTPIN  23
-#define DHTTYPE DHT22
 #define DEBUG 1
 #define ETHERNET 0
 
@@ -49,7 +48,7 @@ extern PWM_device food_pump;
 extern PWM_device air_pump;
 extern PWM_device LED;
 extern String command_packet;
-extern DHT temp_sensor;
+extern DHT tempSensor;
 
 
 /* Various timer variables for scheduling functions. Can go up to ~40 days. */

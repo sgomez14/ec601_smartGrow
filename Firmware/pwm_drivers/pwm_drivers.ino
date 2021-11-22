@@ -25,7 +25,7 @@ void setup() {
 	pinMode(PLANTER_WATER_SENSOR_PIN, INPUT);
 	pinMode(DHTPIN, INPUT);
 
-	temp_sensor.begin();
+	tempSensorInit();
 
 	Serial.println("Initial 2 sec delay:");
 	delay(2000);
