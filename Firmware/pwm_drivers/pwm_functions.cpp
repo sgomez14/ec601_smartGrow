@@ -1,5 +1,9 @@
 #include "pwm_functions.h"
 
+/* Struct used to monitor system health */
+power_consumption system_device_health;
+Adafruit_INA260 ina260 = Adafruit_INA260();
+
 /* {Pin Number, min voltage, max voltage} */
 PWM_device water_pump_source = { 36, 145, 255};
 PWM_device water_pump_drain = { 15, 180, 255};
@@ -13,6 +17,15 @@ elapsedMillis change_water;
 elapsedMillis turn_on_light;
 elapsedMillis turn_off_light;
 
+/* Networking Variable */
+byte mac[] = {
+  0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+};
+int local_port = 8888;
+EthernetUDP Udp;
+int server_port = 8888;
+IPAddress server_IP(000, 000, 000, 000);
+IPAddress device_ip(000, 000, 000, 000);
 
 /* Info on multifile variables: 
 https://stackoverflow.com/questions/1433204/how-do-i-use-extern-to-share-variables-between-source-files
@@ -214,17 +227,88 @@ void scheduler()
 /* Gets instruction packet via UDP from server. */
 void get_packet()
 {
+	const int input_packet_size = 4; /* Size of buffer in bytes*/
+	byte input_packet_buffer[input_packet_size];
 
+	if (Udp.parsePacket()) 
+	{
+		// We've received a packet, read the data from it
+		Udp.read(input_packet_buffer, input_packet_size);
+
+		/* Parse incoming packet. Reads the nth byte of the input packet as an uint8_t. */
+		change_water_threshold =	(uint8_t) input_packet_buffer[1];
+		turn_on_light_threshold =	(uint8_t) input_packet_buffer[2];
+		turn_off_light_threshold =	(uint8_t) input_packet_buffer[3];
+	}
 }
 
 /* Sends response packet via UDP to server. */
 void send_packet()
 { 
+	/* We need an output packet for 5 32-bit values. So 5 x 4 bytes = 20 bytes. */
+	const int output_packet_size = 21; /* bytes */
+	char output_string[21];
+	byte output_packet_buffer[output_packet_size];
+	uint32_t voltage, current, temp, humidity, luminosity;
+	uint8_t pump_status;
 
+	memset(output_packet_buffer, 0, sizeof(output_packet_buffer));
+	
+	voltage =		0xBBBBBBBB;
+	current =		0xCCCCCCCC;
+	temp =			0xDDDDDDDD;
+	humidity =		0xEEEEEEEE;
+	luminosity =	0xFFFFFFFF;
+	/* bit mask for pump status */
+	pump_status =	0xAA;
+
+	memcpy((output_string + 0),  &voltage,		4);
+	memcpy((output_string + 4),  &current,		4);
+	memcpy((output_string + 8),  &temp,			4);
+	memcpy((output_string + 12), &humidity,		4);
+	memcpy((output_string + 16), &luminosity,	4);
+	memcpy((output_string + 20), &pump_status,	1);
+
+
+#if DEBUG
+	Serial.print("Output buffer: ");
+	for (int i = 0; i < output_packet_size; i++)
+	{
+		Serial.printf("%x", output_string[i]);
+	}
+	Serial.println("");
+#endif
+
+#if ETHERNET
+	Udp.beginPacket(server_IP, server_port); 
+	Udp.write(output_packet_buffer, output_packet_size);
+	Udp.endPacket();
+#endif
 }
 
 /* Calculates baseline power draw from various PWM devices. Used to monitor system health. */
 void calibrate_power_draw()
 {
+	reset();
+	PWM_set_percent(&water_pump_source, 100);
+	system_device_health.source_current = ina260.readCurrent();
+	reset();
+	PWM_set_percent(&water_pump_drain,100);
+	system_device_health.drain_current = ina260.readCurrent();
+	reset();
+	PWM_set_percent(&food_pump, 100);
+	system_device_health.food_current = ina260.readCurrent();
+	reset();
+	PWM_set_percent(&LED, 100);
+	system_device_health.light_current = ina260.readCurrent();
+	reset();
+}
 
+/* Finds Teensy MAC address and populates local MAC address buffer (6 bytes). Sourced from:
+   https://forum.pjrc.com/threads/62932-Teensy-4-1-MAC-Address
+*/
+void teensyMAC(uint8_t* mac) {
+	for (uint8_t by = 0; by < 2; by++) mac[by] = (HW_OCOTP_MAC1 >> ((1 - by) * 8)) & 0xFF;
+	for (uint8_t by = 0; by < 4; by++) mac[by + 2] = (HW_OCOTP_MAC0 >> ((3 - by) * 8)) & 0xFF;
+	Serial.printf("MAC: %02x:%02x:%02x:%02x:%02x:%02x\n", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
 }

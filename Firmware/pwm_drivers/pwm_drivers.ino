@@ -9,7 +9,6 @@
 
 
 */
-
 #include "pwm_functions.h"
 
 
@@ -27,7 +26,7 @@ void setup() {
 	Serial.println("Initial 2 sec delay:");
 	delay(2000);
 
-	initialize();
+	//initialize();
 
 	/* Resetting timers before superloop() */
 	change_water = 0;
@@ -35,14 +34,11 @@ void setup() {
 	turn_on_light = 0;
 
 #if DEBUG
-	PWM_calibration(&water_pump_source);
-	PWM_calibration(&water_pump_drain);
-	PWM_calibration(&food_pump);
-	PWM_calibration(&air_pump);
-	PWM_calibration(&LED);
-	Serial.print("Water Sensor: ");
-	Serial.println(digitalReadFast(PLANTER_WATER_SENSOR_PIN));
-	while(1){ ; }
+	//PWM_calibration(&water_pump_source);
+	//PWM_calibration(&water_pump_drain);
+	//PWM_calibration(&food_pump);
+	//PWM_calibration(&air_pump);
+	//PWM_calibration(&LED);
 #endif
 }
  
@@ -52,10 +48,10 @@ void loop() {
 	/* Receive command packet*/
 
 	/* Scheduler */
-	scheduler();
+	//scheduler();
 
 	/* Send response packet*/
-
+	send_packet();
 
 	/* Printing timers for debugging */
 #if DEBUG
