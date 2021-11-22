@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1080</width>
-    <height>840</height>
+    <width>1500</width>
+    <height>800</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -269,7 +269,7 @@
             </property>
             <property name="font">
              <font>
-              <pointsize>6</pointsize>
+              <pointsize>8</pointsize>
              </font>
             </property>
             <property name="frameShape">
@@ -305,6 +305,11 @@
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="font">
+                <font>
+                 <pointsize>8</pointsize>
+                </font>
+               </property>
                <property name="verticalScrollBarPolicy">
                 <enum>Qt::ScrollBarAsNeeded</enum>
                </property>
@@ -315,13 +320,13 @@
                 <property name="geometry">
                  <rect>
                   <x>0</x>
-                  <y>0</y>
-                  <width>847</width>
-                  <height>543</height>
+                  <y>-1480</y>
+                  <width>1250</width>
+                  <height>2039</height>
                  </rect>
                 </property>
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
@@ -332,10 +337,1393 @@
                   <height>0</height>
                  </size>
                 </property>
-                <layout class="QGridLayout" name="gridLayout">
-                 <property name="sizeConstraint">
-                  <enum>QLayout::SetMinAndMaxSize</enum>
-                 </property>
+                <layout class="QGridLayout" name="gridLayout_10">
+                 <item row="0" column="0">
+                  <widget class="QGroupBox" name="growPodContainer_1">
+                   <property name="font">
+                    <font>
+                     <pointsize>11</pointsize>
+                    </font>
+                   </property>
+                   <property name="title">
+                    <string>Grow Pod 1 Status View</string>
+                   </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_63">
+                    <item>
+                     <widget class="QFrame" name="growPodInfo_1">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>10</pointsize>
+                       </font>
+                      </property>
+                      <property name="frameShape">
+                       <enum>QFrame::StyledPanel</enum>
+                      </property>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
+                      </property>
+                      <layout class="QVBoxLayout" name="verticalLayout_64">
+                       <item>
+                        <widget class="QFrame" name="growPodInfoFrame_1">
+                         <property name="frameShape">
+                          <enum>QFrame::StyledPanel</enum>
+                         </property>
+                         <property name="frameShadow">
+                          <enum>QFrame::Raised</enum>
+                         </property>
+                         <layout class="QVBoxLayout" name="verticalLayout_65">
+                          <item>
+                           <widget class="QGroupBox" name="plantNameSection_1">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="title">
+                             <string>Plant Name and Type</string>
+                            </property>
+                            <layout class="QVBoxLayout" name="verticalLayout_66">
+                             <item>
+                              <layout class="QFormLayout" name="plantNameForm_1">
+                               <item row="0" column="0">
+                                <widget class="QLabel" name="plantNameLabel_1">
+                                 <property name="text">
+                                  <string>Plant Name</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="0" column="1">
+                                <widget class="QLineEdit" name="plantNameLineEdit_1"/>
+                               </item>
+                               <item row="1" column="0">
+                                <widget class="QLabel" name="plantTypeLabel_1">
+                                 <property name="text">
+                                  <string>Plant Type</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="1">
+                                <widget class="QLineEdit" name="plantTypeLineEdit_1"/>
+                               </item>
+                              </layout>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QGroupBox" name="feedInfoSection_1">
+                            <property name="title">
+                             <string>Feeding Information</string>
+                            </property>
+                            <layout class="QVBoxLayout" name="verticalLayout_67">
+                             <item>
+                              <layout class="QFormLayout" name="feedInfoForm_1">
+                               <item row="0" column="0">
+                                <widget class="QLabel" name="feedScheduleLabel_1">
+                                 <property name="text">
+                                  <string>Feed Schedule</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="0" column="1">
+                                <widget class="QSpinBox" name="feedScheduleSpinBox_1">
+                                 <property name="readOnly">
+                                  <bool>false</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="0">
+                                <widget class="QLabel" name="feedDosageLabel_1">
+                                 <property name="text">
+                                  <string>Feed Dosage</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="1">
+                                <widget class="QDoubleSpinBox" name="feedDosageDoubleSpinBox_1">
+                                 <property name="readOnly">
+                                  <bool>false</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                              </layout>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QGroupBox" name="lightScheduleSection_1">
+                            <property name="title">
+                             <string>Light Schedule</string>
+                            </property>
+                            <layout class="QVBoxLayout" name="verticalLayout_68">
+                             <item>
+                              <layout class="QFormLayout" name="lightScheduleForm_1">
+                               <item row="0" column="0">
+                                <widget class="QLabel" name="hoursOnLabel_1">
+                                 <property name="text">
+                                  <string>Hours On</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="0" column="1">
+                                <widget class="QSpinBox" name="hoursOnSpinBox_1">
+                                 <property name="readOnly">
+                                  <bool>false</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="0">
+                                <widget class="QLabel" name="hoursOffLabel_1">
+                                 <property name="text">
+                                  <string>Hours Off</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="1">
+                                <widget class="QSpinBox" name="hoursOffSpinBox_1">
+                                 <property name="readOnly">
+                                  <bool>false</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                              </layout>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                         </layout>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QFrame" name="growPodFeedbackFrame_1">
+                         <property name="frameShape">
+                          <enum>QFrame::StyledPanel</enum>
+                         </property>
+                         <property name="frameShadow">
+                          <enum>QFrame::Raised</enum>
+                         </property>
+                         <layout class="QVBoxLayout" name="verticalLayout_69">
+                          <item>
+                           <widget class="QGroupBox" name="environmentStatusSection_1">
+                            <property name="title">
+                             <string>Environment</string>
+                            </property>
+                            <layout class="QVBoxLayout" name="verticalLayout_70">
+                             <item>
+                              <layout class="QFormLayout" name="environmentStatusForm_1">
+                               <item row="0" column="0">
+                                <widget class="QLabel" name="luminosityLabel_1">
+                                 <property name="text">
+                                  <string>Luminosity</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="0" column="1">
+                                <widget class="QSpinBox" name="luminositySpinBox_1">
+                                 <property name="styleSheet">
+                                  <string notr="true">background-color: Gainsboro</string>
+                                 </property>
+                                 <property name="readOnly">
+                                  <bool>true</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="2" column="0">
+                                <widget class="QLabel" name="humidityLabel_1">
+                                 <property name="text">
+                                  <string>Humidity</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="2" column="1">
+                                <widget class="QDoubleSpinBox" name="humidityDoubleSpinBox_1">
+                                 <property name="styleSheet">
+                                  <string notr="true">background-color: Gainsboro</string>
+                                 </property>
+                                 <property name="readOnly">
+                                  <bool>true</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="0">
+                                <widget class="QLabel" name="temperatureLabel_1">
+                                 <property name="text">
+                                  <string>Temperature</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="1">
+                                <widget class="QDoubleSpinBox" name="temperatureDoubleSpinBox_1">
+                                 <property name="styleSheet">
+                                  <string notr="true">background-color: Gainsboro</string>
+                                 </property>
+                                 <property name="readOnly">
+                                  <bool>true</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                              </layout>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QGroupBox" name="powerStatusSection_1">
+                            <property name="title">
+                             <string>Power</string>
+                            </property>
+                            <layout class="QVBoxLayout" name="verticalLayout_71">
+                             <item>
+                              <layout class="QFormLayout" name="powerStatusForm_1">
+                               <item row="0" column="0">
+                                <widget class="QLabel" name="voltageLabel_1">
+                                 <property name="text">
+                                  <string>Voltage</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="0" column="1">
+                                <widget class="QDoubleSpinBox" name="voltageDoubleSpinBox_1">
+                                 <property name="styleSheet">
+                                  <string notr="true">background-color: Gainsboro</string>
+                                 </property>
+                                 <property name="readOnly">
+                                  <bool>true</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="0">
+                                <widget class="QLabel" name="ampsLabel_1">
+                                 <property name="text">
+                                  <string>Amps</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="1">
+                                <widget class="QDoubleSpinBox" name="ampsDoubleSpinBox_1">
+                                 <property name="styleSheet">
+                                  <string notr="true">background-color: Gainsboro</string>
+                                 </property>
+                                 <property name="readOnly">
+                                  <bool>true</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                              </layout>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QGroupBox" name="pumpStatusSection_1">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="title">
+                             <string>Pumps</string>
+                            </property>
+                            <layout class="QVBoxLayout" name="verticalLayout_72">
+                             <item>
+                              <layout class="QFormLayout" name="pumpStatusForm_1">
+                               <item row="0" column="0">
+                                <widget class="QLabel" name="airPumpLabel_1">
+                                 <property name="text">
+                                  <string>Air Pump</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="0" column="1">
+                                <widget class="QLineEdit" name="airPumpLineEdit_1">
+                                 <property name="styleSheet">
+                                  <string notr="true">background-color: Gainsboro</string>
+                                 </property>
+                                 <property name="readOnly">
+                                  <bool>true</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="0">
+                                <widget class="QLabel" name="sourcePumpLabel_1">
+                                 <property name="text">
+                                  <string>Source Pump</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="1">
+                                <widget class="QLineEdit" name="sourcePumpLineEdit_1">
+                                 <property name="styleSheet">
+                                  <string notr="true">background-color: Gainsboro</string>
+                                 </property>
+                                 <property name="readOnly">
+                                  <bool>true</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="2" column="0">
+                                <widget class="QLabel" name="drainPumpLabel_1">
+                                 <property name="text">
+                                  <string>Drain Pump</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="2" column="1">
+                                <widget class="QLineEdit" name="drainPumpLineEdit_1">
+                                 <property name="styleSheet">
+                                  <string notr="true">background-color: Gainsboro</string>
+                                 </property>
+                                 <property name="readOnly">
+                                  <bool>true</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="3" column="0">
+                                <widget class="QLabel" name="nutrientsPumpLabel_1">
+                                 <property name="text">
+                                  <string>Nutrients Pump</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="3" column="1">
+                                <widget class="QLineEdit" name="nutrientsPumpLineEdit_1">
+                                 <property name="styleSheet">
+                                  <string notr="true">background-color: Gainsboro</string>
+                                 </property>
+                                 <property name="readOnly">
+                                  <bool>true</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                              </layout>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                         </layout>
+                        </widget>
+                       </item>
+                       <item alignment="Qt::AlignBottom">
+                        <widget class="QFrame" name="notesFrame_1">
+                         <property name="frameShape">
+                          <enum>QFrame::StyledPanel</enum>
+                         </property>
+                         <property name="frameShadow">
+                          <enum>QFrame::Raised</enum>
+                         </property>
+                         <layout class="QVBoxLayout" name="verticalLayout_73">
+                          <item>
+                           <widget class="QGroupBox" name="growPodNotesSection_1">
+                            <property name="maximumSize">
+                             <size>
+                              <width>16777215</width>
+                              <height>150</height>
+                             </size>
+                            </property>
+                            <property name="title">
+                             <string>Notes</string>
+                            </property>
+                            <layout class="QVBoxLayout" name="verticalLayout_74">
+                             <item>
+                              <widget class="QTextEdit" name="growPodNotesText_1"/>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                         </layout>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QFrame" name="growStatusControlButtons_1">
+                      <property name="font">
+                       <font>
+                        <pointsize>11</pointsize>
+                       </font>
+                      </property>
+                      <property name="frameShape">
+                       <enum>QFrame::StyledPanel</enum>
+                      </property>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
+                      </property>
+                      <layout class="QGridLayout" name="gridLayout_7">
+                       <item row="1" column="1">
+                        <widget class="QPushButton" name="saveInfoButton_1">
+                         <property name="text">
+                          <string>Save Info</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="0" column="1">
+                        <widget class="QPushButton" name="saveInitializeLaterButton_1">
+                         <property name="text">
+                          <string>Save Info, Initialize Later</string>
+                         </property>
+                         <property name="default">
+                          <bool>false</bool>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="0" column="0">
+                        <widget class="QPushButton" name="initializeGrowPodButton_1">
+                         <property name="text">
+                          <string>Initilize Grow Pod</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="1" column="0">
+                        <widget class="QPushButton" name="editButton_1">
+                         <property name="text">
+                          <string>Edit</string>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item row="0" column="2">
+                  <widget class="QGroupBox" name="growPodContainer_2">
+                   <property name="font">
+                    <font>
+                     <pointsize>11</pointsize>
+                     <weight>50</weight>
+                     <bold>false</bold>
+                    </font>
+                   </property>
+                   <property name="title">
+                    <string>Grow Pod 2 Status View</string>
+                   </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_75">
+                    <item>
+                     <widget class="QFrame" name="growPodInfo_20">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>10</pointsize>
+                        <weight>50</weight>
+                        <bold>false</bold>
+                       </font>
+                      </property>
+                      <property name="frameShape">
+                       <enum>QFrame::StyledPanel</enum>
+                      </property>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
+                      </property>
+                      <layout class="QVBoxLayout" name="verticalLayout_76">
+                       <item>
+                        <widget class="QFrame" name="growPodInfoFrame_20">
+                         <property name="frameShape">
+                          <enum>QFrame::StyledPanel</enum>
+                         </property>
+                         <property name="frameShadow">
+                          <enum>QFrame::Raised</enum>
+                         </property>
+                         <layout class="QVBoxLayout" name="verticalLayout_77">
+                          <item>
+                           <widget class="QGroupBox" name="plantNameSection_20">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="title">
+                             <string>Plant Name and Type</string>
+                            </property>
+                            <layout class="QVBoxLayout" name="verticalLayout_78">
+                             <item>
+                              <layout class="QFormLayout" name="plantNameForm_20">
+                               <item row="0" column="0">
+                                <widget class="QLabel" name="plantNameLabel_20">
+                                 <property name="text">
+                                  <string>Plant Name</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="0" column="1">
+                                <widget class="QLineEdit" name="plantNameLineEdit_20"/>
+                               </item>
+                               <item row="1" column="0">
+                                <widget class="QLabel" name="plantTypeLabel_20">
+                                 <property name="text">
+                                  <string>Plant Type</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="1">
+                                <widget class="QLineEdit" name="plantTypeLineEdit_20"/>
+                               </item>
+                              </layout>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QGroupBox" name="feedInfoSection_20">
+                            <property name="title">
+                             <string>Feeding Information</string>
+                            </property>
+                            <layout class="QVBoxLayout" name="verticalLayout_79">
+                             <item>
+                              <layout class="QFormLayout" name="feedInfoForm_20">
+                               <item row="0" column="0">
+                                <widget class="QLabel" name="feedScheduleLabel_20">
+                                 <property name="text">
+                                  <string>Feed Schedule</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="0" column="1">
+                                <widget class="QSpinBox" name="feedScheduleSpinBox_20">
+                                 <property name="readOnly">
+                                  <bool>false</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="0">
+                                <widget class="QLabel" name="feedDosageLabel_20">
+                                 <property name="text">
+                                  <string>Feed Dosage</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="1">
+                                <widget class="QDoubleSpinBox" name="feedDosageDoubleSpinBox_20">
+                                 <property name="readOnly">
+                                  <bool>false</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                              </layout>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QGroupBox" name="lightScheduleSection_20">
+                            <property name="title">
+                             <string>Light Schedule</string>
+                            </property>
+                            <layout class="QVBoxLayout" name="verticalLayout_80">
+                             <item>
+                              <layout class="QFormLayout" name="lightScheduleForm_20">
+                               <item row="0" column="0">
+                                <widget class="QLabel" name="hoursOnLabel_20">
+                                 <property name="text">
+                                  <string>Hours On</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="0" column="1">
+                                <widget class="QSpinBox" name="hoursOnSpinBox_20">
+                                 <property name="readOnly">
+                                  <bool>false</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="0">
+                                <widget class="QLabel" name="hoursOffLabel_20">
+                                 <property name="text">
+                                  <string>Hours Off</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="1">
+                                <widget class="QSpinBox" name="hoursOffSpinBox_20">
+                                 <property name="readOnly">
+                                  <bool>false</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                              </layout>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                         </layout>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QFrame" name="growPodFeedbackFrame_20">
+                         <property name="frameShape">
+                          <enum>QFrame::StyledPanel</enum>
+                         </property>
+                         <property name="frameShadow">
+                          <enum>QFrame::Raised</enum>
+                         </property>
+                         <layout class="QVBoxLayout" name="verticalLayout_81">
+                          <item>
+                           <widget class="QGroupBox" name="environmentStatusSection_20">
+                            <property name="title">
+                             <string>Environment</string>
+                            </property>
+                            <layout class="QVBoxLayout" name="verticalLayout_82">
+                             <item>
+                              <layout class="QFormLayout" name="environmentStatusForm_20">
+                               <item row="0" column="0">
+                                <widget class="QLabel" name="luminosityLabel_20">
+                                 <property name="text">
+                                  <string>Luminosity</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="0" column="1">
+                                <widget class="QSpinBox" name="luminositySpinBox_20">
+                                 <property name="styleSheet">
+                                  <string notr="true">background-color: Gainsboro</string>
+                                 </property>
+                                 <property name="readOnly">
+                                  <bool>true</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="2" column="0">
+                                <widget class="QLabel" name="humidityLabel_20">
+                                 <property name="text">
+                                  <string>Humidity</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="2" column="1">
+                                <widget class="QDoubleSpinBox" name="humidityDoubleSpinBox_20">
+                                 <property name="styleSheet">
+                                  <string notr="true">background-color: Gainsboro</string>
+                                 </property>
+                                 <property name="readOnly">
+                                  <bool>true</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="0">
+                                <widget class="QLabel" name="temperatureLabel_20">
+                                 <property name="text">
+                                  <string>Temperature</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="1">
+                                <widget class="QDoubleSpinBox" name="temperatureDoubleSpinBox_20">
+                                 <property name="styleSheet">
+                                  <string notr="true">background-color: Gainsboro</string>
+                                 </property>
+                                 <property name="readOnly">
+                                  <bool>true</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                              </layout>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QGroupBox" name="powerStatusSection_20">
+                            <property name="title">
+                             <string>Power</string>
+                            </property>
+                            <layout class="QVBoxLayout" name="verticalLayout_83">
+                             <item>
+                              <layout class="QFormLayout" name="powerStatusForm_20">
+                               <item row="0" column="0">
+                                <widget class="QLabel" name="voltageLabel_20">
+                                 <property name="text">
+                                  <string>Voltage</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="0" column="1">
+                                <widget class="QDoubleSpinBox" name="voltageDoubleSpinBox_20">
+                                 <property name="styleSheet">
+                                  <string notr="true">background-color: Gainsboro</string>
+                                 </property>
+                                 <property name="readOnly">
+                                  <bool>true</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="0">
+                                <widget class="QLabel" name="ampsLabel_20">
+                                 <property name="text">
+                                  <string>Amps</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="1">
+                                <widget class="QDoubleSpinBox" name="ampsDoubleSpinBox_20">
+                                 <property name="styleSheet">
+                                  <string notr="true">background-color: Gainsboro</string>
+                                 </property>
+                                 <property name="readOnly">
+                                  <bool>true</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                              </layout>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QGroupBox" name="pumpStatusSection_20">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="title">
+                             <string>Pumps</string>
+                            </property>
+                            <layout class="QVBoxLayout" name="verticalLayout_84">
+                             <item>
+                              <layout class="QFormLayout" name="pumpStatusForm_20">
+                               <item row="0" column="0">
+                                <widget class="QLabel" name="airPumpLabel_20">
+                                 <property name="text">
+                                  <string>Air Pump</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="0" column="1">
+                                <widget class="QLineEdit" name="airPumpLineEdit_20">
+                                 <property name="styleSheet">
+                                  <string notr="true">background-color: Gainsboro</string>
+                                 </property>
+                                 <property name="readOnly">
+                                  <bool>true</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="0">
+                                <widget class="QLabel" name="sourcePumpLabel_20">
+                                 <property name="text">
+                                  <string>Source Pump</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="1">
+                                <widget class="QLineEdit" name="sourcePumpLineEdit_20">
+                                 <property name="styleSheet">
+                                  <string notr="true">background-color: Gainsboro</string>
+                                 </property>
+                                 <property name="readOnly">
+                                  <bool>true</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="2" column="0">
+                                <widget class="QLabel" name="drainPumpLabel_20">
+                                 <property name="text">
+                                  <string>Drain Pump</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="2" column="1">
+                                <widget class="QLineEdit" name="drainPumpLineEdit_20">
+                                 <property name="styleSheet">
+                                  <string notr="true">background-color: Gainsboro</string>
+                                 </property>
+                                 <property name="readOnly">
+                                  <bool>true</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="3" column="0">
+                                <widget class="QLabel" name="nutrientsPumpLabel_20">
+                                 <property name="text">
+                                  <string>Nutrients Pump</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="3" column="1">
+                                <widget class="QLineEdit" name="nutrientsPumpLineEdit_20">
+                                 <property name="styleSheet">
+                                  <string notr="true">background-color: Gainsboro</string>
+                                 </property>
+                                 <property name="readOnly">
+                                  <bool>true</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                              </layout>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                         </layout>
+                        </widget>
+                       </item>
+                       <item alignment="Qt::AlignBottom">
+                        <widget class="QFrame" name="notesFrame_20">
+                         <property name="frameShape">
+                          <enum>QFrame::StyledPanel</enum>
+                         </property>
+                         <property name="frameShadow">
+                          <enum>QFrame::Raised</enum>
+                         </property>
+                         <layout class="QVBoxLayout" name="verticalLayout_85">
+                          <item>
+                           <widget class="QGroupBox" name="growPodNotesSection_20">
+                            <property name="maximumSize">
+                             <size>
+                              <width>16777215</width>
+                              <height>150</height>
+                             </size>
+                            </property>
+                            <property name="title">
+                             <string>Notes</string>
+                            </property>
+                            <layout class="QVBoxLayout" name="verticalLayout_86">
+                             <item>
+                              <widget class="QTextEdit" name="growPodNotesText_20"/>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                         </layout>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QFrame" name="growStatusControlButtons_20">
+                      <property name="font">
+                       <font>
+                        <pointsize>11</pointsize>
+                        <weight>50</weight>
+                        <bold>false</bold>
+                       </font>
+                      </property>
+                      <property name="frameShape">
+                       <enum>QFrame::StyledPanel</enum>
+                      </property>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
+                      </property>
+                      <layout class="QGridLayout" name="gridLayout_8">
+                       <item row="0" column="1">
+                        <widget class="QPushButton" name="saveInitializeLaterButton_20">
+                         <property name="text">
+                          <string>Save Info, Initialize Later</string>
+                         </property>
+                         <property name="default">
+                          <bool>false</bool>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="0" column="0">
+                        <widget class="QPushButton" name="initializeGrowPodButton_20">
+                         <property name="text">
+                          <string>Initilize Grow Pod</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="1" column="0">
+                        <widget class="QPushButton" name="editButton_20">
+                         <property name="text">
+                          <string>Edit</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="1" column="1">
+                        <widget class="QPushButton" name="saveInfoButton_20">
+                         <property name="text">
+                          <string>Save Info</string>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QGroupBox" name="growPodContainer_3">
+                   <property name="font">
+                    <font>
+                     <pointsize>11</pointsize>
+                    </font>
+                   </property>
+                   <property name="title">
+                    <string>Grow Pod 3 Status View</string>
+                   </property>
+                   <layout class="QVBoxLayout" name="verticalLayout_87">
+                    <item>
+                     <widget class="QFrame" name="growPodInfo_30">
+                      <property name="sizePolicy">
+                       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                       </sizepolicy>
+                      </property>
+                      <property name="font">
+                       <font>
+                        <pointsize>10</pointsize>
+                       </font>
+                      </property>
+                      <property name="frameShape">
+                       <enum>QFrame::StyledPanel</enum>
+                      </property>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
+                      </property>
+                      <layout class="QVBoxLayout" name="verticalLayout_88">
+                       <item>
+                        <widget class="QFrame" name="growPodInfoFrame_30">
+                         <property name="frameShape">
+                          <enum>QFrame::StyledPanel</enum>
+                         </property>
+                         <property name="frameShadow">
+                          <enum>QFrame::Raised</enum>
+                         </property>
+                         <layout class="QVBoxLayout" name="verticalLayout_89">
+                          <item>
+                           <widget class="QGroupBox" name="plantNameSection_30">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="title">
+                             <string>Plant Name and Type</string>
+                            </property>
+                            <layout class="QVBoxLayout" name="verticalLayout_90">
+                             <item>
+                              <layout class="QFormLayout" name="plantNameForm_30">
+                               <item row="0" column="0">
+                                <widget class="QLabel" name="plantNameLabel_30">
+                                 <property name="text">
+                                  <string>Plant Name</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="0" column="1">
+                                <widget class="QLineEdit" name="plantNameLineEdit_30"/>
+                               </item>
+                               <item row="1" column="0">
+                                <widget class="QLabel" name="plantTypeLabel_30">
+                                 <property name="text">
+                                  <string>Plant Type</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="1">
+                                <widget class="QLineEdit" name="plantTypeLineEdit_30"/>
+                               </item>
+                              </layout>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QGroupBox" name="feedInfoSection_30">
+                            <property name="title">
+                             <string>Feeding Information</string>
+                            </property>
+                            <layout class="QVBoxLayout" name="verticalLayout_91">
+                             <item>
+                              <layout class="QFormLayout" name="feedInfoForm_30">
+                               <item row="0" column="0">
+                                <widget class="QLabel" name="feedScheduleLabel_30">
+                                 <property name="text">
+                                  <string>Feed Schedule</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="0" column="1">
+                                <widget class="QSpinBox" name="feedScheduleSpinBox_30">
+                                 <property name="readOnly">
+                                  <bool>false</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="0">
+                                <widget class="QLabel" name="feedDosageLabel_30">
+                                 <property name="text">
+                                  <string>Feed Dosage</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="1">
+                                <widget class="QDoubleSpinBox" name="feedDosageDoubleSpinBox_30">
+                                 <property name="readOnly">
+                                  <bool>false</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                              </layout>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QGroupBox" name="lightScheduleSection_30">
+                            <property name="title">
+                             <string>Light Schedule</string>
+                            </property>
+                            <layout class="QVBoxLayout" name="verticalLayout_92">
+                             <item>
+                              <layout class="QFormLayout" name="lightScheduleForm_30">
+                               <item row="0" column="0">
+                                <widget class="QLabel" name="hoursOnLabel_30">
+                                 <property name="text">
+                                  <string>Hours On</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="0" column="1">
+                                <widget class="QSpinBox" name="hoursOnSpinBox_30">
+                                 <property name="styleSheet">
+                                  <string notr="true">background-color: Gainsboro</string>
+                                 </property>
+                                 <property name="readOnly">
+                                  <bool>false</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="0">
+                                <widget class="QLabel" name="hoursOffLabel_30">
+                                 <property name="text">
+                                  <string>Hours Off</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="1">
+                                <widget class="QSpinBox" name="hoursOffSpinBox_30">
+                                 <property name="styleSheet">
+                                  <string notr="true">background-color: Gainsboro</string>
+                                 </property>
+                                 <property name="readOnly">
+                                  <bool>false</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                              </layout>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                         </layout>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QFrame" name="growPodFeedbackFrame_30">
+                         <property name="frameShape">
+                          <enum>QFrame::StyledPanel</enum>
+                         </property>
+                         <property name="frameShadow">
+                          <enum>QFrame::Raised</enum>
+                         </property>
+                         <layout class="QVBoxLayout" name="verticalLayout_93">
+                          <item>
+                           <widget class="QGroupBox" name="environmentStatusSection_30">
+                            <property name="title">
+                             <string>Environment</string>
+                            </property>
+                            <layout class="QVBoxLayout" name="verticalLayout_94">
+                             <item>
+                              <layout class="QFormLayout" name="environmentStatusForm_30">
+                               <item row="0" column="0">
+                                <widget class="QLabel" name="luminosityLabel_30">
+                                 <property name="text">
+                                  <string>Luminosity</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="0" column="1">
+                                <widget class="QSpinBox" name="luminositySpinBox_30">
+                                 <property name="styleSheet">
+                                  <string notr="true">background-color: Gainsboro</string>
+                                 </property>
+                                 <property name="readOnly">
+                                  <bool>true</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="2" column="0">
+                                <widget class="QLabel" name="humidityLabel_30">
+                                 <property name="text">
+                                  <string>Humidity</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="2" column="1">
+                                <widget class="QDoubleSpinBox" name="humidityDoubleSpinBox_30">
+                                 <property name="styleSheet">
+                                  <string notr="true">background-color: Gainsboro</string>
+                                 </property>
+                                 <property name="readOnly">
+                                  <bool>true</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="0">
+                                <widget class="QLabel" name="temperatureLabel_30">
+                                 <property name="text">
+                                  <string>Temperature</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="1">
+                                <widget class="QDoubleSpinBox" name="temperatureDoubleSpinBox_30">
+                                 <property name="styleSheet">
+                                  <string notr="true">background-color: Gainsboro</string>
+                                 </property>
+                                 <property name="readOnly">
+                                  <bool>true</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                              </layout>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QGroupBox" name="powerStatusSection_30">
+                            <property name="title">
+                             <string>Power</string>
+                            </property>
+                            <layout class="QVBoxLayout" name="verticalLayout_95">
+                             <item>
+                              <layout class="QFormLayout" name="powerStatusForm_30">
+                               <item row="0" column="0">
+                                <widget class="QLabel" name="voltageLabel_30">
+                                 <property name="text">
+                                  <string>Voltage</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="0" column="1">
+                                <widget class="QDoubleSpinBox" name="voltageDoubleSpinBox_30">
+                                 <property name="styleSheet">
+                                  <string notr="true">background-color: Gainsboro</string>
+                                 </property>
+                                 <property name="readOnly">
+                                  <bool>true</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="0">
+                                <widget class="QLabel" name="ampsLabel_30">
+                                 <property name="text">
+                                  <string>Amps</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="1">
+                                <widget class="QDoubleSpinBox" name="ampsDoubleSpinBox_30">
+                                 <property name="styleSheet">
+                                  <string notr="true">background-color: Gainsboro</string>
+                                 </property>
+                                 <property name="readOnly">
+                                  <bool>true</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                              </layout>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QGroupBox" name="pumpStatusSection_30">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="title">
+                             <string>Pumps</string>
+                            </property>
+                            <layout class="QVBoxLayout" name="verticalLayout_96">
+                             <item>
+                              <layout class="QFormLayout" name="pumpStatusForm_30">
+                               <item row="0" column="0">
+                                <widget class="QLabel" name="airPumpLabel_30">
+                                 <property name="text">
+                                  <string>Air Pump</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="0" column="1">
+                                <widget class="QLineEdit" name="airPumpLineEdit_30">
+                                 <property name="styleSheet">
+                                  <string notr="true">background-color: Gainsboro</string>
+                                 </property>
+                                 <property name="readOnly">
+                                  <bool>true</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="0">
+                                <widget class="QLabel" name="sourcePumpLabel_30">
+                                 <property name="text">
+                                  <string>Source Pump</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="1">
+                                <widget class="QLineEdit" name="sourcePumpLineEdit_30">
+                                 <property name="styleSheet">
+                                  <string notr="true">background-color: Gainsboro</string>
+                                 </property>
+                                 <property name="readOnly">
+                                  <bool>true</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="2" column="0">
+                                <widget class="QLabel" name="drainPumpLabel_30">
+                                 <property name="text">
+                                  <string>Drain Pump</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="2" column="1">
+                                <widget class="QLineEdit" name="drainPumpLineEdit_30">
+                                 <property name="styleSheet">
+                                  <string notr="true">background-color: Gainsboro</string>
+                                 </property>
+                                 <property name="readOnly">
+                                  <bool>true</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="3" column="0">
+                                <widget class="QLabel" name="nutrientsPumpLabel_30">
+                                 <property name="text">
+                                  <string>Nutrients Pump</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="3" column="1">
+                                <widget class="QLineEdit" name="nutrientsPumpLineEdit_30">
+                                 <property name="styleSheet">
+                                  <string notr="true">background-color: Gainsboro</string>
+                                 </property>
+                                 <property name="readOnly">
+                                  <bool>true</bool>
+                                 </property>
+                                </widget>
+                               </item>
+                              </layout>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                         </layout>
+                        </widget>
+                       </item>
+                       <item alignment="Qt::AlignBottom">
+                        <widget class="QFrame" name="notesFrame_30">
+                         <property name="frameShape">
+                          <enum>QFrame::StyledPanel</enum>
+                         </property>
+                         <property name="frameShadow">
+                          <enum>QFrame::Raised</enum>
+                         </property>
+                         <layout class="QVBoxLayout" name="verticalLayout_97">
+                          <item>
+                           <widget class="QGroupBox" name="growPodNotesSection_30">
+                            <property name="maximumSize">
+                             <size>
+                              <width>16777215</width>
+                              <height>150</height>
+                             </size>
+                            </property>
+                            <property name="title">
+                             <string>Notes</string>
+                            </property>
+                            <layout class="QVBoxLayout" name="verticalLayout_98">
+                             <item>
+                              <widget class="QTextEdit" name="growPodNotesText_30"/>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                         </layout>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QFrame" name="growStatusControlButtons_30">
+                      <property name="font">
+                       <font>
+                        <pointsize>11</pointsize>
+                       </font>
+                      </property>
+                      <property name="frameShape">
+                       <enum>QFrame::StyledPanel</enum>
+                      </property>
+                      <property name="frameShadow">
+                       <enum>QFrame::Raised</enum>
+                      </property>
+                      <layout class="QGridLayout" name="gridLayout_9">
+                       <item row="0" column="1">
+                        <widget class="QPushButton" name="saveInitializeLaterButton_30">
+                         <property name="text">
+                          <string>Save Info, Initialize Later</string>
+                         </property>
+                         <property name="default">
+                          <bool>false</bool>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="0" column="0">
+                        <widget class="QPushButton" name="initializeGrowPodButton_30">
+                         <property name="text">
+                          <string>Initilize Grow Pod</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="1" column="0">
+                        <widget class="QPushButton" name="editButton_30">
+                         <property name="text">
+                          <string>Edit</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="1" column="1">
+                        <widget class="QPushButton" name="saveInfoButton_30">
+                         <property name="text">
+                          <string>Save Info</string>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                    </item>
+                   </layout>
+                  </widget>
+                 </item>
                 </layout>
                </widget>
               </widget>
@@ -380,7 +1768,7 @@
               <number>0</number>
              </property>
              <item>
-              <widget class="QFrame" name="msg">
+              <widget class="QFrame" name="messageArea">
                <property name="frameShape">
                 <enum>QFrame::StyledPanel</enum>
                </property>
@@ -404,7 +1792,7 @@
                  <number>0</number>
                 </property>
                 <item>
-                 <widget class="QTextEdit" name="textEdit"/>
+                 <widget class="QTextEdit" name="messageAreaText"/>
                 </item>
                </layout>
               </widget>
@@ -451,7 +1839,7 @@
                  <number>0</number>
                 </property>
                 <item>
-                 <widget class="QPushButton" name="pushButton">
+                 <widget class="QPushButton" name="messageAreaClearButton">
                   <property name="font">
                    <font>
                     <pointsize>11</pointsize>
