@@ -9,6 +9,7 @@
 
 
 */
+
 #include "pwm_functions.h"
 
 
@@ -22,6 +23,9 @@ void setup() {
 	pinMode(LED.pin, OUTPUT);
 	digitalWrite(13, HIGH);
 	pinMode(PLANTER_WATER_SENSOR_PIN, INPUT);
+	pinMode(DHTPIN, INPUT);
+
+	temp_sensor.begin();
 
 	Serial.println("Initial 2 sec delay:");
 	delay(2000);

@@ -11,6 +11,7 @@ PWM_device food_pump = { 33, 180, 255};
 PWM_device air_pump = { 14, 230, 255};
 PWM_device LED = { 37, 145, 255};
 String command_packet = "";
+DHT temp_sensor(DHTPIN, DHTTYPE);
 
 /* Variables for timers. */
 elapsedMillis change_water;
@@ -18,14 +19,15 @@ elapsedMillis turn_on_light;
 elapsedMillis turn_off_light;
 
 /* Networking Variable */
+bool response_requested = true;
 byte mac[] = {
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 int local_port = 8888;
 EthernetUDP Udp;
 int server_port = 8888;
-IPAddress server_IP(000, 000, 000, 000);
-IPAddress device_ip(000, 000, 000, 000);
+IPAddress server_IP(192, 168, 0, 0);
+IPAddress device_ip(192, 168, 0, 1);
 
 /* Info on multifile variables: 
 https://stackoverflow.com/questions/1433204/how-do-i-use-extern-to-share-variables-between-source-files
@@ -34,6 +36,8 @@ Demo: Water changes after 1 minute, light turns off after 1.5 minutes, turns bac
 unsigned int change_water_threshold = 15000;
 unsigned int turn_on_light_threshold = 23000; /* After how long to turn the light back on, when in off state. */
 unsigned int turn_off_light_threshold = 10000; /* After how long to turn light off, when in on state.*/
+
+uint8_t dosage = 0;
 
 unsigned long time_to_fill = 35000; /* milliseconds */
 
@@ -227,7 +231,7 @@ void scheduler()
 /* Gets instruction packet via UDP from server. */
 void get_packet()
 {
-	const int input_packet_size = 4; /* Size of buffer in bytes*/
+	const int input_packet_size = 5; /* Size of buffer in bytes*/
 	byte input_packet_buffer[input_packet_size];
 
 	if (Udp.parsePacket()) 
@@ -235,55 +239,78 @@ void get_packet()
 		// We've received a packet, read the data from it
 		Udp.read(input_packet_buffer, input_packet_size);
 
-		/* Parse incoming packet. Reads the nth byte of the input packet as an uint8_t. */
-		change_water_threshold =	(uint8_t) input_packet_buffer[1];
-		turn_on_light_threshold =	(uint8_t) input_packet_buffer[2];
-		turn_off_light_threshold =	(uint8_t) input_packet_buffer[3];
+		if (bitRead(input_packet_buffer[0], 0) == 0)
+		{
+			response_requested = true;
+		}
+		else if ((bitRead(input_packet_buffer[0], 0) == 1))
+		{
+			/* Parse incoming packet. Reads the nth byte of the input packet as an uint8_t. */
+			change_water_threshold =	(uint8_t)input_packet_buffer[1];
+			turn_on_light_threshold =	(uint8_t)input_packet_buffer[2];
+			turn_off_light_threshold =	(uint8_t)input_packet_buffer[3];
+			dosage =					(uint8_t)input_packet_buffer[4];
+			response_requested = false;
+		}
+		else
+		{
+			Serial.println("ERROR: Bad UDP packet!");
+			response_requested = false;
+		}
+
+
 	}
 }
 
 /* Sends response packet via UDP to server. */
 void send_packet()
 { 
-	/* We need an output packet for 5 32-bit values. So 5 x 4 bytes = 20 bytes. */
-	const int output_packet_size = 21; /* bytes */
-	char output_string[21];
-	byte output_packet_buffer[output_packet_size];
-	uint32_t voltage, current, temp, humidity, luminosity;
-	uint8_t pump_status;
+	if (response_requested == true)
+	{
+		/* We need an output packet for 5 32-bit values. So 5 x 4 bytes = 20 bytes. */
+		const int output_packet_size = 21; /* bytes */
+		char output_string[21];
+		byte output_packet_buffer[output_packet_size];
+		uint32_t voltage, current, temp, humidity, luminosity;
+		uint8_t pump_status;
 
-	memset(output_packet_buffer, 0, sizeof(output_packet_buffer));
-	
-	voltage =		0xBBBBBBBB;
-	current =		0xCCCCCCCC;
-	temp =			0xDDDDDDDD;
-	humidity =		0xEEEEEEEE;
-	luminosity =	0xFFFFFFFF;
-	/* bit mask for pump status */
-	pump_status =	0xAA;
+		memset(output_packet_buffer, 0, sizeof(output_packet_buffer));
 
-	memcpy((output_string + 0),  &voltage,		4);
-	memcpy((output_string + 4),  &current,		4);
-	memcpy((output_string + 8),  &temp,			4);
-	memcpy((output_string + 12), &humidity,		4);
-	memcpy((output_string + 16), &luminosity,	4);
-	memcpy((output_string + 20), &pump_status,	1);
+		voltage =		0xBBBBBBBB;//ina260.readBusVoltage();
+		current =		0xCCCCCCCC;//ina260.readCurrent();
+		temp =			0xDDDDDDDD;//temp_sensor.readTemperature();
+		humidity =		0xEEEEEEEE;//temp_sensor.readHumidity();
+		luminosity =	0xFFFFFFFF;
+		/* bit mask for pump status */
+		pump_status =	0xAA;
+
+		//Serial.printf("Measured Temp: %f\nMeasured Humidity: %f\n", temp_sensor.readTemperature() , temp_sensor.readHumidity());
+		//Serial.printf("Stored Temp: %f\nStored Humidity: %f\n", temp, humidity);
+
+		memcpy((output_string + 0), &voltage, 4);
+		memcpy((output_string + 4), &current, 4);
+		memcpy((output_string + 8), &temp, 4);
+		memcpy((output_string + 12), &humidity, 4);
+		memcpy((output_string + 16), &luminosity, 4);
+		memcpy((output_string + 20), &pump_status, 1);
 
 
 #if DEBUG
-	Serial.print("Output buffer: ");
-	for (int i = 0; i < output_packet_size; i++)
-	{
-		Serial.printf("%x", output_string[i]);
-	}
-	Serial.println("");
+		Serial.print("Output buffer: ");
+		for (int i = 0; i < output_packet_size; i++)
+		{
+			Serial.printf("%x", output_string[i]);
+		}
+		Serial.println("");
 #endif
 
 #if ETHERNET
-	Udp.beginPacket(server_IP, server_port); 
-	Udp.write(output_packet_buffer, output_packet_size);
-	Udp.endPacket();
+		Udp.beginPacket(server_IP, server_port);
+		Udp.write(output_string, output_packet_size);
+		Udp.endPacket();
 #endif
+		response_requested == false;
+	}
 }
 
 /* Calculates baseline power draw from various PWM devices. Used to monitor system health. */

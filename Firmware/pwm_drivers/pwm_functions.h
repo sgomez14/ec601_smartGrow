@@ -14,12 +14,17 @@
 
 #include <SPI.h>
 #include <Adafruit_INA260.h>
+#include <DHT_U.h>
+#include <DHT.h>
 #include <NativeEthernet.h>
 #include <NativeEthernetUdp.h>
+#include "lightsensor.h"
 
 /* ml per sec, measured by running how long it takes to fill 100 ml. */
 #define FILL_RATE 10 
-#define PLANTER_WATER_SENSOR_PIN 23
+#define PLANTER_WATER_SENSOR_PIN 24
+#define DHTPIN  23
+#define DHTTYPE DHT22
 #define DEBUG 1
 #define ETHERNET 0
 
@@ -44,6 +49,7 @@ extern PWM_device food_pump;
 extern PWM_device air_pump;
 extern PWM_device LED;
 extern String command_packet;
+extern DHT temp_sensor;
 
 
 /* Various timer variables for scheduling functions. Can go up to ~40 days. */
@@ -72,6 +78,8 @@ extern unsigned int change_water_threshold, turn_on_light_threshold, turn_off_li
 
 extern bool LED_status, tank_is_full_flag; /* 1 := on, 0 := off */
 extern unsigned long time_to_fill;
+extern bool response_requested;
+extern uint8_t dosage;
 
 extern void PWM_calibration(PWM_device *pwm_device);
 extern void PWM_set_percent(PWM_device *pwm_device, uint8_t percent);
