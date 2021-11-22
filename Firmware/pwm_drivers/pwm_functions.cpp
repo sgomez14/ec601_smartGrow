@@ -231,29 +231,37 @@ void scheduler()
 void get_packet()
 {
 	const int input_packet_size = 5; /* Size of buffer in bytes*/
-	byte input_packet_buffer[input_packet_size];
+	char input_packet_buffer[input_packet_size];
+	uint8_t command_packet, new_water_schedule, new_light_on_schedule, new_light_off_schedule, new_dosage;
 
 	if (Udp.parsePacket()) 
 	{
 		// We've received a packet, read the data from it
 		Udp.read(input_packet_buffer, input_packet_size);
 
-		if (bitRead(input_packet_buffer[0], 0) == 0)
+		/* Different method without sscanf()? */
+		sscanf(input_packet_buffer, "%hhu,%hhu,%hhu,%hhu,%hhu", &command_packet, &new_water_schedule,&new_light_on_schedule,&new_light_off_schedule, &new_dosage);
+
+		if (bitRead(command_packet, 0) == 0)
 		{
 			response_requested = true;
 		}
-		else if ((bitRead(input_packet_buffer[0], 0) == 1))
+		else if ((bitRead(command_packet, 0) == 1))
 		{
 			/* Parse incoming packet. Reads the nth byte of the input packet as an uint8_t. */
-			change_water_threshold =	(uint8_t)input_packet_buffer[1];
-			turn_on_light_threshold =	(uint8_t)input_packet_buffer[2];
-			turn_off_light_threshold =	(uint8_t)input_packet_buffer[3];
-			dosage =					(uint8_t)input_packet_buffer[4];
+			change_water_threshold =	new_water_schedule;
+			turn_on_light_threshold =	new_light_on_schedule;
+			turn_off_light_threshold =	new_light_off_schedule;
+			dosage =					new_dosage;
 			response_requested = false;
 		}
-		else if ((bitRead(input_packet_buffer[0], 1) == 1))
+		else if ((bitRead(command_packet, 1) == 1))
 		{
 			reset();
+		}
+		else if ((bitRead(command_packet, 2) == 1))
+		{
+			initialize();
 		}
 		else
 		{

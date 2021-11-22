@@ -20,6 +20,7 @@
 #include <NativeEthernetUdp.h>
 #include "lightsensor.h"
 #include "temp_sensor.h"
+#include <string.h>
 
 /* ml per sec, measured by running how long it takes to fill 100 ml. */
 #define FILL_RATE 10 
