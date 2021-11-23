@@ -167,7 +167,7 @@ class Ui_smartGrowGUI(object):
         self.statusScrollArea.setWidgetResizable(True)
         self.statusGrid = QWidget()
         self.statusGrid.setObjectName(u"statusGrid")
-        self.statusGrid.setGeometry(QRect(0, -1480, 1250, 2039))
+        self.statusGrid.setGeometry(QRect(0, -1211, 1250, 2053))
         sizePolicy.setHeightForWidth(self.statusGrid.sizePolicy().hasHeightForWidth())
         self.statusGrid.setSizePolicy(sizePolicy)
         self.statusGrid.setMinimumSize(QSize(0, 0))
@@ -403,50 +403,62 @@ class Ui_smartGrowGUI(object):
         self.airPumpLabel_1 = QLabel(self.pumpStatusSection_1)
         self.airPumpLabel_1.setObjectName(u"airPumpLabel_1")
 
-        self.pumpStatusForm_1.setWidget(0, QFormLayout.LabelRole, self.airPumpLabel_1)
+        self.pumpStatusForm_1.setWidget(1, QFormLayout.LabelRole, self.airPumpLabel_1)
 
         self.airPumpLineEdit_1 = QLineEdit(self.pumpStatusSection_1)
         self.airPumpLineEdit_1.setObjectName(u"airPumpLineEdit_1")
         self.airPumpLineEdit_1.setStyleSheet(u"background-color: Gainsboro")
         self.airPumpLineEdit_1.setReadOnly(True)
 
-        self.pumpStatusForm_1.setWidget(0, QFormLayout.FieldRole, self.airPumpLineEdit_1)
+        self.pumpStatusForm_1.setWidget(1, QFormLayout.FieldRole, self.airPumpLineEdit_1)
 
         self.sourcePumpLabel_1 = QLabel(self.pumpStatusSection_1)
         self.sourcePumpLabel_1.setObjectName(u"sourcePumpLabel_1")
 
-        self.pumpStatusForm_1.setWidget(1, QFormLayout.LabelRole, self.sourcePumpLabel_1)
+        self.pumpStatusForm_1.setWidget(2, QFormLayout.LabelRole, self.sourcePumpLabel_1)
 
         self.sourcePumpLineEdit_1 = QLineEdit(self.pumpStatusSection_1)
         self.sourcePumpLineEdit_1.setObjectName(u"sourcePumpLineEdit_1")
         self.sourcePumpLineEdit_1.setStyleSheet(u"background-color: Gainsboro")
         self.sourcePumpLineEdit_1.setReadOnly(True)
 
-        self.pumpStatusForm_1.setWidget(1, QFormLayout.FieldRole, self.sourcePumpLineEdit_1)
+        self.pumpStatusForm_1.setWidget(2, QFormLayout.FieldRole, self.sourcePumpLineEdit_1)
 
         self.drainPumpLabel_1 = QLabel(self.pumpStatusSection_1)
         self.drainPumpLabel_1.setObjectName(u"drainPumpLabel_1")
 
-        self.pumpStatusForm_1.setWidget(2, QFormLayout.LabelRole, self.drainPumpLabel_1)
+        self.pumpStatusForm_1.setWidget(3, QFormLayout.LabelRole, self.drainPumpLabel_1)
 
         self.drainPumpLineEdit_1 = QLineEdit(self.pumpStatusSection_1)
         self.drainPumpLineEdit_1.setObjectName(u"drainPumpLineEdit_1")
         self.drainPumpLineEdit_1.setStyleSheet(u"background-color: Gainsboro")
         self.drainPumpLineEdit_1.setReadOnly(True)
 
-        self.pumpStatusForm_1.setWidget(2, QFormLayout.FieldRole, self.drainPumpLineEdit_1)
+        self.pumpStatusForm_1.setWidget(3, QFormLayout.FieldRole, self.drainPumpLineEdit_1)
 
         self.nutrientsPumpLabel_1 = QLabel(self.pumpStatusSection_1)
         self.nutrientsPumpLabel_1.setObjectName(u"nutrientsPumpLabel_1")
 
-        self.pumpStatusForm_1.setWidget(3, QFormLayout.LabelRole, self.nutrientsPumpLabel_1)
+        self.pumpStatusForm_1.setWidget(4, QFormLayout.LabelRole, self.nutrientsPumpLabel_1)
 
         self.nutrientsPumpLineEdit_1 = QLineEdit(self.pumpStatusSection_1)
         self.nutrientsPumpLineEdit_1.setObjectName(u"nutrientsPumpLineEdit_1")
         self.nutrientsPumpLineEdit_1.setStyleSheet(u"background-color: Gainsboro")
         self.nutrientsPumpLineEdit_1.setReadOnly(True)
 
-        self.pumpStatusForm_1.setWidget(3, QFormLayout.FieldRole, self.nutrientsPumpLineEdit_1)
+        self.pumpStatusForm_1.setWidget(4, QFormLayout.FieldRole, self.nutrientsPumpLineEdit_1)
+
+        self.lightStatusLabel_1 = QLabel(self.pumpStatusSection_1)
+        self.lightStatusLabel_1.setObjectName(u"lightStatusLabel_1")
+
+        self.pumpStatusForm_1.setWidget(0, QFormLayout.LabelRole, self.lightStatusLabel_1)
+
+        self.lightStatusLineEdit_1 = QLineEdit(self.pumpStatusSection_1)
+        self.lightStatusLineEdit_1.setObjectName(u"lightStatusLineEdit_1")
+        self.lightStatusLineEdit_1.setStyleSheet(u"background-color: Gainsboro")
+        self.lightStatusLineEdit_1.setReadOnly(True)
+
+        self.pumpStatusForm_1.setWidget(0, QFormLayout.FieldRole, self.lightStatusLineEdit_1)
 
 
         self.verticalLayout_72.addLayout(self.pumpStatusForm_1)
@@ -747,50 +759,62 @@ class Ui_smartGrowGUI(object):
         self.airPumpLabel_20 = QLabel(self.pumpStatusSection_20)
         self.airPumpLabel_20.setObjectName(u"airPumpLabel_20")
 
-        self.pumpStatusForm_20.setWidget(0, QFormLayout.LabelRole, self.airPumpLabel_20)
+        self.pumpStatusForm_20.setWidget(1, QFormLayout.LabelRole, self.airPumpLabel_20)
 
         self.airPumpLineEdit_20 = QLineEdit(self.pumpStatusSection_20)
         self.airPumpLineEdit_20.setObjectName(u"airPumpLineEdit_20")
         self.airPumpLineEdit_20.setStyleSheet(u"background-color: Gainsboro")
         self.airPumpLineEdit_20.setReadOnly(True)
 
-        self.pumpStatusForm_20.setWidget(0, QFormLayout.FieldRole, self.airPumpLineEdit_20)
+        self.pumpStatusForm_20.setWidget(1, QFormLayout.FieldRole, self.airPumpLineEdit_20)
 
         self.sourcePumpLabel_20 = QLabel(self.pumpStatusSection_20)
         self.sourcePumpLabel_20.setObjectName(u"sourcePumpLabel_20")
 
-        self.pumpStatusForm_20.setWidget(1, QFormLayout.LabelRole, self.sourcePumpLabel_20)
+        self.pumpStatusForm_20.setWidget(2, QFormLayout.LabelRole, self.sourcePumpLabel_20)
 
         self.sourcePumpLineEdit_20 = QLineEdit(self.pumpStatusSection_20)
         self.sourcePumpLineEdit_20.setObjectName(u"sourcePumpLineEdit_20")
         self.sourcePumpLineEdit_20.setStyleSheet(u"background-color: Gainsboro")
         self.sourcePumpLineEdit_20.setReadOnly(True)
 
-        self.pumpStatusForm_20.setWidget(1, QFormLayout.FieldRole, self.sourcePumpLineEdit_20)
+        self.pumpStatusForm_20.setWidget(2, QFormLayout.FieldRole, self.sourcePumpLineEdit_20)
 
         self.drainPumpLabel_20 = QLabel(self.pumpStatusSection_20)
         self.drainPumpLabel_20.setObjectName(u"drainPumpLabel_20")
 
-        self.pumpStatusForm_20.setWidget(2, QFormLayout.LabelRole, self.drainPumpLabel_20)
+        self.pumpStatusForm_20.setWidget(3, QFormLayout.LabelRole, self.drainPumpLabel_20)
 
         self.drainPumpLineEdit_20 = QLineEdit(self.pumpStatusSection_20)
         self.drainPumpLineEdit_20.setObjectName(u"drainPumpLineEdit_20")
         self.drainPumpLineEdit_20.setStyleSheet(u"background-color: Gainsboro")
         self.drainPumpLineEdit_20.setReadOnly(True)
 
-        self.pumpStatusForm_20.setWidget(2, QFormLayout.FieldRole, self.drainPumpLineEdit_20)
+        self.pumpStatusForm_20.setWidget(3, QFormLayout.FieldRole, self.drainPumpLineEdit_20)
 
         self.nutrientsPumpLabel_20 = QLabel(self.pumpStatusSection_20)
         self.nutrientsPumpLabel_20.setObjectName(u"nutrientsPumpLabel_20")
 
-        self.pumpStatusForm_20.setWidget(3, QFormLayout.LabelRole, self.nutrientsPumpLabel_20)
+        self.pumpStatusForm_20.setWidget(4, QFormLayout.LabelRole, self.nutrientsPumpLabel_20)
 
         self.nutrientsPumpLineEdit_20 = QLineEdit(self.pumpStatusSection_20)
         self.nutrientsPumpLineEdit_20.setObjectName(u"nutrientsPumpLineEdit_20")
         self.nutrientsPumpLineEdit_20.setStyleSheet(u"background-color: Gainsboro")
         self.nutrientsPumpLineEdit_20.setReadOnly(True)
 
-        self.pumpStatusForm_20.setWidget(3, QFormLayout.FieldRole, self.nutrientsPumpLineEdit_20)
+        self.pumpStatusForm_20.setWidget(4, QFormLayout.FieldRole, self.nutrientsPumpLineEdit_20)
+
+        self.lightStatusLabel_20 = QLabel(self.pumpStatusSection_20)
+        self.lightStatusLabel_20.setObjectName(u"lightStatusLabel_20")
+
+        self.pumpStatusForm_20.setWidget(0, QFormLayout.LabelRole, self.lightStatusLabel_20)
+
+        self.lightStatusLineEdit_20 = QLineEdit(self.pumpStatusSection_20)
+        self.lightStatusLineEdit_20.setObjectName(u"lightStatusLineEdit_20")
+        self.lightStatusLineEdit_20.setStyleSheet(u"background-color: Gainsboro")
+        self.lightStatusLineEdit_20.setReadOnly(True)
+
+        self.pumpStatusForm_20.setWidget(0, QFormLayout.FieldRole, self.lightStatusLineEdit_20)
 
 
         self.verticalLayout_84.addLayout(self.pumpStatusForm_20)
@@ -960,7 +984,7 @@ class Ui_smartGrowGUI(object):
 
         self.hoursOnSpinBox_30 = QSpinBox(self.lightScheduleSection_30)
         self.hoursOnSpinBox_30.setObjectName(u"hoursOnSpinBox_30")
-        self.hoursOnSpinBox_30.setStyleSheet(u"background-color: Gainsboro")
+        self.hoursOnSpinBox_30.setStyleSheet(u"")
         self.hoursOnSpinBox_30.setReadOnly(False)
 
         self.lightScheduleForm_30.setWidget(0, QFormLayout.FieldRole, self.hoursOnSpinBox_30)
@@ -972,7 +996,7 @@ class Ui_smartGrowGUI(object):
 
         self.hoursOffSpinBox_30 = QSpinBox(self.lightScheduleSection_30)
         self.hoursOffSpinBox_30.setObjectName(u"hoursOffSpinBox_30")
-        self.hoursOffSpinBox_30.setStyleSheet(u"background-color: Gainsboro")
+        self.hoursOffSpinBox_30.setStyleSheet(u"")
         self.hoursOffSpinBox_30.setReadOnly(False)
 
         self.lightScheduleForm_30.setWidget(1, QFormLayout.FieldRole, self.hoursOffSpinBox_30)
@@ -1087,50 +1111,62 @@ class Ui_smartGrowGUI(object):
         self.airPumpLabel_30 = QLabel(self.pumpStatusSection_30)
         self.airPumpLabel_30.setObjectName(u"airPumpLabel_30")
 
-        self.pumpStatusForm_30.setWidget(0, QFormLayout.LabelRole, self.airPumpLabel_30)
+        self.pumpStatusForm_30.setWidget(1, QFormLayout.LabelRole, self.airPumpLabel_30)
 
         self.airPumpLineEdit_30 = QLineEdit(self.pumpStatusSection_30)
         self.airPumpLineEdit_30.setObjectName(u"airPumpLineEdit_30")
         self.airPumpLineEdit_30.setStyleSheet(u"background-color: Gainsboro")
         self.airPumpLineEdit_30.setReadOnly(True)
 
-        self.pumpStatusForm_30.setWidget(0, QFormLayout.FieldRole, self.airPumpLineEdit_30)
+        self.pumpStatusForm_30.setWidget(1, QFormLayout.FieldRole, self.airPumpLineEdit_30)
 
         self.sourcePumpLabel_30 = QLabel(self.pumpStatusSection_30)
         self.sourcePumpLabel_30.setObjectName(u"sourcePumpLabel_30")
 
-        self.pumpStatusForm_30.setWidget(1, QFormLayout.LabelRole, self.sourcePumpLabel_30)
+        self.pumpStatusForm_30.setWidget(2, QFormLayout.LabelRole, self.sourcePumpLabel_30)
 
         self.sourcePumpLineEdit_30 = QLineEdit(self.pumpStatusSection_30)
         self.sourcePumpLineEdit_30.setObjectName(u"sourcePumpLineEdit_30")
         self.sourcePumpLineEdit_30.setStyleSheet(u"background-color: Gainsboro")
         self.sourcePumpLineEdit_30.setReadOnly(True)
 
-        self.pumpStatusForm_30.setWidget(1, QFormLayout.FieldRole, self.sourcePumpLineEdit_30)
+        self.pumpStatusForm_30.setWidget(2, QFormLayout.FieldRole, self.sourcePumpLineEdit_30)
 
         self.drainPumpLabel_30 = QLabel(self.pumpStatusSection_30)
         self.drainPumpLabel_30.setObjectName(u"drainPumpLabel_30")
 
-        self.pumpStatusForm_30.setWidget(2, QFormLayout.LabelRole, self.drainPumpLabel_30)
+        self.pumpStatusForm_30.setWidget(3, QFormLayout.LabelRole, self.drainPumpLabel_30)
 
         self.drainPumpLineEdit_30 = QLineEdit(self.pumpStatusSection_30)
         self.drainPumpLineEdit_30.setObjectName(u"drainPumpLineEdit_30")
         self.drainPumpLineEdit_30.setStyleSheet(u"background-color: Gainsboro")
         self.drainPumpLineEdit_30.setReadOnly(True)
 
-        self.pumpStatusForm_30.setWidget(2, QFormLayout.FieldRole, self.drainPumpLineEdit_30)
+        self.pumpStatusForm_30.setWidget(3, QFormLayout.FieldRole, self.drainPumpLineEdit_30)
 
         self.nutrientsPumpLabel_30 = QLabel(self.pumpStatusSection_30)
         self.nutrientsPumpLabel_30.setObjectName(u"nutrientsPumpLabel_30")
 
-        self.pumpStatusForm_30.setWidget(3, QFormLayout.LabelRole, self.nutrientsPumpLabel_30)
+        self.pumpStatusForm_30.setWidget(4, QFormLayout.LabelRole, self.nutrientsPumpLabel_30)
 
         self.nutrientsPumpLineEdit_30 = QLineEdit(self.pumpStatusSection_30)
         self.nutrientsPumpLineEdit_30.setObjectName(u"nutrientsPumpLineEdit_30")
         self.nutrientsPumpLineEdit_30.setStyleSheet(u"background-color: Gainsboro")
         self.nutrientsPumpLineEdit_30.setReadOnly(True)
 
-        self.pumpStatusForm_30.setWidget(3, QFormLayout.FieldRole, self.nutrientsPumpLineEdit_30)
+        self.pumpStatusForm_30.setWidget(4, QFormLayout.FieldRole, self.nutrientsPumpLineEdit_30)
+
+        self.lightStatusLabel_30 = QLabel(self.pumpStatusSection_30)
+        self.lightStatusLabel_30.setObjectName(u"lightStatusLabel_30")
+
+        self.pumpStatusForm_30.setWidget(0, QFormLayout.LabelRole, self.lightStatusLabel_30)
+
+        self.lightStatusLineEdit_30 = QLineEdit(self.pumpStatusSection_30)
+        self.lightStatusLineEdit_30.setObjectName(u"lightStatusLineEdit_30")
+        self.lightStatusLineEdit_30.setStyleSheet(u"background-color: Gainsboro")
+        self.lightStatusLineEdit_30.setReadOnly(True)
+
+        self.pumpStatusForm_30.setWidget(0, QFormLayout.FieldRole, self.lightStatusLineEdit_30)
 
 
         self.verticalLayout_96.addLayout(self.pumpStatusForm_30)
@@ -1289,23 +1325,24 @@ class Ui_smartGrowGUI(object):
         self.plantNameLabel_1.setText(QCoreApplication.translate("smartGrowGUI", u"Plant Name", None))
         self.plantTypeLabel_1.setText(QCoreApplication.translate("smartGrowGUI", u"Plant Type", None))
         self.feedInfoSection_1.setTitle(QCoreApplication.translate("smartGrowGUI", u"Feeding Information", None))
-        self.feedScheduleLabel_1.setText(QCoreApplication.translate("smartGrowGUI", u"Feed Schedule", None))
-        self.feedDosageLabel_1.setText(QCoreApplication.translate("smartGrowGUI", u"Feed Dosage", None))
+        self.feedScheduleLabel_1.setText(QCoreApplication.translate("smartGrowGUI", u"Feed Schedule (every x hours)", None))
+        self.feedDosageLabel_1.setText(QCoreApplication.translate("smartGrowGUI", u"Feed Dosage (mL)", None))
         self.lightScheduleSection_1.setTitle(QCoreApplication.translate("smartGrowGUI", u"Light Schedule", None))
         self.hoursOnLabel_1.setText(QCoreApplication.translate("smartGrowGUI", u"Hours On", None))
         self.hoursOffLabel_1.setText(QCoreApplication.translate("smartGrowGUI", u"Hours Off", None))
         self.environmentStatusSection_1.setTitle(QCoreApplication.translate("smartGrowGUI", u"Environment", None))
-        self.luminosityLabel_1.setText(QCoreApplication.translate("smartGrowGUI", u"Luminosity", None))
-        self.humidityLabel_1.setText(QCoreApplication.translate("smartGrowGUI", u"Humidity", None))
-        self.temperatureLabel_1.setText(QCoreApplication.translate("smartGrowGUI", u"Temperature", None))
+        self.luminosityLabel_1.setText(QCoreApplication.translate("smartGrowGUI", u"Luminosity (LUX)", None))
+        self.humidityLabel_1.setText(QCoreApplication.translate("smartGrowGUI", u"Humidity (%)", None))
+        self.temperatureLabel_1.setText(QCoreApplication.translate("smartGrowGUI", u"Temperature (F)", None))
         self.powerStatusSection_1.setTitle(QCoreApplication.translate("smartGrowGUI", u"Power", None))
-        self.voltageLabel_1.setText(QCoreApplication.translate("smartGrowGUI", u"Voltage", None))
-        self.ampsLabel_1.setText(QCoreApplication.translate("smartGrowGUI", u"Amps", None))
-        self.pumpStatusSection_1.setTitle(QCoreApplication.translate("smartGrowGUI", u"Pumps", None))
+        self.voltageLabel_1.setText(QCoreApplication.translate("smartGrowGUI", u"Voltage (mV)", None))
+        self.ampsLabel_1.setText(QCoreApplication.translate("smartGrowGUI", u"Amps (mA)", None))
+        self.pumpStatusSection_1.setTitle(QCoreApplication.translate("smartGrowGUI", u"Light and Pumps", None))
         self.airPumpLabel_1.setText(QCoreApplication.translate("smartGrowGUI", u"Air Pump", None))
         self.sourcePumpLabel_1.setText(QCoreApplication.translate("smartGrowGUI", u"Source Pump", None))
         self.drainPumpLabel_1.setText(QCoreApplication.translate("smartGrowGUI", u"Drain Pump", None))
         self.nutrientsPumpLabel_1.setText(QCoreApplication.translate("smartGrowGUI", u"Nutrients Pump", None))
+        self.lightStatusLabel_1.setText(QCoreApplication.translate("smartGrowGUI", u"Light Status", None))
         self.growPodNotesSection_1.setTitle(QCoreApplication.translate("smartGrowGUI", u"Notes", None))
         self.saveInfoButton_1.setText(QCoreApplication.translate("smartGrowGUI", u"Save Info", None))
         self.saveInitializeLaterButton_1.setText(QCoreApplication.translate("smartGrowGUI", u"Save Info, Initialize Later", None))
@@ -1316,23 +1353,24 @@ class Ui_smartGrowGUI(object):
         self.plantNameLabel_20.setText(QCoreApplication.translate("smartGrowGUI", u"Plant Name", None))
         self.plantTypeLabel_20.setText(QCoreApplication.translate("smartGrowGUI", u"Plant Type", None))
         self.feedInfoSection_20.setTitle(QCoreApplication.translate("smartGrowGUI", u"Feeding Information", None))
-        self.feedScheduleLabel_20.setText(QCoreApplication.translate("smartGrowGUI", u"Feed Schedule", None))
-        self.feedDosageLabel_20.setText(QCoreApplication.translate("smartGrowGUI", u"Feed Dosage", None))
+        self.feedScheduleLabel_20.setText(QCoreApplication.translate("smartGrowGUI", u"Feed Schedule (every x hours)", None))
+        self.feedDosageLabel_20.setText(QCoreApplication.translate("smartGrowGUI", u"Feed Dosage (mL)", None))
         self.lightScheduleSection_20.setTitle(QCoreApplication.translate("smartGrowGUI", u"Light Schedule", None))
         self.hoursOnLabel_20.setText(QCoreApplication.translate("smartGrowGUI", u"Hours On", None))
         self.hoursOffLabel_20.setText(QCoreApplication.translate("smartGrowGUI", u"Hours Off", None))
         self.environmentStatusSection_20.setTitle(QCoreApplication.translate("smartGrowGUI", u"Environment", None))
-        self.luminosityLabel_20.setText(QCoreApplication.translate("smartGrowGUI", u"Luminosity", None))
-        self.humidityLabel_20.setText(QCoreApplication.translate("smartGrowGUI", u"Humidity", None))
-        self.temperatureLabel_20.setText(QCoreApplication.translate("smartGrowGUI", u"Temperature", None))
+        self.luminosityLabel_20.setText(QCoreApplication.translate("smartGrowGUI", u"Luminosity (LUX)", None))
+        self.humidityLabel_20.setText(QCoreApplication.translate("smartGrowGUI", u"Humidity (%)", None))
+        self.temperatureLabel_20.setText(QCoreApplication.translate("smartGrowGUI", u"Temperature (F)", None))
         self.powerStatusSection_20.setTitle(QCoreApplication.translate("smartGrowGUI", u"Power", None))
-        self.voltageLabel_20.setText(QCoreApplication.translate("smartGrowGUI", u"Voltage", None))
-        self.ampsLabel_20.setText(QCoreApplication.translate("smartGrowGUI", u"Amps", None))
-        self.pumpStatusSection_20.setTitle(QCoreApplication.translate("smartGrowGUI", u"Pumps", None))
+        self.voltageLabel_20.setText(QCoreApplication.translate("smartGrowGUI", u"Voltage (mV)", None))
+        self.ampsLabel_20.setText(QCoreApplication.translate("smartGrowGUI", u"Amps (mA)", None))
+        self.pumpStatusSection_20.setTitle(QCoreApplication.translate("smartGrowGUI", u"Light and Pumps", None))
         self.airPumpLabel_20.setText(QCoreApplication.translate("smartGrowGUI", u"Air Pump", None))
         self.sourcePumpLabel_20.setText(QCoreApplication.translate("smartGrowGUI", u"Source Pump", None))
         self.drainPumpLabel_20.setText(QCoreApplication.translate("smartGrowGUI", u"Drain Pump", None))
         self.nutrientsPumpLabel_20.setText(QCoreApplication.translate("smartGrowGUI", u"Nutrients Pump", None))
+        self.lightStatusLabel_20.setText(QCoreApplication.translate("smartGrowGUI", u"Light Status", None))
         self.growPodNotesSection_20.setTitle(QCoreApplication.translate("smartGrowGUI", u"Notes", None))
         self.saveInitializeLaterButton_20.setText(QCoreApplication.translate("smartGrowGUI", u"Save Info, Initialize Later", None))
         self.initializeGrowPodButton_20.setText(QCoreApplication.translate("smartGrowGUI", u"Initilize Grow Pod", None))
@@ -1343,23 +1381,24 @@ class Ui_smartGrowGUI(object):
         self.plantNameLabel_30.setText(QCoreApplication.translate("smartGrowGUI", u"Plant Name", None))
         self.plantTypeLabel_30.setText(QCoreApplication.translate("smartGrowGUI", u"Plant Type", None))
         self.feedInfoSection_30.setTitle(QCoreApplication.translate("smartGrowGUI", u"Feeding Information", None))
-        self.feedScheduleLabel_30.setText(QCoreApplication.translate("smartGrowGUI", u"Feed Schedule", None))
-        self.feedDosageLabel_30.setText(QCoreApplication.translate("smartGrowGUI", u"Feed Dosage", None))
+        self.feedScheduleLabel_30.setText(QCoreApplication.translate("smartGrowGUI", u"Feed Schedule (every x hours)", None))
+        self.feedDosageLabel_30.setText(QCoreApplication.translate("smartGrowGUI", u"Feed Dosage (mL)", None))
         self.lightScheduleSection_30.setTitle(QCoreApplication.translate("smartGrowGUI", u"Light Schedule", None))
         self.hoursOnLabel_30.setText(QCoreApplication.translate("smartGrowGUI", u"Hours On", None))
         self.hoursOffLabel_30.setText(QCoreApplication.translate("smartGrowGUI", u"Hours Off", None))
         self.environmentStatusSection_30.setTitle(QCoreApplication.translate("smartGrowGUI", u"Environment", None))
-        self.luminosityLabel_30.setText(QCoreApplication.translate("smartGrowGUI", u"Luminosity", None))
-        self.humidityLabel_30.setText(QCoreApplication.translate("smartGrowGUI", u"Humidity", None))
-        self.temperatureLabel_30.setText(QCoreApplication.translate("smartGrowGUI", u"Temperature", None))
+        self.luminosityLabel_30.setText(QCoreApplication.translate("smartGrowGUI", u"Luminosity (LUX)", None))
+        self.humidityLabel_30.setText(QCoreApplication.translate("smartGrowGUI", u"Humidity (%)", None))
+        self.temperatureLabel_30.setText(QCoreApplication.translate("smartGrowGUI", u"Temperature (F)", None))
         self.powerStatusSection_30.setTitle(QCoreApplication.translate("smartGrowGUI", u"Power", None))
-        self.voltageLabel_30.setText(QCoreApplication.translate("smartGrowGUI", u"Voltage", None))
-        self.ampsLabel_30.setText(QCoreApplication.translate("smartGrowGUI", u"Amps", None))
-        self.pumpStatusSection_30.setTitle(QCoreApplication.translate("smartGrowGUI", u"Pumps", None))
+        self.voltageLabel_30.setText(QCoreApplication.translate("smartGrowGUI", u"Voltage (mV)", None))
+        self.ampsLabel_30.setText(QCoreApplication.translate("smartGrowGUI", u"Amps (mA)", None))
+        self.pumpStatusSection_30.setTitle(QCoreApplication.translate("smartGrowGUI", u"Light and Pumps", None))
         self.airPumpLabel_30.setText(QCoreApplication.translate("smartGrowGUI", u"Air Pump", None))
         self.sourcePumpLabel_30.setText(QCoreApplication.translate("smartGrowGUI", u"Source Pump", None))
         self.drainPumpLabel_30.setText(QCoreApplication.translate("smartGrowGUI", u"Drain Pump", None))
         self.nutrientsPumpLabel_30.setText(QCoreApplication.translate("smartGrowGUI", u"Nutrients Pump", None))
+        self.lightStatusLabel_30.setText(QCoreApplication.translate("smartGrowGUI", u"Light Status", None))
         self.growPodNotesSection_30.setTitle(QCoreApplication.translate("smartGrowGUI", u"Notes", None))
         self.saveInitializeLaterButton_30.setText(QCoreApplication.translate("smartGrowGUI", u"Save Info, Initialize Later", None))
         self.initializeGrowPodButton_30.setText(QCoreApplication.translate("smartGrowGUI", u"Initilize Grow Pod", None))

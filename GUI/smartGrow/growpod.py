@@ -1,5 +1,9 @@
 import json
 
+# list of available IP addresses for the grow pods
+ipAddress1 = "192.168.0.1"
+ipAddress2 = "192.168.0.2"
+ipAddress3 = "192.168.0.3"
 
 # if any of the setup fields are invalid then return 1
 def invalidSetupInfo(growPod):
@@ -39,6 +43,7 @@ class GrowPod:
     def __init__(self):
         self.uniqueID = 0
         self.ipAddress = ""
+        self.port = 80 # default port for UDP communication
         self.plantName = ""
         self.plantType = ""
         self.feedSchedule = 0
@@ -49,6 +54,7 @@ class GrowPod:
         self.temperature = 0
         self.humidity = 0
         self.voltage = 0
+        self.lightStatus = False
         self.airPump = False
         self.sourcePump = False
         self.drainPump = False
@@ -69,6 +75,7 @@ class GrowPod:
         growPodDictionary = {key:
                                  {'uniqueID': self.uniqueID,
                                   'ipAddress': self.ipAddress,
+                                  'port': self.port,
                                   'plantName': self.plantName,
                                   'plantType': self.plantType,
                                   'feedSchedule': self.feedSchedule,
@@ -79,6 +86,7 @@ class GrowPod:
                                   'temperature': self.temperature,
                                   'humidity': self.humidity,
                                   'voltage': self.voltage,
+                                  'lightStatus': self.lightStatus,
                                   'airPump': self.airPump,
                                   'sourcePump': self.sourcePump,
                                   'drainPump': self.drainPump,
@@ -91,6 +99,7 @@ class GrowPod:
     def resetGrowPod(self):
         self.uniqueID = 0
         self.ipAddress = ""
+        self.port = 80
         self.plantName = ""
         self.plantType = ""
         self.feedSchedule = 0
@@ -101,6 +110,7 @@ class GrowPod:
         self.temperature = 0
         self.humidity = 0
         self.voltage = 0
+        self.lightStatus = False
         self.airPump = False
         self.sourcePump = False
         self.drainPump = False
