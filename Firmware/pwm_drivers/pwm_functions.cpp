@@ -39,7 +39,7 @@ unsigned int turn_off_light_threshold = 10000; /* After how long to turn light o
 uint8_t dosage = 0;
 
 unsigned long time_to_fill = 35000; /* milliseconds */
-
+bool system_attention_flag = 0;
 bool tank_is_full_flag = 0;
 bool LED_status = 0;
 
@@ -332,6 +332,15 @@ void calibrate_power_draw()
 	PWM_set_percent(&LED, 100);
 	system_device_health.light_current = ina260.readCurrent();
 	reset();
+}
+
+void read_current()
+{
+	if (ina260.readCurrent() >= CURRENT_THRESHOLD)
+	{
+		reset();
+		system_attention_flag = 1;
+	}
 }
 
 /* Finds Teensy MAC address and populates local MAC address buffer (6 bytes). Sourced from:

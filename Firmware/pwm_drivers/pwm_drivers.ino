@@ -48,25 +48,33 @@ void setup() {
  
 // the loop function runs over and over again until power down or reset
 void loop() {
-	
-	/* Receive command packet*/
 
-	/* Scheduler */
-	//scheduler();
+	if (system_attention_flag)
+	{
+		Serial.printf("ERROR IN SYSTEM. CURRENT OVERDRAW PROTECTION ACTIVATED. CHECK FOR PUMP JAMS.\n");
+		reset();
+	}
+	else
+	{
+		/* Receive command packet*/
 
-	/* Send response packet*/
-	send_packet();
+		/* Scheduler */
+		//scheduler();
 
-	/* Printing timers for debugging */
+		/* Send response packet*/
+		send_packet();
+
+		/* Printing timers for debugging */
 #if DEBUG
-	Serial.print("change_water: ");
-	Serial.println(change_water);
-	Serial.print("turn_off_light: ");
-	Serial.println(turn_off_light);
-	Serial.print("turn_on_light: ");
-	Serial.println(turn_on_light);
-	Serial.println();
+		Serial.print("change_water: ");
+		Serial.println(change_water);
+		Serial.print("turn_off_light: ");
+		Serial.println(turn_off_light);
+		Serial.print("turn_on_light: ");
+		Serial.println(turn_on_light);
+		Serial.println();
 #endif
 
-	delay(1000);
+	}
+	delay(500);
 }

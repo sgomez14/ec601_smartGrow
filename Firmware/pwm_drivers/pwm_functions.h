@@ -27,6 +27,7 @@
 #define PLANTER_WATER_SENSOR_PIN 24
 #define DEBUG 1
 #define ETHERNET 0
+#define CURRENT_THRESHOLD 7000
 
 typedef struct PWM_device {
 	uint8_t pin;
@@ -79,6 +80,7 @@ extern unsigned int change_water_threshold, turn_on_light_threshold, turn_off_li
 extern bool LED_status, tank_is_full_flag; /* 1 := on, 0 := off */
 extern unsigned long time_to_fill;
 extern bool response_requested;
+extern bool system_attention_flag; /* At the start of each loop, the current draw is measured. If above a threshold, all motors turn off an an ERROR alert is sent to. Operation of the system pauses until checked. Air pump remains on, as its current source is different from the DC motors. */
 extern uint8_t dosage;
 
 extern void PWM_calibration(PWM_device *pwm_device);
@@ -93,4 +95,5 @@ void scheduler();
 void get_packet();
 void send_packet();
 void calibrate_power_draw();
+void read_current();
 void teensyMAC(uint8_t* mac);
