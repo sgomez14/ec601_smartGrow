@@ -13,9 +13,13 @@
   <property name="windowTitle">
    <string>smartGrowGUI</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>resources/icons/hydroponics2.png</normaloff>resources/icons/hydroponics2.png</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
+    <item alignment="Qt::AlignHCenter">
      <widget class="QFrame" name="header">
       <property name="minimumSize">
        <size>
@@ -51,6 +55,19 @@
        <property name="bottomMargin">
         <number>0</number>
        </property>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>100</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
        <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
         <widget class="QFrame" name="logo">
          <property name="sizePolicy">
@@ -67,10 +84,23 @@
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_4">
           <item>
+           <spacer name="horizontalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
            <widget class="QLabel" name="logoName">
             <property name="font">
              <font>
-              <pointsize>15</pointsize>
+              <pointsize>20</pointsize>
              </font>
             </property>
             <property name="text">
@@ -78,15 +108,43 @@
             </property>
            </widget>
           </item>
-          <item>
-           <widget class="QLabel" name="logoIcon">
-            <property name="text">
-             <string>Icon</string>
-            </property>
-           </widget>
-          </item>
          </layout>
         </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>60</height>
+          </size>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap>resources/icons/hydroponics2.png</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>
@@ -184,23 +242,6 @@
               <number>0</number>
              </property>
              <item>
-              <widget class="QPushButton" name="addGrowPodButton">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>200</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>  Add Grow Pod</string>
-               </property>
-               <property name="icon">
-                <iconset>
-                 <normaloff>resources/icons/plus-circle.svg</normaloff>resources/icons/plus-circle.svg</iconset>
-               </property>
-              </widget>
-             </item>
-             <item>
               <widget class="QPushButton" name="refreshGrowPodInfoButton">
                <property name="minimumSize">
                 <size>
@@ -220,6 +261,23 @@
                  <width>20</width>
                  <height>20</height>
                 </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="addGrowPodButton">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>200</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>  Add Grow Pod</string>
+               </property>
+               <property name="icon">
+                <iconset>
+                 <normaloff>resources/icons/plus-circle.svg</normaloff>resources/icons/plus-circle.svg</iconset>
                </property>
               </widget>
              </item>
@@ -320,9 +378,9 @@
                 <property name="geometry">
                  <rect>
                   <x>0</x>
-                  <y>-1211</y>
-                  <width>1250</width>
-                  <height>2053</height>
+                  <y>0</y>
+                  <width>1255</width>
+                  <height>2133</height>
                  </rect>
                 </property>
                 <property name="sizePolicy">
@@ -528,6 +586,11 @@
                                </item>
                                <item row="0" column="1">
                                 <widget class="QSpinBox" name="luminositySpinBox_1">
+                                 <property name="font">
+                                  <font>
+                                   <pointsize>10</pointsize>
+                                  </font>
+                                 </property>
                                  <property name="styleSheet">
                                   <string notr="true">background-color: Gainsboro</string>
                                  </property>
@@ -545,6 +608,11 @@
                                </item>
                                <item row="2" column="1">
                                 <widget class="QDoubleSpinBox" name="humidityDoubleSpinBox_1">
+                                 <property name="font">
+                                  <font>
+                                   <pointsize>10</pointsize>
+                                  </font>
+                                 </property>
                                  <property name="styleSheet">
                                   <string notr="true">background-color: Gainsboro</string>
                                  </property>
@@ -562,6 +630,11 @@
                                </item>
                                <item row="1" column="1">
                                 <widget class="QDoubleSpinBox" name="temperatureDoubleSpinBox_1">
+                                 <property name="font">
+                                  <font>
+                                   <pointsize>10</pointsize>
+                                  </font>
+                                 </property>
                                  <property name="styleSheet">
                                   <string notr="true">background-color: Gainsboro</string>
                                  </property>
@@ -645,6 +718,11 @@
                                </item>
                                <item row="1" column="1">
                                 <widget class="QLineEdit" name="airPumpLineEdit_1">
+                                 <property name="font">
+                                  <font>
+                                   <pointsize>10</pointsize>
+                                  </font>
+                                 </property>
                                  <property name="styleSheet">
                                   <string notr="true">background-color: Gainsboro</string>
                                  </property>
@@ -662,6 +740,11 @@
                                </item>
                                <item row="2" column="1">
                                 <widget class="QLineEdit" name="sourcePumpLineEdit_1">
+                                 <property name="font">
+                                  <font>
+                                   <pointsize>10</pointsize>
+                                  </font>
+                                 </property>
                                  <property name="styleSheet">
                                   <string notr="true">background-color: Gainsboro</string>
                                  </property>
@@ -679,6 +762,11 @@
                                </item>
                                <item row="3" column="1">
                                 <widget class="QLineEdit" name="drainPumpLineEdit_1">
+                                 <property name="font">
+                                  <font>
+                                   <pointsize>10</pointsize>
+                                  </font>
+                                 </property>
                                  <property name="styleSheet">
                                   <string notr="true">background-color: Gainsboro</string>
                                  </property>
@@ -696,6 +784,11 @@
                                </item>
                                <item row="4" column="1">
                                 <widget class="QLineEdit" name="nutrientsPumpLineEdit_1">
+                                 <property name="font">
+                                  <font>
+                                   <pointsize>10</pointsize>
+                                  </font>
+                                 </property>
                                  <property name="styleSheet">
                                   <string notr="true">background-color: Gainsboro</string>
                                  </property>
@@ -713,6 +806,11 @@
                                </item>
                                <item row="0" column="1">
                                 <widget class="QLineEdit" name="lightStatusLineEdit_1">
+                                 <property name="font">
+                                  <font>
+                                   <pointsize>10</pointsize>
+                                  </font>
+                                 </property>
                                  <property name="styleSheet">
                                   <string notr="true">background-color: Gainsboro</string>
                                  </property>
@@ -804,6 +902,20 @@
                         <widget class="QPushButton" name="editButton_1">
                          <property name="text">
                           <string>Edit</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="2" column="0">
+                        <widget class="QPushButton" name="enableResetButton_1">
+                         <property name="text">
+                          <string>Enable Reset Button</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="2" column="1">
+                        <widget class="QPushButton" name="resetGrowPodButton_1">
+                         <property name="text">
+                          <string>Reset Grow Pod</string>
                          </property>
                         </widget>
                        </item>
@@ -1007,6 +1119,13 @@
                                </item>
                                <item row="0" column="1">
                                 <widget class="QSpinBox" name="luminositySpinBox_20">
+                                 <property name="font">
+                                  <font>
+                                   <pointsize>10</pointsize>
+                                   <weight>50</weight>
+                                   <bold>false</bold>
+                                  </font>
+                                 </property>
                                  <property name="styleSheet">
                                   <string notr="true">background-color: Gainsboro</string>
                                  </property>
@@ -1024,6 +1143,13 @@
                                </item>
                                <item row="2" column="1">
                                 <widget class="QDoubleSpinBox" name="humidityDoubleSpinBox_20">
+                                 <property name="font">
+                                  <font>
+                                   <pointsize>10</pointsize>
+                                   <weight>50</weight>
+                                   <bold>false</bold>
+                                  </font>
+                                 </property>
                                  <property name="styleSheet">
                                   <string notr="true">background-color: Gainsboro</string>
                                  </property>
@@ -1041,6 +1167,13 @@
                                </item>
                                <item row="1" column="1">
                                 <widget class="QDoubleSpinBox" name="temperatureDoubleSpinBox_20">
+                                 <property name="font">
+                                  <font>
+                                   <pointsize>10</pointsize>
+                                   <weight>50</weight>
+                                   <bold>false</bold>
+                                  </font>
+                                 </property>
                                  <property name="styleSheet">
                                   <string notr="true">background-color: Gainsboro</string>
                                  </property>
@@ -1071,6 +1204,13 @@
                                </item>
                                <item row="0" column="1">
                                 <widget class="QDoubleSpinBox" name="voltageDoubleSpinBox_20">
+                                 <property name="font">
+                                  <font>
+                                   <pointsize>10</pointsize>
+                                   <weight>50</weight>
+                                   <bold>false</bold>
+                                  </font>
+                                 </property>
                                  <property name="styleSheet">
                                   <string notr="true">background-color: Gainsboro</string>
                                  </property>
@@ -1088,6 +1228,13 @@
                                </item>
                                <item row="1" column="1">
                                 <widget class="QDoubleSpinBox" name="ampsDoubleSpinBox_20">
+                                 <property name="font">
+                                  <font>
+                                   <pointsize>10</pointsize>
+                                   <weight>50</weight>
+                                   <bold>false</bold>
+                                  </font>
+                                 </property>
                                  <property name="styleSheet">
                                   <string notr="true">background-color: Gainsboro</string>
                                  </property>
@@ -1124,6 +1271,13 @@
                                </item>
                                <item row="1" column="1">
                                 <widget class="QLineEdit" name="airPumpLineEdit_20">
+                                 <property name="font">
+                                  <font>
+                                   <pointsize>10</pointsize>
+                                   <weight>50</weight>
+                                   <bold>false</bold>
+                                  </font>
+                                 </property>
                                  <property name="styleSheet">
                                   <string notr="true">background-color: Gainsboro</string>
                                  </property>
@@ -1141,6 +1295,13 @@
                                </item>
                                <item row="2" column="1">
                                 <widget class="QLineEdit" name="sourcePumpLineEdit_20">
+                                 <property name="font">
+                                  <font>
+                                   <pointsize>10</pointsize>
+                                   <weight>50</weight>
+                                   <bold>false</bold>
+                                  </font>
+                                 </property>
                                  <property name="styleSheet">
                                   <string notr="true">background-color: Gainsboro</string>
                                  </property>
@@ -1158,6 +1319,13 @@
                                </item>
                                <item row="3" column="1">
                                 <widget class="QLineEdit" name="drainPumpLineEdit_20">
+                                 <property name="font">
+                                  <font>
+                                   <pointsize>10</pointsize>
+                                   <weight>50</weight>
+                                   <bold>false</bold>
+                                  </font>
+                                 </property>
                                  <property name="styleSheet">
                                   <string notr="true">background-color: Gainsboro</string>
                                  </property>
@@ -1175,6 +1343,13 @@
                                </item>
                                <item row="4" column="1">
                                 <widget class="QLineEdit" name="nutrientsPumpLineEdit_20">
+                                 <property name="font">
+                                  <font>
+                                   <pointsize>10</pointsize>
+                                   <weight>50</weight>
+                                   <bold>false</bold>
+                                  </font>
+                                 </property>
                                  <property name="styleSheet">
                                   <string notr="true">background-color: Gainsboro</string>
                                  </property>
@@ -1192,6 +1367,13 @@
                                </item>
                                <item row="0" column="1">
                                 <widget class="QLineEdit" name="lightStatusLineEdit_20">
+                                 <property name="font">
+                                  <font>
+                                   <pointsize>10</pointsize>
+                                   <weight>50</weight>
+                                   <bold>false</bold>
+                                  </font>
+                                 </property>
                                  <property name="styleSheet">
                                   <string notr="true">background-color: Gainsboro</string>
                                  </property>
@@ -1285,6 +1467,20 @@
                         <widget class="QPushButton" name="saveInfoButton_20">
                          <property name="text">
                           <string>Save Info</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="2" column="0">
+                        <widget class="QPushButton" name="enableResetButton_20">
+                         <property name="text">
+                          <string>Enable Reset Button</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="2" column="1">
+                        <widget class="QPushButton" name="resetGrowPodButton_20">
+                         <property name="text">
+                          <string>Reset Grow Pod</string>
                          </property>
                         </widget>
                        </item>
@@ -1431,6 +1627,11 @@
                                </item>
                                <item row="0" column="1">
                                 <widget class="QSpinBox" name="hoursOnSpinBox_30">
+                                 <property name="font">
+                                  <font>
+                                   <pointsize>10</pointsize>
+                                  </font>
+                                 </property>
                                  <property name="styleSheet">
                                   <string notr="true"/>
                                  </property>
@@ -1448,6 +1649,11 @@
                                </item>
                                <item row="1" column="1">
                                 <widget class="QSpinBox" name="hoursOffSpinBox_30">
+                                 <property name="font">
+                                  <font>
+                                   <pointsize>10</pointsize>
+                                  </font>
+                                 </property>
                                  <property name="styleSheet">
                                   <string notr="true"/>
                                  </property>
@@ -1490,6 +1696,11 @@
                                </item>
                                <item row="0" column="1">
                                 <widget class="QSpinBox" name="luminositySpinBox_30">
+                                 <property name="font">
+                                  <font>
+                                   <pointsize>10</pointsize>
+                                  </font>
+                                 </property>
                                  <property name="styleSheet">
                                   <string notr="true">background-color: Gainsboro</string>
                                  </property>
@@ -1507,6 +1718,11 @@
                                </item>
                                <item row="2" column="1">
                                 <widget class="QDoubleSpinBox" name="humidityDoubleSpinBox_30">
+                                 <property name="font">
+                                  <font>
+                                   <pointsize>10</pointsize>
+                                  </font>
+                                 </property>
                                  <property name="styleSheet">
                                   <string notr="true">background-color: Gainsboro</string>
                                  </property>
@@ -1524,6 +1740,11 @@
                                </item>
                                <item row="1" column="1">
                                 <widget class="QDoubleSpinBox" name="temperatureDoubleSpinBox_30">
+                                 <property name="font">
+                                  <font>
+                                   <pointsize>10</pointsize>
+                                  </font>
+                                 </property>
                                  <property name="styleSheet">
                                   <string notr="true">background-color: Gainsboro</string>
                                  </property>
@@ -1554,6 +1775,11 @@
                                </item>
                                <item row="0" column="1">
                                 <widget class="QDoubleSpinBox" name="voltageDoubleSpinBox_30">
+                                 <property name="font">
+                                  <font>
+                                   <pointsize>10</pointsize>
+                                  </font>
+                                 </property>
                                  <property name="styleSheet">
                                   <string notr="true">background-color: Gainsboro</string>
                                  </property>
@@ -1571,6 +1797,11 @@
                                </item>
                                <item row="1" column="1">
                                 <widget class="QDoubleSpinBox" name="ampsDoubleSpinBox_30">
+                                 <property name="font">
+                                  <font>
+                                   <pointsize>10</pointsize>
+                                  </font>
+                                 </property>
                                  <property name="styleSheet">
                                   <string notr="true">background-color: Gainsboro</string>
                                  </property>
@@ -1607,6 +1838,11 @@
                                </item>
                                <item row="1" column="1">
                                 <widget class="QLineEdit" name="airPumpLineEdit_30">
+                                 <property name="font">
+                                  <font>
+                                   <pointsize>10</pointsize>
+                                  </font>
+                                 </property>
                                  <property name="styleSheet">
                                   <string notr="true">background-color: Gainsboro</string>
                                  </property>
@@ -1624,6 +1860,11 @@
                                </item>
                                <item row="2" column="1">
                                 <widget class="QLineEdit" name="sourcePumpLineEdit_30">
+                                 <property name="font">
+                                  <font>
+                                   <pointsize>10</pointsize>
+                                  </font>
+                                 </property>
                                  <property name="styleSheet">
                                   <string notr="true">background-color: Gainsboro</string>
                                  </property>
@@ -1641,6 +1882,11 @@
                                </item>
                                <item row="3" column="1">
                                 <widget class="QLineEdit" name="drainPumpLineEdit_30">
+                                 <property name="font">
+                                  <font>
+                                   <pointsize>10</pointsize>
+                                  </font>
+                                 </property>
                                  <property name="styleSheet">
                                   <string notr="true">background-color: Gainsboro</string>
                                  </property>
@@ -1658,6 +1904,11 @@
                                </item>
                                <item row="4" column="1">
                                 <widget class="QLineEdit" name="nutrientsPumpLineEdit_30">
+                                 <property name="font">
+                                  <font>
+                                   <pointsize>10</pointsize>
+                                  </font>
+                                 </property>
                                  <property name="styleSheet">
                                   <string notr="true">background-color: Gainsboro</string>
                                  </property>
@@ -1675,6 +1926,11 @@
                                </item>
                                <item row="0" column="1">
                                 <widget class="QLineEdit" name="lightStatusLineEdit_30">
+                                 <property name="font">
+                                  <font>
+                                   <pointsize>10</pointsize>
+                                  </font>
+                                 </property>
                                  <property name="styleSheet">
                                   <string notr="true">background-color: Gainsboro</string>
                                  </property>
@@ -1738,6 +1994,13 @@
                        <enum>QFrame::Raised</enum>
                       </property>
                       <layout class="QGridLayout" name="gridLayout_9">
+                       <item row="1" column="1">
+                        <widget class="QPushButton" name="saveInfoButton_30">
+                         <property name="text">
+                          <string>Save Info</string>
+                         </property>
+                        </widget>
+                       </item>
                        <item row="0" column="1">
                         <widget class="QPushButton" name="saveInitializeLaterButton_30">
                          <property name="text">
@@ -1762,10 +2025,17 @@
                          </property>
                         </widget>
                        </item>
-                       <item row="1" column="1">
-                        <widget class="QPushButton" name="saveInfoButton_30">
+                       <item row="2" column="0">
+                        <widget class="QPushButton" name="enableResetButton_30">
                          <property name="text">
-                          <string>Save Info</string>
+                          <string>Enable Reset Button</string>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="2" column="1">
+                        <widget class="QPushButton" name="resetGrowPodButton_30">
+                         <property name="text">
+                          <string>Reset Grow Pod</string>
                          </property>
                         </widget>
                        </item>
@@ -1843,7 +2113,25 @@
                  <number>0</number>
                 </property>
                 <item>
-                 <widget class="QTextEdit" name="messageAreaText"/>
+                 <widget class="QLabel" name="messageAreaLabel">
+                  <property name="font">
+                   <font>
+                    <pointsize>16</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Messages</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QTextEdit" name="messageAreaText">
+                  <property name="font">
+                   <font>
+                    <pointsize>9</pointsize>
+                   </font>
+                  </property>
+                 </widget>
                 </item>
                </layout>
               </widget>

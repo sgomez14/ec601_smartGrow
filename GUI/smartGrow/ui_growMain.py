@@ -18,14 +18,17 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QDoubleSpinBox, QFormLayout, QFrame,
     QGridLayout, QGroupBox, QHBoxLayout, QLabel,
     QLayout, QLineEdit, QMainWindow, QPushButton,
-    QScrollArea, QSizePolicy, QSpinBox, QStatusBar,
-    QTextEdit, QVBoxLayout, QWidget)
+    QScrollArea, QSizePolicy, QSpacerItem, QSpinBox,
+    QStatusBar, QTextEdit, QVBoxLayout, QWidget)
 
 class Ui_smartGrowGUI(object):
     def setupUi(self, smartGrowGUI):
         if not smartGrowGUI.objectName():
             smartGrowGUI.setObjectName(u"smartGrowGUI")
         smartGrowGUI.resize(1500, 800)
+        icon = QIcon()
+        icon.addFile(u"resources/icons/hydroponics2.png", QSize(), QIcon.Normal, QIcon.Off)
+        smartGrowGUI.setWindowIcon(icon)
         self.centralwidget = QWidget(smartGrowGUI)
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayout = QVBoxLayout(self.centralwidget)
@@ -40,6 +43,10 @@ class Ui_smartGrowGUI(object):
         self.horizontalLayout_3.setSpacing(0)
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.horizontalSpacer_2 = QSpacerItem(100, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_3.addItem(self.horizontalSpacer_2)
+
         self.logo = QFrame(self.header)
         self.logo.setObjectName(u"logo")
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
@@ -51,24 +58,36 @@ class Ui_smartGrowGUI(object):
         self.logo.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_4 = QHBoxLayout(self.logo)
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
+        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_4.addItem(self.horizontalSpacer_3)
+
         self.logoName = QLabel(self.logo)
         self.logoName.setObjectName(u"logoName")
         font = QFont()
-        font.setPointSize(15)
+        font.setPointSize(20)
         self.logoName.setFont(font)
 
         self.horizontalLayout_4.addWidget(self.logoName)
 
-        self.logoIcon = QLabel(self.logo)
-        self.logoIcon.setObjectName(u"logoIcon")
-
-        self.horizontalLayout_4.addWidget(self.logoIcon)
-
 
         self.horizontalLayout_3.addWidget(self.logo, 0, Qt.AlignHCenter|Qt.AlignVCenter)
 
+        self.label = QLabel(self.header)
+        self.label.setObjectName(u"label")
+        self.label.setMaximumSize(QSize(60, 60))
+        self.label.setPixmap(QPixmap(u"resources/icons/hydroponics2.png"))
+        self.label.setScaledContents(True)
+        self.label.setAlignment(Qt.AlignBottom|Qt.AlignLeading|Qt.AlignLeft)
 
-        self.verticalLayout.addWidget(self.header)
+        self.horizontalLayout_3.addWidget(self.label)
+
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_3.addItem(self.horizontalSpacer)
+
+
+        self.verticalLayout.addWidget(self.header, 0, Qt.AlignHCenter)
 
         self.body = QFrame(self.centralwidget)
         self.body.setObjectName(u"body")
@@ -105,15 +124,6 @@ class Ui_smartGrowGUI(object):
         self.verticalLayout_4.setSpacing(0)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
-        self.addGrowPodButton = QPushButton(self.sideButtons)
-        self.addGrowPodButton.setObjectName(u"addGrowPodButton")
-        self.addGrowPodButton.setMinimumSize(QSize(0, 200))
-        icon = QIcon()
-        icon.addFile(u"resources/icons/plus-circle.svg", QSize(), QIcon.Normal, QIcon.Off)
-        self.addGrowPodButton.setIcon(icon)
-
-        self.verticalLayout_4.addWidget(self.addGrowPodButton)
-
         self.refreshGrowPodInfoButton = QPushButton(self.sideButtons)
         self.refreshGrowPodInfoButton.setObjectName(u"refreshGrowPodInfoButton")
         self.refreshGrowPodInfoButton.setMinimumSize(QSize(0, 200))
@@ -123,6 +133,15 @@ class Ui_smartGrowGUI(object):
         self.refreshGrowPodInfoButton.setIconSize(QSize(20, 20))
 
         self.verticalLayout_4.addWidget(self.refreshGrowPodInfoButton)
+
+        self.addGrowPodButton = QPushButton(self.sideButtons)
+        self.addGrowPodButton.setObjectName(u"addGrowPodButton")
+        self.addGrowPodButton.setMinimumSize(QSize(0, 200))
+        icon2 = QIcon()
+        icon2.addFile(u"resources/icons/plus-circle.svg", QSize(), QIcon.Normal, QIcon.Off)
+        self.addGrowPodButton.setIcon(icon2)
+
+        self.verticalLayout_4.addWidget(self.addGrowPodButton)
 
 
         self.verticalLayout_3.addWidget(self.sideButtons)
@@ -167,7 +186,7 @@ class Ui_smartGrowGUI(object):
         self.statusScrollArea.setWidgetResizable(True)
         self.statusGrid = QWidget()
         self.statusGrid.setObjectName(u"statusGrid")
-        self.statusGrid.setGeometry(QRect(0, -1211, 1250, 2053))
+        self.statusGrid.setGeometry(QRect(0, 0, 1255, 2133))
         sizePolicy.setHeightForWidth(self.statusGrid.sizePolicy().hasHeightForWidth())
         self.statusGrid.setSizePolicy(sizePolicy)
         self.statusGrid.setMinimumSize(QSize(0, 0))
@@ -321,6 +340,7 @@ class Ui_smartGrowGUI(object):
 
         self.luminositySpinBox_1 = QSpinBox(self.environmentStatusSection_1)
         self.luminositySpinBox_1.setObjectName(u"luminositySpinBox_1")
+        self.luminositySpinBox_1.setFont(font4)
         self.luminositySpinBox_1.setStyleSheet(u"background-color: Gainsboro")
         self.luminositySpinBox_1.setReadOnly(True)
 
@@ -333,6 +353,7 @@ class Ui_smartGrowGUI(object):
 
         self.humidityDoubleSpinBox_1 = QDoubleSpinBox(self.environmentStatusSection_1)
         self.humidityDoubleSpinBox_1.setObjectName(u"humidityDoubleSpinBox_1")
+        self.humidityDoubleSpinBox_1.setFont(font4)
         self.humidityDoubleSpinBox_1.setStyleSheet(u"background-color: Gainsboro")
         self.humidityDoubleSpinBox_1.setReadOnly(True)
 
@@ -345,6 +366,7 @@ class Ui_smartGrowGUI(object):
 
         self.temperatureDoubleSpinBox_1 = QDoubleSpinBox(self.environmentStatusSection_1)
         self.temperatureDoubleSpinBox_1.setObjectName(u"temperatureDoubleSpinBox_1")
+        self.temperatureDoubleSpinBox_1.setFont(font4)
         self.temperatureDoubleSpinBox_1.setStyleSheet(u"background-color: Gainsboro")
         self.temperatureDoubleSpinBox_1.setReadOnly(True)
 
@@ -407,6 +429,7 @@ class Ui_smartGrowGUI(object):
 
         self.airPumpLineEdit_1 = QLineEdit(self.pumpStatusSection_1)
         self.airPumpLineEdit_1.setObjectName(u"airPumpLineEdit_1")
+        self.airPumpLineEdit_1.setFont(font4)
         self.airPumpLineEdit_1.setStyleSheet(u"background-color: Gainsboro")
         self.airPumpLineEdit_1.setReadOnly(True)
 
@@ -419,6 +442,7 @@ class Ui_smartGrowGUI(object):
 
         self.sourcePumpLineEdit_1 = QLineEdit(self.pumpStatusSection_1)
         self.sourcePumpLineEdit_1.setObjectName(u"sourcePumpLineEdit_1")
+        self.sourcePumpLineEdit_1.setFont(font4)
         self.sourcePumpLineEdit_1.setStyleSheet(u"background-color: Gainsboro")
         self.sourcePumpLineEdit_1.setReadOnly(True)
 
@@ -431,6 +455,7 @@ class Ui_smartGrowGUI(object):
 
         self.drainPumpLineEdit_1 = QLineEdit(self.pumpStatusSection_1)
         self.drainPumpLineEdit_1.setObjectName(u"drainPumpLineEdit_1")
+        self.drainPumpLineEdit_1.setFont(font4)
         self.drainPumpLineEdit_1.setStyleSheet(u"background-color: Gainsboro")
         self.drainPumpLineEdit_1.setReadOnly(True)
 
@@ -443,6 +468,7 @@ class Ui_smartGrowGUI(object):
 
         self.nutrientsPumpLineEdit_1 = QLineEdit(self.pumpStatusSection_1)
         self.nutrientsPumpLineEdit_1.setObjectName(u"nutrientsPumpLineEdit_1")
+        self.nutrientsPumpLineEdit_1.setFont(font4)
         self.nutrientsPumpLineEdit_1.setStyleSheet(u"background-color: Gainsboro")
         self.nutrientsPumpLineEdit_1.setReadOnly(True)
 
@@ -455,6 +481,7 @@ class Ui_smartGrowGUI(object):
 
         self.lightStatusLineEdit_1 = QLineEdit(self.pumpStatusSection_1)
         self.lightStatusLineEdit_1.setObjectName(u"lightStatusLineEdit_1")
+        self.lightStatusLineEdit_1.setFont(font4)
         self.lightStatusLineEdit_1.setStyleSheet(u"background-color: Gainsboro")
         self.lightStatusLineEdit_1.setReadOnly(True)
 
@@ -520,6 +547,16 @@ class Ui_smartGrowGUI(object):
         self.editButton_1.setObjectName(u"editButton_1")
 
         self.gridLayout_7.addWidget(self.editButton_1, 1, 0, 1, 1)
+
+        self.enableResetButton_1 = QPushButton(self.growStatusControlButtons_1)
+        self.enableResetButton_1.setObjectName(u"enableResetButton_1")
+
+        self.gridLayout_7.addWidget(self.enableResetButton_1, 2, 0, 1, 1)
+
+        self.resetGrowPodButton_1 = QPushButton(self.growStatusControlButtons_1)
+        self.resetGrowPodButton_1.setObjectName(u"resetGrowPodButton_1")
+
+        self.gridLayout_7.addWidget(self.resetGrowPodButton_1, 2, 1, 1, 1)
 
 
         self.verticalLayout_63.addWidget(self.growStatusControlButtons_1)
@@ -677,6 +714,7 @@ class Ui_smartGrowGUI(object):
 
         self.luminositySpinBox_20 = QSpinBox(self.environmentStatusSection_20)
         self.luminositySpinBox_20.setObjectName(u"luminositySpinBox_20")
+        self.luminositySpinBox_20.setFont(font6)
         self.luminositySpinBox_20.setStyleSheet(u"background-color: Gainsboro")
         self.luminositySpinBox_20.setReadOnly(True)
 
@@ -689,6 +727,7 @@ class Ui_smartGrowGUI(object):
 
         self.humidityDoubleSpinBox_20 = QDoubleSpinBox(self.environmentStatusSection_20)
         self.humidityDoubleSpinBox_20.setObjectName(u"humidityDoubleSpinBox_20")
+        self.humidityDoubleSpinBox_20.setFont(font6)
         self.humidityDoubleSpinBox_20.setStyleSheet(u"background-color: Gainsboro")
         self.humidityDoubleSpinBox_20.setReadOnly(True)
 
@@ -701,6 +740,7 @@ class Ui_smartGrowGUI(object):
 
         self.temperatureDoubleSpinBox_20 = QDoubleSpinBox(self.environmentStatusSection_20)
         self.temperatureDoubleSpinBox_20.setObjectName(u"temperatureDoubleSpinBox_20")
+        self.temperatureDoubleSpinBox_20.setFont(font6)
         self.temperatureDoubleSpinBox_20.setStyleSheet(u"background-color: Gainsboro")
         self.temperatureDoubleSpinBox_20.setReadOnly(True)
 
@@ -725,6 +765,7 @@ class Ui_smartGrowGUI(object):
 
         self.voltageDoubleSpinBox_20 = QDoubleSpinBox(self.powerStatusSection_20)
         self.voltageDoubleSpinBox_20.setObjectName(u"voltageDoubleSpinBox_20")
+        self.voltageDoubleSpinBox_20.setFont(font6)
         self.voltageDoubleSpinBox_20.setStyleSheet(u"background-color: Gainsboro")
         self.voltageDoubleSpinBox_20.setReadOnly(True)
 
@@ -737,6 +778,7 @@ class Ui_smartGrowGUI(object):
 
         self.ampsDoubleSpinBox_20 = QDoubleSpinBox(self.powerStatusSection_20)
         self.ampsDoubleSpinBox_20.setObjectName(u"ampsDoubleSpinBox_20")
+        self.ampsDoubleSpinBox_20.setFont(font6)
         self.ampsDoubleSpinBox_20.setStyleSheet(u"background-color: Gainsboro")
         self.ampsDoubleSpinBox_20.setReadOnly(True)
 
@@ -763,6 +805,7 @@ class Ui_smartGrowGUI(object):
 
         self.airPumpLineEdit_20 = QLineEdit(self.pumpStatusSection_20)
         self.airPumpLineEdit_20.setObjectName(u"airPumpLineEdit_20")
+        self.airPumpLineEdit_20.setFont(font6)
         self.airPumpLineEdit_20.setStyleSheet(u"background-color: Gainsboro")
         self.airPumpLineEdit_20.setReadOnly(True)
 
@@ -775,6 +818,7 @@ class Ui_smartGrowGUI(object):
 
         self.sourcePumpLineEdit_20 = QLineEdit(self.pumpStatusSection_20)
         self.sourcePumpLineEdit_20.setObjectName(u"sourcePumpLineEdit_20")
+        self.sourcePumpLineEdit_20.setFont(font6)
         self.sourcePumpLineEdit_20.setStyleSheet(u"background-color: Gainsboro")
         self.sourcePumpLineEdit_20.setReadOnly(True)
 
@@ -787,6 +831,7 @@ class Ui_smartGrowGUI(object):
 
         self.drainPumpLineEdit_20 = QLineEdit(self.pumpStatusSection_20)
         self.drainPumpLineEdit_20.setObjectName(u"drainPumpLineEdit_20")
+        self.drainPumpLineEdit_20.setFont(font6)
         self.drainPumpLineEdit_20.setStyleSheet(u"background-color: Gainsboro")
         self.drainPumpLineEdit_20.setReadOnly(True)
 
@@ -799,6 +844,7 @@ class Ui_smartGrowGUI(object):
 
         self.nutrientsPumpLineEdit_20 = QLineEdit(self.pumpStatusSection_20)
         self.nutrientsPumpLineEdit_20.setObjectName(u"nutrientsPumpLineEdit_20")
+        self.nutrientsPumpLineEdit_20.setFont(font6)
         self.nutrientsPumpLineEdit_20.setStyleSheet(u"background-color: Gainsboro")
         self.nutrientsPumpLineEdit_20.setReadOnly(True)
 
@@ -811,6 +857,7 @@ class Ui_smartGrowGUI(object):
 
         self.lightStatusLineEdit_20 = QLineEdit(self.pumpStatusSection_20)
         self.lightStatusLineEdit_20.setObjectName(u"lightStatusLineEdit_20")
+        self.lightStatusLineEdit_20.setFont(font6)
         self.lightStatusLineEdit_20.setStyleSheet(u"background-color: Gainsboro")
         self.lightStatusLineEdit_20.setReadOnly(True)
 
@@ -876,6 +923,16 @@ class Ui_smartGrowGUI(object):
         self.saveInfoButton_20.setObjectName(u"saveInfoButton_20")
 
         self.gridLayout_8.addWidget(self.saveInfoButton_20, 1, 1, 1, 1)
+
+        self.enableResetButton_20 = QPushButton(self.growStatusControlButtons_20)
+        self.enableResetButton_20.setObjectName(u"enableResetButton_20")
+
+        self.gridLayout_8.addWidget(self.enableResetButton_20, 2, 0, 1, 1)
+
+        self.resetGrowPodButton_20 = QPushButton(self.growStatusControlButtons_20)
+        self.resetGrowPodButton_20.setObjectName(u"resetGrowPodButton_20")
+
+        self.gridLayout_8.addWidget(self.resetGrowPodButton_20, 2, 1, 1, 1)
 
 
         self.verticalLayout_75.addWidget(self.growStatusControlButtons_20)
@@ -984,6 +1041,7 @@ class Ui_smartGrowGUI(object):
 
         self.hoursOnSpinBox_30 = QSpinBox(self.lightScheduleSection_30)
         self.hoursOnSpinBox_30.setObjectName(u"hoursOnSpinBox_30")
+        self.hoursOnSpinBox_30.setFont(font4)
         self.hoursOnSpinBox_30.setStyleSheet(u"")
         self.hoursOnSpinBox_30.setReadOnly(False)
 
@@ -996,6 +1054,7 @@ class Ui_smartGrowGUI(object):
 
         self.hoursOffSpinBox_30 = QSpinBox(self.lightScheduleSection_30)
         self.hoursOffSpinBox_30.setObjectName(u"hoursOffSpinBox_30")
+        self.hoursOffSpinBox_30.setFont(font4)
         self.hoursOffSpinBox_30.setStyleSheet(u"")
         self.hoursOffSpinBox_30.setReadOnly(False)
 
@@ -1029,6 +1088,7 @@ class Ui_smartGrowGUI(object):
 
         self.luminositySpinBox_30 = QSpinBox(self.environmentStatusSection_30)
         self.luminositySpinBox_30.setObjectName(u"luminositySpinBox_30")
+        self.luminositySpinBox_30.setFont(font4)
         self.luminositySpinBox_30.setStyleSheet(u"background-color: Gainsboro")
         self.luminositySpinBox_30.setReadOnly(True)
 
@@ -1041,6 +1101,7 @@ class Ui_smartGrowGUI(object):
 
         self.humidityDoubleSpinBox_30 = QDoubleSpinBox(self.environmentStatusSection_30)
         self.humidityDoubleSpinBox_30.setObjectName(u"humidityDoubleSpinBox_30")
+        self.humidityDoubleSpinBox_30.setFont(font4)
         self.humidityDoubleSpinBox_30.setStyleSheet(u"background-color: Gainsboro")
         self.humidityDoubleSpinBox_30.setReadOnly(True)
 
@@ -1053,6 +1114,7 @@ class Ui_smartGrowGUI(object):
 
         self.temperatureDoubleSpinBox_30 = QDoubleSpinBox(self.environmentStatusSection_30)
         self.temperatureDoubleSpinBox_30.setObjectName(u"temperatureDoubleSpinBox_30")
+        self.temperatureDoubleSpinBox_30.setFont(font4)
         self.temperatureDoubleSpinBox_30.setStyleSheet(u"background-color: Gainsboro")
         self.temperatureDoubleSpinBox_30.setReadOnly(True)
 
@@ -1077,6 +1139,7 @@ class Ui_smartGrowGUI(object):
 
         self.voltageDoubleSpinBox_30 = QDoubleSpinBox(self.powerStatusSection_30)
         self.voltageDoubleSpinBox_30.setObjectName(u"voltageDoubleSpinBox_30")
+        self.voltageDoubleSpinBox_30.setFont(font4)
         self.voltageDoubleSpinBox_30.setStyleSheet(u"background-color: Gainsboro")
         self.voltageDoubleSpinBox_30.setReadOnly(True)
 
@@ -1089,6 +1152,7 @@ class Ui_smartGrowGUI(object):
 
         self.ampsDoubleSpinBox_30 = QDoubleSpinBox(self.powerStatusSection_30)
         self.ampsDoubleSpinBox_30.setObjectName(u"ampsDoubleSpinBox_30")
+        self.ampsDoubleSpinBox_30.setFont(font4)
         self.ampsDoubleSpinBox_30.setStyleSheet(u"background-color: Gainsboro")
         self.ampsDoubleSpinBox_30.setReadOnly(True)
 
@@ -1115,6 +1179,7 @@ class Ui_smartGrowGUI(object):
 
         self.airPumpLineEdit_30 = QLineEdit(self.pumpStatusSection_30)
         self.airPumpLineEdit_30.setObjectName(u"airPumpLineEdit_30")
+        self.airPumpLineEdit_30.setFont(font4)
         self.airPumpLineEdit_30.setStyleSheet(u"background-color: Gainsboro")
         self.airPumpLineEdit_30.setReadOnly(True)
 
@@ -1127,6 +1192,7 @@ class Ui_smartGrowGUI(object):
 
         self.sourcePumpLineEdit_30 = QLineEdit(self.pumpStatusSection_30)
         self.sourcePumpLineEdit_30.setObjectName(u"sourcePumpLineEdit_30")
+        self.sourcePumpLineEdit_30.setFont(font4)
         self.sourcePumpLineEdit_30.setStyleSheet(u"background-color: Gainsboro")
         self.sourcePumpLineEdit_30.setReadOnly(True)
 
@@ -1139,6 +1205,7 @@ class Ui_smartGrowGUI(object):
 
         self.drainPumpLineEdit_30 = QLineEdit(self.pumpStatusSection_30)
         self.drainPumpLineEdit_30.setObjectName(u"drainPumpLineEdit_30")
+        self.drainPumpLineEdit_30.setFont(font4)
         self.drainPumpLineEdit_30.setStyleSheet(u"background-color: Gainsboro")
         self.drainPumpLineEdit_30.setReadOnly(True)
 
@@ -1151,6 +1218,7 @@ class Ui_smartGrowGUI(object):
 
         self.nutrientsPumpLineEdit_30 = QLineEdit(self.pumpStatusSection_30)
         self.nutrientsPumpLineEdit_30.setObjectName(u"nutrientsPumpLineEdit_30")
+        self.nutrientsPumpLineEdit_30.setFont(font4)
         self.nutrientsPumpLineEdit_30.setStyleSheet(u"background-color: Gainsboro")
         self.nutrientsPumpLineEdit_30.setReadOnly(True)
 
@@ -1163,6 +1231,7 @@ class Ui_smartGrowGUI(object):
 
         self.lightStatusLineEdit_30 = QLineEdit(self.pumpStatusSection_30)
         self.lightStatusLineEdit_30.setObjectName(u"lightStatusLineEdit_30")
+        self.lightStatusLineEdit_30.setFont(font4)
         self.lightStatusLineEdit_30.setStyleSheet(u"background-color: Gainsboro")
         self.lightStatusLineEdit_30.setReadOnly(True)
 
@@ -1209,6 +1278,11 @@ class Ui_smartGrowGUI(object):
         self.growStatusControlButtons_30.setFrameShadow(QFrame.Raised)
         self.gridLayout_9 = QGridLayout(self.growStatusControlButtons_30)
         self.gridLayout_9.setObjectName(u"gridLayout_9")
+        self.saveInfoButton_30 = QPushButton(self.growStatusControlButtons_30)
+        self.saveInfoButton_30.setObjectName(u"saveInfoButton_30")
+
+        self.gridLayout_9.addWidget(self.saveInfoButton_30, 1, 1, 1, 1)
+
         self.saveInitializeLaterButton_30 = QPushButton(self.growStatusControlButtons_30)
         self.saveInitializeLaterButton_30.setObjectName(u"saveInitializeLaterButton_30")
 
@@ -1224,10 +1298,15 @@ class Ui_smartGrowGUI(object):
 
         self.gridLayout_9.addWidget(self.editButton_30, 1, 0, 1, 1)
 
-        self.saveInfoButton_30 = QPushButton(self.growStatusControlButtons_30)
-        self.saveInfoButton_30.setObjectName(u"saveInfoButton_30")
+        self.enableResetButton_30 = QPushButton(self.growStatusControlButtons_30)
+        self.enableResetButton_30.setObjectName(u"enableResetButton_30")
 
-        self.gridLayout_9.addWidget(self.saveInfoButton_30, 1, 1, 1, 1)
+        self.gridLayout_9.addWidget(self.enableResetButton_30, 2, 0, 1, 1)
+
+        self.resetGrowPodButton_30 = QPushButton(self.growStatusControlButtons_30)
+        self.resetGrowPodButton_30.setObjectName(u"resetGrowPodButton_30")
+
+        self.gridLayout_9.addWidget(self.resetGrowPodButton_30, 2, 1, 1, 1)
 
 
         self.verticalLayout_87.addWidget(self.growStatusControlButtons_30)
@@ -1260,8 +1339,17 @@ class Ui_smartGrowGUI(object):
         self.verticalLayout_7.setSpacing(0)
         self.verticalLayout_7.setObjectName(u"verticalLayout_7")
         self.verticalLayout_7.setContentsMargins(0, 0, 0, 0)
+        self.messageAreaLabel = QLabel(self.messageArea)
+        self.messageAreaLabel.setObjectName(u"messageAreaLabel")
+        font7 = QFont()
+        font7.setPointSize(16)
+        self.messageAreaLabel.setFont(font7)
+
+        self.verticalLayout_7.addWidget(self.messageAreaLabel)
+
         self.messageAreaText = QTextEdit(self.messageArea)
         self.messageAreaText.setObjectName(u"messageAreaText")
+        self.messageAreaText.setFont(font1)
 
         self.verticalLayout_7.addWidget(self.messageAreaText)
 
@@ -1272,9 +1360,9 @@ class Ui_smartGrowGUI(object):
         self.msgClear.setObjectName(u"msgClear")
         self.msgClear.setMinimumSize(QSize(150, 0))
         self.msgClear.setMaximumSize(QSize(150, 16777215))
-        font7 = QFont()
-        font7.setPointSize(1)
-        self.msgClear.setFont(font7)
+        font8 = QFont()
+        font8.setPointSize(1)
+        self.msgClear.setFont(font8)
         self.msgClear.setFrameShape(QFrame.StyledPanel)
         self.msgClear.setFrameShadow(QFrame.Raised)
         self.verticalLayout_5 = QVBoxLayout(self.msgClear)
@@ -1317,9 +1405,9 @@ class Ui_smartGrowGUI(object):
     def retranslateUi(self, smartGrowGUI):
         smartGrowGUI.setWindowTitle(QCoreApplication.translate("smartGrowGUI", u"smartGrowGUI", None))
         self.logoName.setText(QCoreApplication.translate("smartGrowGUI", u"Smart Grow App", None))
-        self.logoIcon.setText(QCoreApplication.translate("smartGrowGUI", u"Icon", None))
-        self.addGrowPodButton.setText(QCoreApplication.translate("smartGrowGUI", u"  Add Grow Pod", None))
+        self.label.setText("")
         self.refreshGrowPodInfoButton.setText(QCoreApplication.translate("smartGrowGUI", u"  Refresh Info", None))
+        self.addGrowPodButton.setText(QCoreApplication.translate("smartGrowGUI", u"  Add Grow Pod", None))
         self.growPodContainer_1.setTitle(QCoreApplication.translate("smartGrowGUI", u"Grow Pod 1 Status View", None))
         self.plantNameSection_1.setTitle(QCoreApplication.translate("smartGrowGUI", u"Plant Name and Type", None))
         self.plantNameLabel_1.setText(QCoreApplication.translate("smartGrowGUI", u"Plant Name", None))
@@ -1348,6 +1436,8 @@ class Ui_smartGrowGUI(object):
         self.saveInitializeLaterButton_1.setText(QCoreApplication.translate("smartGrowGUI", u"Save Info, Initialize Later", None))
         self.initializeGrowPodButton_1.setText(QCoreApplication.translate("smartGrowGUI", u"Initilize Grow Pod", None))
         self.editButton_1.setText(QCoreApplication.translate("smartGrowGUI", u"Edit", None))
+        self.enableResetButton_1.setText(QCoreApplication.translate("smartGrowGUI", u"Enable Reset Button", None))
+        self.resetGrowPodButton_1.setText(QCoreApplication.translate("smartGrowGUI", u"Reset Grow Pod", None))
         self.growPodContainer_2.setTitle(QCoreApplication.translate("smartGrowGUI", u"Grow Pod 2 Status View", None))
         self.plantNameSection_20.setTitle(QCoreApplication.translate("smartGrowGUI", u"Plant Name and Type", None))
         self.plantNameLabel_20.setText(QCoreApplication.translate("smartGrowGUI", u"Plant Name", None))
@@ -1376,6 +1466,8 @@ class Ui_smartGrowGUI(object):
         self.initializeGrowPodButton_20.setText(QCoreApplication.translate("smartGrowGUI", u"Initilize Grow Pod", None))
         self.editButton_20.setText(QCoreApplication.translate("smartGrowGUI", u"Edit", None))
         self.saveInfoButton_20.setText(QCoreApplication.translate("smartGrowGUI", u"Save Info", None))
+        self.enableResetButton_20.setText(QCoreApplication.translate("smartGrowGUI", u"Enable Reset Button", None))
+        self.resetGrowPodButton_20.setText(QCoreApplication.translate("smartGrowGUI", u"Reset Grow Pod", None))
         self.growPodContainer_3.setTitle(QCoreApplication.translate("smartGrowGUI", u"Grow Pod 3 Status View", None))
         self.plantNameSection_30.setTitle(QCoreApplication.translate("smartGrowGUI", u"Plant Name and Type", None))
         self.plantNameLabel_30.setText(QCoreApplication.translate("smartGrowGUI", u"Plant Name", None))
@@ -1400,10 +1492,13 @@ class Ui_smartGrowGUI(object):
         self.nutrientsPumpLabel_30.setText(QCoreApplication.translate("smartGrowGUI", u"Nutrients Pump", None))
         self.lightStatusLabel_30.setText(QCoreApplication.translate("smartGrowGUI", u"Light Status", None))
         self.growPodNotesSection_30.setTitle(QCoreApplication.translate("smartGrowGUI", u"Notes", None))
+        self.saveInfoButton_30.setText(QCoreApplication.translate("smartGrowGUI", u"Save Info", None))
         self.saveInitializeLaterButton_30.setText(QCoreApplication.translate("smartGrowGUI", u"Save Info, Initialize Later", None))
         self.initializeGrowPodButton_30.setText(QCoreApplication.translate("smartGrowGUI", u"Initilize Grow Pod", None))
         self.editButton_30.setText(QCoreApplication.translate("smartGrowGUI", u"Edit", None))
-        self.saveInfoButton_30.setText(QCoreApplication.translate("smartGrowGUI", u"Save Info", None))
+        self.enableResetButton_30.setText(QCoreApplication.translate("smartGrowGUI", u"Enable Reset Button", None))
+        self.resetGrowPodButton_30.setText(QCoreApplication.translate("smartGrowGUI", u"Reset Grow Pod", None))
+        self.messageAreaLabel.setText(QCoreApplication.translate("smartGrowGUI", u"Messages", None))
         self.messageAreaClearButton.setText(QCoreApplication.translate("smartGrowGUI", u"Reset Messages", None))
     # retranslateUi
 
