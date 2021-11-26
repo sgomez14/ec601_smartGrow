@@ -104,6 +104,31 @@ class GrowPod:
         self.notes = ""
         self.rememberGUIAtStartUp = False
 
+    def createUpdatePacket(self, command):
+        # packet that will be sent to grow pod mcu
+        updatePacket = ""
+
+        # construct setup info string
+        setupInfo = f"{self.feedSchedule};{self.feedDosage};{self.lightHoursOn};{self.lightHoursOff}"
+
+        if command == "init":
+            updatePacket = "init" + setupInfo
+
+            return updatePacket
+
+        elif command == "update":
+            updatePacket = "update" + setupInfo
+
+            return updatePacket
+
+        elif command == "reset":
+            updatePacket = "reset" + setupInfo
+
+            return updatePacket
+
+        else:
+            print("did not recognize command for updating grow pod mcu")
+
     def updateWithMCUInfo(self, stringfromGrowPod):
 
         # incoming string will have the following structure
