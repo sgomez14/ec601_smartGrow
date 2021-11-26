@@ -15,6 +15,9 @@ styles = ["Toolery.qss", "Remover.qss", "SyNet.qss", "Irrorater.qss"]
 
 stylesheetFilePath = f"resources/stylesheets/{styles[0]}"
 
+# one minute in milliseconds
+minute_ms = 60000
+
 
 DEVELOPMENT = True
 ReleaseFirstBootUp = False
@@ -63,6 +66,7 @@ class MainWindow(QMainWindow):
         self.gridCurrentCol = 1
         self.gridCurrentRow = 1
 
+        # create grow pod objects
         self.growPod1 = GrowPod()
         self.growPod2 = GrowPod()
         self.growPod3 = GrowPod()
@@ -73,6 +77,7 @@ class MainWindow(QMainWindow):
         # set grow pod IP Addresses
         self.assignIpAddressesToGrowPods()
 
+        # add grow pods to list
         self.growPodsList = [self.growPod1, self.growPod2, self.growPod3]
 
         # styling for when form is saved
@@ -186,6 +191,9 @@ class MainWindow(QMainWindow):
 
         # connect message reset button to action
         self.ui.messageAreaClearButton.clicked.connect(self.messagesResetButtonClicked)
+
+        # connect refresh button to action
+        self.ui.refreshGrowPodInfoButton.clicked.connect(self.refreshInfoButtonClicked)
 
     def setGrowPod_UI_notInitializedState(self, growPodNumber):
 
@@ -361,6 +369,12 @@ class MainWindow(QMainWindow):
                 # TODO: here is the section for sending information over to microcontroller
                 # sendPacketToGrowPod(growPod, command)
 
+                # create grow pod timer
+                self.createGrowPodTimer(1, 1000)
+
+                # start timer
+                self.startGrowPodTimer(1)
+
             else:
                 print("user does not want to initialize growPod")
 
@@ -481,6 +495,9 @@ class MainWindow(QMainWindow):
             # set UI to not initialized state
             self.setGrowPod_UI_notInitializedState(1)
 
+            # kill grow pod timer
+            self.stopGrowPodTimer(1)
+
         else:
             print("user does not want to reset grow pod")
 
@@ -526,9 +543,14 @@ class MainWindow(QMainWindow):
                 # TODO: here is the section for sending information over to microcontroller
                 # sendPacketToGrowPod(growPod, command)
 
+                # create grow pod timer
+                self.createGrowPodTimer(2, 1000)
+
+                # start timer
+                self.startGrowPodTimer(2)
+
             else:
                 print("user does not want to initialize growPod")
-
 
     def saveInitializeLaterButton_20_Clicked(self):
         print("save initialize Later button 20 clicked")
@@ -646,6 +668,9 @@ class MainWindow(QMainWindow):
             # set UI to not initialized state
             self.setGrowPod_UI_notInitializedState(2)
 
+            # stop grow pod timer
+            self.stopGrowPodTimer(2)
+
         else:
             print("user does not want to reset grow pod")
 
@@ -690,6 +715,12 @@ class MainWindow(QMainWindow):
 
                 # TODO: here is the section for sending information over to microcontroller
                 # sendPacketToGrowPod(growPod, command)
+
+                # create grow pod timer
+                self.createGrowPodTimer(3, 1000)
+
+                # start timer
+                self.startGrowPodTimer(3)
 
             else:
                 print("user does not want to initialize growPod")
@@ -809,6 +840,9 @@ class MainWindow(QMainWindow):
 
             # set UI to not initialized state
             self.setGrowPod_UI_notInitializedState(3)
+
+            # stop grow pod timer
+            self.stopGrowPodTimer(3)
 
         else:
             print("user does not want to reset grow pod")
@@ -1449,6 +1483,136 @@ class MainWindow(QMainWindow):
             self.ui.initializeGrowPodButton_30.setHidden(True)
             self.ui.saveInitializeLaterButton_30.setHidden(True)
             self.ui.resetGrowPodButton_30.setHidden(True)
+
+    def createGrowPodTimer(self, growPodNumber, timeOutInterval):
+
+        if growPodNumber == 1:
+            # create timer for requesting data from grow pod
+            self.growPodTimer1 = QtCore.QTimer()
+
+            # connect timer to timeout functions
+            self.growPodTimer1.timeout.connect(self.requestInfoFromGrowPod1)
+
+            # set timeout interval
+            self.growPodTimer1.setInterval(timeOutInterval)
+
+        elif growPodNumber == 2:
+            # create timer for requesting data from grow pod
+            self.growPodTimer2 = QtCore.QTimer()
+
+            # connect timer to timeout functions
+            self.growPodTimer2.timeout.connect(self.requestInfoFromGrowPod2)
+
+            # set timeout interval
+            self.growPodTimer2.setInterval(timeOutInterval)
+
+        elif growPodNumber == 3:
+            # create timer for requesting data from grow pod
+            self.growPodTimer3 = QtCore.QTimer()
+
+            # connect timer to timeout functions
+            self.growPodTimer3.timeout.connect(self.requestInfoFromGrowPod3)
+
+            # set timeout interval
+            self.growPodTimer3.setInterval(timeOutInterval)
+
+        else:
+            print("did not recognize grow pod number for setting up timer")
+
+    def startGrowPodTimer(self, growPodNumber):
+
+        if growPodNumber == 1:
+            self.growPodTimer1.start()
+
+        elif growPodNumber == 2:
+            self.growPodTimer2.start()
+
+        elif growPodNumber == 3:
+            self.growPodTimer3.start()
+
+        else:
+            print("did not recognize grow pod number for starting timer")
+
+    def stopGrowPodTimer(self, growPodNumber):
+
+        if growPodNumber == 1:
+            self.growPodTimer1.stop()
+
+        elif growPodNumber == 2:
+            self.growPodTimer2.stop()
+
+        elif growPodNumber == 3:
+            self.growPodTimer3.stop()
+
+        else:
+            print("did not recognize grow pod number for killing timer")
+
+    def requestInfoFromGrowPod1(self):
+        growPodNumber = 1
+        message = f"requesting info from grow pod {growPodNumber}"
+        print(message)
+
+        # get info from the grow pod MCU
+        # TODO: function to request info
+
+        # luminosity;temperature;humidity;voltage;amps;lightStatus;airPump;sourcePump;drainPump;nutrientsPump
+        mcuInfo = "100;100.5;100.5;200.3;400.6;ON;ON;ON;ON;ON" # function goes here
+
+        # update grow pod object with info from the grow pod MCU
+        self.growPod1.updateWithMCUInfo(mcuInfo)
+
+        # save the new info the JSON
+        saveGrowPodJSON(self.growPodsList)
+
+        # load that info on the GUI
+        self.loadGrowPodInfoForDisplay([self.growPod1])
+
+    def requestInfoFromGrowPod2(self):
+        growPodNumber = 2
+        message = f"requesting info from grow pod {growPodNumber}"
+        print(message)
+
+        # get info from the grow pod MCU
+        # TODO: function to request info
+
+        # luminosity;temperature;humidity;voltage;amps;lightStatus;airPump;sourcePump;drainPump;nutrientsPump
+        mcuInfo = "2000;100.5;100.5;200.3;400.6;ON;ON;ON;ON;ON"  # function goes here
+
+        # update grow pod object with info from the grow pod MCU
+        self.growPod2.updateWithMCUInfo(mcuInfo)
+
+        # save the new info the JSON
+        saveGrowPodJSON(self.growPodsList)
+
+        # load that info on the GUI
+        self.loadGrowPodInfoForDisplay([self.growPod2])
+
+    def requestInfoFromGrowPod3(self):
+        growPodNumber = 3
+        message = f"requesting info from grow pod {growPodNumber}"
+        print(message)
+
+        # get info from the grow pod MCU
+        # TODO: function to request info
+
+        # luminosity;temperature;humidity;voltage;amps;lightStatus;airPump;sourcePump;drainPump;nutrientsPump
+        mcuInfo = "3000;100.5;100.5;200.3;400.6;ON;ON;ON;ON;ON"  # function goes here
+
+        # update grow pod object with info from the grow pod MCU
+        self.growPod3.updateWithMCUInfo(mcuInfo)
+
+        # save the new info the JSON
+        saveGrowPodJSON(self.growPodsList)
+
+        # load that info on the GUI
+        self.loadGrowPodInfoForDisplay([self.growPod3])
+
+    def refreshInfoButtonClicked(self):
+
+        # refresh all three grow pod gui
+        self.requestInfoFromGrowPod1()
+        self.requestInfoFromGrowPod2()
+        self.requestInfoFromGrowPod3()
 
 
 if __name__ == '__main__':

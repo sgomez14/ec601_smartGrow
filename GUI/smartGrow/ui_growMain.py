@@ -186,7 +186,7 @@ class Ui_smartGrowGUI(object):
         self.statusScrollArea.setWidgetResizable(True)
         self.statusGrid = QWidget()
         self.statusGrid.setObjectName(u"statusGrid")
-        self.statusGrid.setGeometry(QRect(0, 0, 1255, 2133))
+        self.statusGrid.setGeometry(QRect(0, -1644, 1246, 2485))
         sizePolicy.setHeightForWidth(self.statusGrid.sizePolicy().hasHeightForWidth())
         self.statusGrid.setSizePolicy(sizePolicy)
         self.statusGrid.setMinimumSize(QSize(0, 0))
@@ -264,6 +264,7 @@ class Ui_smartGrowGUI(object):
         self.feedScheduleSpinBox_1 = QSpinBox(self.feedInfoSection_1)
         self.feedScheduleSpinBox_1.setObjectName(u"feedScheduleSpinBox_1")
         self.feedScheduleSpinBox_1.setReadOnly(False)
+        self.feedScheduleSpinBox_1.setMaximum(100000)
 
         self.feedInfoForm_1.setWidget(0, QFormLayout.FieldRole, self.feedScheduleSpinBox_1)
 
@@ -275,6 +276,7 @@ class Ui_smartGrowGUI(object):
         self.feedDosageDoubleSpinBox_1 = QDoubleSpinBox(self.feedInfoSection_1)
         self.feedDosageDoubleSpinBox_1.setObjectName(u"feedDosageDoubleSpinBox_1")
         self.feedDosageDoubleSpinBox_1.setReadOnly(False)
+        self.feedDosageDoubleSpinBox_1.setMaximum(100000.000000000000000)
 
         self.feedInfoForm_1.setWidget(1, QFormLayout.FieldRole, self.feedDosageDoubleSpinBox_1)
 
@@ -298,6 +300,7 @@ class Ui_smartGrowGUI(object):
         self.hoursOnSpinBox_1 = QSpinBox(self.lightScheduleSection_1)
         self.hoursOnSpinBox_1.setObjectName(u"hoursOnSpinBox_1")
         self.hoursOnSpinBox_1.setReadOnly(False)
+        self.hoursOnSpinBox_1.setMaximum(100000)
 
         self.lightScheduleForm_1.setWidget(0, QFormLayout.FieldRole, self.hoursOnSpinBox_1)
 
@@ -309,6 +312,7 @@ class Ui_smartGrowGUI(object):
         self.hoursOffSpinBox_1 = QSpinBox(self.lightScheduleSection_1)
         self.hoursOffSpinBox_1.setObjectName(u"hoursOffSpinBox_1")
         self.hoursOffSpinBox_1.setReadOnly(False)
+        self.hoursOffSpinBox_1.setMaximum(100000)
 
         self.lightScheduleForm_1.setWidget(1, QFormLayout.FieldRole, self.hoursOffSpinBox_1)
 
@@ -343,6 +347,7 @@ class Ui_smartGrowGUI(object):
         self.luminositySpinBox_1.setFont(font4)
         self.luminositySpinBox_1.setStyleSheet(u"background-color: Gainsboro")
         self.luminositySpinBox_1.setReadOnly(True)
+        self.luminositySpinBox_1.setMaximum(100000)
 
         self.environmentStatusForm_1.setWidget(0, QFormLayout.FieldRole, self.luminositySpinBox_1)
 
@@ -356,6 +361,7 @@ class Ui_smartGrowGUI(object):
         self.humidityDoubleSpinBox_1.setFont(font4)
         self.humidityDoubleSpinBox_1.setStyleSheet(u"background-color: Gainsboro")
         self.humidityDoubleSpinBox_1.setReadOnly(True)
+        self.humidityDoubleSpinBox_1.setMaximum(100000.000000000000000)
 
         self.environmentStatusForm_1.setWidget(2, QFormLayout.FieldRole, self.humidityDoubleSpinBox_1)
 
@@ -369,6 +375,7 @@ class Ui_smartGrowGUI(object):
         self.temperatureDoubleSpinBox_1.setFont(font4)
         self.temperatureDoubleSpinBox_1.setStyleSheet(u"background-color: Gainsboro")
         self.temperatureDoubleSpinBox_1.setReadOnly(True)
+        self.temperatureDoubleSpinBox_1.setMaximum(100000.000000000000000)
 
         self.environmentStatusForm_1.setWidget(1, QFormLayout.FieldRole, self.temperatureDoubleSpinBox_1)
 
@@ -393,6 +400,7 @@ class Ui_smartGrowGUI(object):
         self.voltageDoubleSpinBox_1.setObjectName(u"voltageDoubleSpinBox_1")
         self.voltageDoubleSpinBox_1.setStyleSheet(u"background-color: Gainsboro")
         self.voltageDoubleSpinBox_1.setReadOnly(True)
+        self.voltageDoubleSpinBox_1.setMaximum(100000.000000000000000)
 
         self.powerStatusForm_1.setWidget(0, QFormLayout.FieldRole, self.voltageDoubleSpinBox_1)
 
@@ -405,6 +413,7 @@ class Ui_smartGrowGUI(object):
         self.ampsDoubleSpinBox_1.setObjectName(u"ampsDoubleSpinBox_1")
         self.ampsDoubleSpinBox_1.setStyleSheet(u"background-color: Gainsboro")
         self.ampsDoubleSpinBox_1.setReadOnly(True)
+        self.ampsDoubleSpinBox_1.setMaximum(100000.000000000000000)
 
         self.powerStatusForm_1.setWidget(1, QFormLayout.FieldRole, self.ampsDoubleSpinBox_1)
 
@@ -638,6 +647,7 @@ class Ui_smartGrowGUI(object):
         self.feedScheduleSpinBox_20 = QSpinBox(self.feedInfoSection_20)
         self.feedScheduleSpinBox_20.setObjectName(u"feedScheduleSpinBox_20")
         self.feedScheduleSpinBox_20.setReadOnly(False)
+        self.feedScheduleSpinBox_20.setMaximum(100000)
 
         self.feedInfoForm_20.setWidget(0, QFormLayout.FieldRole, self.feedScheduleSpinBox_20)
 
@@ -649,6 +659,7 @@ class Ui_smartGrowGUI(object):
         self.feedDosageDoubleSpinBox_20 = QDoubleSpinBox(self.feedInfoSection_20)
         self.feedDosageDoubleSpinBox_20.setObjectName(u"feedDosageDoubleSpinBox_20")
         self.feedDosageDoubleSpinBox_20.setReadOnly(False)
+        self.feedDosageDoubleSpinBox_20.setMaximum(100000.000000000000000)
 
         self.feedInfoForm_20.setWidget(1, QFormLayout.FieldRole, self.feedDosageDoubleSpinBox_20)
 
@@ -672,6 +683,7 @@ class Ui_smartGrowGUI(object):
         self.hoursOnSpinBox_20 = QSpinBox(self.lightScheduleSection_20)
         self.hoursOnSpinBox_20.setObjectName(u"hoursOnSpinBox_20")
         self.hoursOnSpinBox_20.setReadOnly(False)
+        self.hoursOnSpinBox_20.setMaximum(100000)
 
         self.lightScheduleForm_20.setWidget(0, QFormLayout.FieldRole, self.hoursOnSpinBox_20)
 
@@ -683,6 +695,7 @@ class Ui_smartGrowGUI(object):
         self.hoursOffSpinBox_20 = QSpinBox(self.lightScheduleSection_20)
         self.hoursOffSpinBox_20.setObjectName(u"hoursOffSpinBox_20")
         self.hoursOffSpinBox_20.setReadOnly(False)
+        self.hoursOffSpinBox_20.setMaximum(100000)
 
         self.lightScheduleForm_20.setWidget(1, QFormLayout.FieldRole, self.hoursOffSpinBox_20)
 
@@ -717,6 +730,7 @@ class Ui_smartGrowGUI(object):
         self.luminositySpinBox_20.setFont(font6)
         self.luminositySpinBox_20.setStyleSheet(u"background-color: Gainsboro")
         self.luminositySpinBox_20.setReadOnly(True)
+        self.luminositySpinBox_20.setMaximum(100000)
 
         self.environmentStatusForm_20.setWidget(0, QFormLayout.FieldRole, self.luminositySpinBox_20)
 
@@ -730,6 +744,7 @@ class Ui_smartGrowGUI(object):
         self.humidityDoubleSpinBox_20.setFont(font6)
         self.humidityDoubleSpinBox_20.setStyleSheet(u"background-color: Gainsboro")
         self.humidityDoubleSpinBox_20.setReadOnly(True)
+        self.humidityDoubleSpinBox_20.setMaximum(100000.000000000000000)
 
         self.environmentStatusForm_20.setWidget(2, QFormLayout.FieldRole, self.humidityDoubleSpinBox_20)
 
@@ -743,6 +758,7 @@ class Ui_smartGrowGUI(object):
         self.temperatureDoubleSpinBox_20.setFont(font6)
         self.temperatureDoubleSpinBox_20.setStyleSheet(u"background-color: Gainsboro")
         self.temperatureDoubleSpinBox_20.setReadOnly(True)
+        self.temperatureDoubleSpinBox_20.setMaximum(100000.000000000000000)
 
         self.environmentStatusForm_20.setWidget(1, QFormLayout.FieldRole, self.temperatureDoubleSpinBox_20)
 
@@ -768,6 +784,7 @@ class Ui_smartGrowGUI(object):
         self.voltageDoubleSpinBox_20.setFont(font6)
         self.voltageDoubleSpinBox_20.setStyleSheet(u"background-color: Gainsboro")
         self.voltageDoubleSpinBox_20.setReadOnly(True)
+        self.voltageDoubleSpinBox_20.setMaximum(100000.000000000000000)
 
         self.powerStatusForm_20.setWidget(0, QFormLayout.FieldRole, self.voltageDoubleSpinBox_20)
 
@@ -781,6 +798,7 @@ class Ui_smartGrowGUI(object):
         self.ampsDoubleSpinBox_20.setFont(font6)
         self.ampsDoubleSpinBox_20.setStyleSheet(u"background-color: Gainsboro")
         self.ampsDoubleSpinBox_20.setReadOnly(True)
+        self.ampsDoubleSpinBox_20.setMaximum(100000.000000000000000)
 
         self.powerStatusForm_20.setWidget(1, QFormLayout.FieldRole, self.ampsDoubleSpinBox_20)
 
@@ -1008,6 +1026,7 @@ class Ui_smartGrowGUI(object):
         self.feedScheduleSpinBox_30 = QSpinBox(self.feedInfoSection_30)
         self.feedScheduleSpinBox_30.setObjectName(u"feedScheduleSpinBox_30")
         self.feedScheduleSpinBox_30.setReadOnly(False)
+        self.feedScheduleSpinBox_30.setMaximum(100000)
 
         self.feedInfoForm_30.setWidget(0, QFormLayout.FieldRole, self.feedScheduleSpinBox_30)
 
@@ -1019,6 +1038,7 @@ class Ui_smartGrowGUI(object):
         self.feedDosageDoubleSpinBox_30 = QDoubleSpinBox(self.feedInfoSection_30)
         self.feedDosageDoubleSpinBox_30.setObjectName(u"feedDosageDoubleSpinBox_30")
         self.feedDosageDoubleSpinBox_30.setReadOnly(False)
+        self.feedDosageDoubleSpinBox_30.setMaximum(100000.000000000000000)
 
         self.feedInfoForm_30.setWidget(1, QFormLayout.FieldRole, self.feedDosageDoubleSpinBox_30)
 
@@ -1044,6 +1064,7 @@ class Ui_smartGrowGUI(object):
         self.hoursOnSpinBox_30.setFont(font4)
         self.hoursOnSpinBox_30.setStyleSheet(u"")
         self.hoursOnSpinBox_30.setReadOnly(False)
+        self.hoursOnSpinBox_30.setMaximum(100000)
 
         self.lightScheduleForm_30.setWidget(0, QFormLayout.FieldRole, self.hoursOnSpinBox_30)
 
@@ -1057,6 +1078,7 @@ class Ui_smartGrowGUI(object):
         self.hoursOffSpinBox_30.setFont(font4)
         self.hoursOffSpinBox_30.setStyleSheet(u"")
         self.hoursOffSpinBox_30.setReadOnly(False)
+        self.hoursOffSpinBox_30.setMaximum(100000)
 
         self.lightScheduleForm_30.setWidget(1, QFormLayout.FieldRole, self.hoursOffSpinBox_30)
 
@@ -1091,6 +1113,7 @@ class Ui_smartGrowGUI(object):
         self.luminositySpinBox_30.setFont(font4)
         self.luminositySpinBox_30.setStyleSheet(u"background-color: Gainsboro")
         self.luminositySpinBox_30.setReadOnly(True)
+        self.luminositySpinBox_30.setMaximum(100000)
 
         self.environmentStatusForm_30.setWidget(0, QFormLayout.FieldRole, self.luminositySpinBox_30)
 
@@ -1104,6 +1127,7 @@ class Ui_smartGrowGUI(object):
         self.humidityDoubleSpinBox_30.setFont(font4)
         self.humidityDoubleSpinBox_30.setStyleSheet(u"background-color: Gainsboro")
         self.humidityDoubleSpinBox_30.setReadOnly(True)
+        self.humidityDoubleSpinBox_30.setMaximum(100000.000000000000000)
 
         self.environmentStatusForm_30.setWidget(2, QFormLayout.FieldRole, self.humidityDoubleSpinBox_30)
 
@@ -1117,6 +1141,7 @@ class Ui_smartGrowGUI(object):
         self.temperatureDoubleSpinBox_30.setFont(font4)
         self.temperatureDoubleSpinBox_30.setStyleSheet(u"background-color: Gainsboro")
         self.temperatureDoubleSpinBox_30.setReadOnly(True)
+        self.temperatureDoubleSpinBox_30.setMaximum(100000.000000000000000)
 
         self.environmentStatusForm_30.setWidget(1, QFormLayout.FieldRole, self.temperatureDoubleSpinBox_30)
 
@@ -1142,6 +1167,7 @@ class Ui_smartGrowGUI(object):
         self.voltageDoubleSpinBox_30.setFont(font4)
         self.voltageDoubleSpinBox_30.setStyleSheet(u"background-color: Gainsboro")
         self.voltageDoubleSpinBox_30.setReadOnly(True)
+        self.voltageDoubleSpinBox_30.setMaximum(100000.000000000000000)
 
         self.powerStatusForm_30.setWidget(0, QFormLayout.FieldRole, self.voltageDoubleSpinBox_30)
 
@@ -1155,6 +1181,7 @@ class Ui_smartGrowGUI(object):
         self.ampsDoubleSpinBox_30.setFont(font4)
         self.ampsDoubleSpinBox_30.setStyleSheet(u"background-color: Gainsboro")
         self.ampsDoubleSpinBox_30.setReadOnly(True)
+        self.ampsDoubleSpinBox_30.setMaximum(100000.000000000000000)
 
         self.powerStatusForm_30.setWidget(1, QFormLayout.FieldRole, self.ampsDoubleSpinBox_30)
 
@@ -1338,7 +1365,7 @@ class Ui_smartGrowGUI(object):
         self.verticalLayout_7 = QVBoxLayout(self.messageArea)
         self.verticalLayout_7.setSpacing(0)
         self.verticalLayout_7.setObjectName(u"verticalLayout_7")
-        self.verticalLayout_7.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_7.setContentsMargins(0, 0, 11, 0)
         self.messageAreaLabel = QLabel(self.messageArea)
         self.messageAreaLabel.setObjectName(u"messageAreaLabel")
         font7 = QFont()

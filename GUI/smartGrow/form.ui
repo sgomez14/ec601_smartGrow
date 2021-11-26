@@ -378,9 +378,9 @@
                 <property name="geometry">
                  <rect>
                   <x>0</x>
-                  <y>0</y>
-                  <width>1255</width>
-                  <height>2133</height>
+                  <y>-1644</y>
+                  <width>1246</width>
+                  <height>2485</height>
                  </rect>
                 </property>
                 <property name="sizePolicy">
@@ -495,6 +495,9 @@
                                  <property name="readOnly">
                                   <bool>false</bool>
                                  </property>
+                                 <property name="maximum">
+                                  <number>100000</number>
+                                 </property>
                                 </widget>
                                </item>
                                <item row="1" column="0">
@@ -508,6 +511,9 @@
                                 <widget class="QDoubleSpinBox" name="feedDosageDoubleSpinBox_1">
                                  <property name="readOnly">
                                   <bool>false</bool>
+                                 </property>
+                                 <property name="maximum">
+                                  <double>100000.000000000000000</double>
                                  </property>
                                 </widget>
                                </item>
@@ -536,6 +542,9 @@
                                  <property name="readOnly">
                                   <bool>false</bool>
                                  </property>
+                                 <property name="maximum">
+                                  <number>100000</number>
+                                 </property>
                                 </widget>
                                </item>
                                <item row="1" column="0">
@@ -549,6 +558,9 @@
                                 <widget class="QSpinBox" name="hoursOffSpinBox_1">
                                  <property name="readOnly">
                                   <bool>false</bool>
+                                 </property>
+                                 <property name="maximum">
+                                  <number>100000</number>
                                  </property>
                                 </widget>
                                </item>
@@ -597,6 +609,9 @@
                                  <property name="readOnly">
                                   <bool>true</bool>
                                  </property>
+                                 <property name="maximum">
+                                  <number>100000</number>
+                                 </property>
                                 </widget>
                                </item>
                                <item row="2" column="0">
@@ -619,6 +634,9 @@
                                  <property name="readOnly">
                                   <bool>true</bool>
                                  </property>
+                                 <property name="maximum">
+                                  <double>100000.000000000000000</double>
+                                 </property>
                                 </widget>
                                </item>
                                <item row="1" column="0">
@@ -640,6 +658,9 @@
                                  </property>
                                  <property name="readOnly">
                                   <bool>true</bool>
+                                 </property>
+                                 <property name="maximum">
+                                  <double>100000.000000000000000</double>
                                  </property>
                                 </widget>
                                </item>
@@ -671,6 +692,9 @@
                                  <property name="readOnly">
                                   <bool>true</bool>
                                  </property>
+                                 <property name="maximum">
+                                  <double>100000.000000000000000</double>
+                                 </property>
                                 </widget>
                                </item>
                                <item row="1" column="0">
@@ -687,6 +711,9 @@
                                  </property>
                                  <property name="readOnly">
                                   <bool>true</bool>
+                                 </property>
+                                 <property name="maximum">
+                                  <double>100000.000000000000000</double>
                                  </property>
                                 </widget>
                                </item>
@@ -1028,6 +1055,9 @@
                                  <property name="readOnly">
                                   <bool>false</bool>
                                  </property>
+                                 <property name="maximum">
+                                  <number>100000</number>
+                                 </property>
                                 </widget>
                                </item>
                                <item row="1" column="0">
@@ -1041,6 +1071,9 @@
                                 <widget class="QDoubleSpinBox" name="feedDosageDoubleSpinBox_20">
                                  <property name="readOnly">
                                   <bool>false</bool>
+                                 </property>
+                                 <property name="maximum">
+                                  <double>100000.000000000000000</double>
                                  </property>
                                 </widget>
                                </item>
@@ -1069,6 +1102,9 @@
                                  <property name="readOnly">
                                   <bool>false</bool>
                                  </property>
+                                 <property name="maximum">
+                                  <number>100000</number>
+                                 </property>
                                 </widget>
                                </item>
                                <item row="1" column="0">
@@ -1082,6 +1118,9 @@
                                 <widget class="QSpinBox" name="hoursOffSpinBox_20">
                                  <property name="readOnly">
                                   <bool>false</bool>
+                                 </property>
+                                 <property name="maximum">
+                                  <number>100000</number>
                                  </property>
                                 </widget>
                                </item>
@@ -1132,6 +1171,9 @@
                                  <property name="readOnly">
                                   <bool>true</bool>
                                  </property>
+                                 <property name="maximum">
+                                  <number>100000</number>
+                                 </property>
                                 </widget>
                                </item>
                                <item row="2" column="0">
@@ -1156,6 +1198,9 @@
                                  <property name="readOnly">
                                   <bool>true</bool>
                                  </property>
+                                 <property name="maximum">
+                                  <double>100000.000000000000000</double>
+                                 </property>
                                 </widget>
                                </item>
                                <item row="1" column="0">
@@ -1179,6 +1224,9 @@
                                  </property>
                                  <property name="readOnly">
                                   <bool>true</bool>
+                                 </property>
+                                 <property name="maximum">
+                                  <double>100000.000000000000000</double>
                                  </property>
                                 </widget>
                                </item>
@@ -1217,6 +1265,9 @@
                                  <property name="readOnly">
                                   <bool>true</bool>
                                  </property>
+                                 <property name="maximum">
+                                  <double>100000.000000000000000</double>
+                                 </property>
                                 </widget>
                                </item>
                                <item row="1" column="0">
@@ -1240,6 +1291,9 @@
                                  </property>
                                  <property name="readOnly">
                                   <bool>true</bool>
+                                 </property>
+                                 <property name="maximum">
+                                  <double>100000.000000000000000</double>
                                  </property>
                                 </widget>
                                </item>
@@ -1589,6 +1643,9 @@
                                  <property name="readOnly">
                                   <bool>false</bool>
                                  </property>
+                                 <property name="maximum">
+                                  <number>100000</number>
+                                 </property>
                                 </widget>
                                </item>
                                <item row="1" column="0">
@@ -1602,6 +1659,9 @@
                                 <widget class="QDoubleSpinBox" name="feedDosageDoubleSpinBox_30">
                                  <property name="readOnly">
                                   <bool>false</bool>
+                                 </property>
+                                 <property name="maximum">
+                                  <double>100000.000000000000000</double>
                                  </property>
                                 </widget>
                                </item>
@@ -1638,6 +1698,9 @@
                                  <property name="readOnly">
                                   <bool>false</bool>
                                  </property>
+                                 <property name="maximum">
+                                  <number>100000</number>
+                                 </property>
                                 </widget>
                                </item>
                                <item row="1" column="0">
@@ -1659,6 +1722,9 @@
                                  </property>
                                  <property name="readOnly">
                                   <bool>false</bool>
+                                 </property>
+                                 <property name="maximum">
+                                  <number>100000</number>
                                  </property>
                                 </widget>
                                </item>
@@ -1707,6 +1773,9 @@
                                  <property name="readOnly">
                                   <bool>true</bool>
                                  </property>
+                                 <property name="maximum">
+                                  <number>100000</number>
+                                 </property>
                                 </widget>
                                </item>
                                <item row="2" column="0">
@@ -1729,6 +1798,9 @@
                                  <property name="readOnly">
                                   <bool>true</bool>
                                  </property>
+                                 <property name="maximum">
+                                  <double>100000.000000000000000</double>
+                                 </property>
                                 </widget>
                                </item>
                                <item row="1" column="0">
@@ -1750,6 +1822,9 @@
                                  </property>
                                  <property name="readOnly">
                                   <bool>true</bool>
+                                 </property>
+                                 <property name="maximum">
+                                  <double>100000.000000000000000</double>
                                  </property>
                                 </widget>
                                </item>
@@ -1786,6 +1861,9 @@
                                  <property name="readOnly">
                                   <bool>true</bool>
                                  </property>
+                                 <property name="maximum">
+                                  <double>100000.000000000000000</double>
+                                 </property>
                                 </widget>
                                </item>
                                <item row="1" column="0">
@@ -1807,6 +1885,9 @@
                                  </property>
                                  <property name="readOnly">
                                   <bool>true</bool>
+                                 </property>
+                                 <property name="maximum">
+                                  <double>100000.000000000000000</double>
                                  </property>
                                 </widget>
                                </item>
@@ -2107,7 +2188,7 @@
                  <number>0</number>
                 </property>
                 <property name="rightMargin">
-                 <number>0</number>
+                 <number>11</number>
                 </property>
                 <property name="bottomMargin">
                  <number>0</number>
