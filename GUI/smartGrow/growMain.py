@@ -5,7 +5,7 @@ from ui_growMain import Ui_smartGrowGUI
 from growpod import *
 import datetime
 
-
+# stylesheets from https://qss-stock.devsecstudio.com/
 styles = ["Toolery.qss", "Remover.qss", "SyNet.qss", "Irrorater.qss"]
 
 # "Toolery.qss" is my favorite, I would have to change the red in the groupbox and spinboxes
