@@ -230,46 +230,36 @@ void scheduler()
 /* Gets instruction packet via UDP from server. */
 void get_packet()
 {
-	const int input_packet_size = 5; /* Size of buffer in bytes*/
+	const int input_packet_size = 64; /* Size of buffer in bytes*/
 	char input_packet_buffer[input_packet_size];
-	uint8_t command_packet, new_water_schedule, new_light_on_schedule, new_light_off_schedule, new_dosage;
+	uint8_t new_water_schedule, new_light_on_schedule, new_light_off_schedule, new_dosage;
+	char command_packet[6];
 
 	if (Udp.parsePacket()) 
 	{
 		// We've received a packet, read the data from it
 		Udp.read(input_packet_buffer, input_packet_size);
 
-		/* Different method without sscanf()? */
-		sscanf(input_packet_buffer, "%hhu,%hhu,%hhu,%hhu,%hhu", &command_packet, &new_water_schedule,&new_light_on_schedule,&new_light_off_schedule, &new_dosage);
+		response_requested = true;
 
-		if (bitRead(command_packet, 0) == 0)
-		{
-			response_requested = true;
-		}
-		else if ((bitRead(command_packet, 0) == 1))
-		{
-			/* Parse incoming packet. Reads the nth byte of the input packet as an uint8_t. */
-			change_water_threshold =	new_water_schedule;
-			turn_on_light_threshold =	new_light_on_schedule;
-			turn_off_light_threshold =	new_light_off_schedule;
-			dosage =					new_dosage;
-			response_requested = false;
-		}
-		else if ((bitRead(command_packet, 1) == 1))
-		{
-			reset();
-		}
-		else if ((bitRead(command_packet, 2) == 1))
+		/* Different method without sscanf()? */
+		sscanf(input_packet_buffer, "%s,%hhu,%hhu,%hhu,%hhu", command_packet, &new_water_schedule, &new_dosage, &new_light_on_schedule,&new_light_off_schedule);
+
+		if (strcmp(input_packet_buffer,"init")==0)
 		{
 			initialize();
 		}
-		else
+		if (strcmp(input_packet_buffer, "update") == 0)
 		{
-			Serial.println("ERROR: Bad UDP packet!");
-			response_requested = false;
+			change_water_threshold = new_water_schedule;
+			turn_on_light_threshold = new_light_on_schedule;
+			turn_off_light_threshold = new_light_off_schedule;
+			dosage = new_dosage;
 		}
-
-
+		if (strcmp(input_packet_buffer, "reset") == 0)
+		{
+			reset();
+		}
 	}
 }
 
@@ -282,7 +272,7 @@ void send_packet()
 		char output_string[64];
 		uint32_t voltage, current, luminosity;
 		float temp, humidity;
-		uint8_t pump_status;
+		char lightStatus[3], airPump[3], sourcePump[3], drainPump[3], nutrientsPump[3];
 
 		memset(output_string, 0, 64);
 
@@ -294,12 +284,58 @@ void send_packet()
 		current = ina260.readCurrent();
 		temp = tempData.fahrenheit;
 		humidity = tempData.humidity;
-		luminosity =	0xFFFFFFFF;//
-		/* bit mask for pump status */
-		pump_status =	0b11111111;
+		luminosity =	0xFFFFFFFF;
+		/* Populating light response*/
+		if (digitalRead(LED.pin) == 1)
+		{
+			strcpy(lightStatus, "ON");
+		}
+		else if (digitalRead(LED.pin) == 0)
+		{
+			strcpy(lightStatus, "OFF");
+		}
 
-		 
-		sprintf(output_string, "%lu,%lu,%.1f,%.1f,%lu,%u\n", voltage,current,temp, humidity,luminosity,pump_status);
+		/* Populating air pump response*/
+		if (digitalRead(air_pump.pin) == 1)
+		{
+			strcpy(lightStatus, "ON");
+		}
+		else if (digitalRead(air_pump.pin) == 0)
+		{
+			strcpy(lightStatus, "OFF");
+		}
+
+		/* Populating source pump response*/
+		if (digitalRead(water_pump_source.pin) == 1)
+		{
+			strcpy(lightStatus, "ON");
+		}
+		else if (digitalRead(water_pump_source.pin) == 0)
+		{
+			strcpy(lightStatus, "OFF");
+		}
+
+		/* Populating drain pump response*/
+		if (digitalRead(water_pump_drain.pin) == 1)
+		{
+			strcpy(lightStatus, "ON");
+		}
+		else if (digitalRead(water_pump_drain.pin) == 0)
+		{
+			strcpy(lightStatus, "OFF");
+		}
+
+		/* Populating nutrient response*/
+		if (digitalRead(food_pump.pin) == 1)
+		{
+			strcpy(lightStatus, "ON");
+		}
+		else if (digitalRead(food_pump.pin) == 0)
+		{
+			strcpy(lightStatus, "OFF");
+		}
+		//luminosity;temperature;humidity;voltage;amps;lightStatus;airPump;sourcePump;drainPump;nutrientsPump
+		sprintf(output_string, "%lu;%.1f;%.1f;%lu;%lu;%s;%s;%s;%s;%s\n", luminosity,temp,humidity, voltage, current, lightStatus, airPump, sourcePump, drainPump, nutrientsPump);
 
 #if DEBUG
 		Serial.printf("\nMeasured Temp: %f\nMeasured Humidity: %f\n", tempData.fahrenheit, tempData.humidity);
@@ -312,7 +348,7 @@ void send_packet()
 		Udp.print(output_string);
 		Udp.endPacket();
 #endif
-		//response_requested = false;
+		response_requested = false;
 	}
 }
 
