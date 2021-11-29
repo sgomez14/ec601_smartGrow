@@ -11,15 +11,6 @@
 void setup(void) 
 {
   Serial.begin(9600);
-  if (tsl.begin()) 
-  {
-    Serial.println(F("Found a TSL2591 sensor"));
-  } 
-  else 
-  {
-    Serial.println(F("No sensor found ... check your wiring?"));
-    while (1);
-  }
   /* Initial the sensor */
   
   init_light_sensor();
@@ -29,6 +20,12 @@ void setup(void)
 
 void loop(void) 
 {  
-  print_light_data();
-  delay(500);
+  if(read_light_data()){
+    print_light_data();
+    delay(500);
+  }
+  else{
+    Serial.println(F("Wrong light data"));
+  }
+
 }
