@@ -1,9 +1,13 @@
 import json
 
 # list of available IP addresses for the grow pods
-ipAddress1 = "192.168.0.1"
-ipAddress2 = "192.168.0.2"
-ipAddress3 = "192.168.0.3"
+# ipAddress1 = "192.168.0.1"
+# ipAddress2 = "192.168.0.2"
+# ipAddress3 = "192.168.0.3"
+
+ipAddress1 = "10.0.0.1"
+ipAddress2 = "10.0.0.2"
+ipAddress3 = "10.0.0.3"
 
 # file path for JSON contains grow pod data
 filePathJSON = "growPod.json"
@@ -104,6 +108,50 @@ class GrowPod:
         self.notes = ""
         self.rememberGUIAtStartUp = False
 
+    def createUpdatePacket(self, command):
+        # packet that will be sent to grow pod mcu
+        updatePacket = ""
+
+        # construct setup info string
+        setupInfo = f"{self.feedSchedule};{self.feedDosage};{self.lightHoursOn};{self.lightHoursOff}"
+
+        if command == "init":
+            updatePacket = "init" + setupInfo
+
+            return updatePacket
+
+        elif command == "update":
+            updatePacket = "update" + setupInfo
+
+            return updatePacket
+
+        elif command == "reset":
+            updatePacket = "reset" + setupInfo
+
+            return updatePacket
+
+        else:
+            print("did not recognize command for updating grow pod mcu")
+
+    def updateWithMCUInfo(self, stringfromGrowPod):
+
+        # incoming string will have the following structure
+        # luminosity;temperature;humidity;voltage;amps;lightStatus;airPump;sourcePump;drainPump;nutrientsPump
+
+        values = stringfromGrowPod.split(";")
+
+        self.luminosity    = int(values[0])
+        self.temperature   = float(values[1])
+        self.humidity      = float(values[2])
+        self.voltage       = float(values[3])
+        self.amps          = float(values[4])
+        self.lightStatus   = values[5]
+        self.airPump       = values[6]
+        self.sourcePump    = values[7]
+        self.drainPump     = values[8]
+        self.nutrientsPump = values[9]
+
+
 ############## Section for Functions ##############
 
 
@@ -129,38 +177,6 @@ def growPodSetupInfoSame(tempGrowPod, currGrowPod):
     setupInfoSame = sameFeedSchedule and sameFeedDosage and sameLightHoursOn and sameLightHoursOff
 
     return setupInfoSame
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 def saveGrowPodJSON(listOfGrowPods):

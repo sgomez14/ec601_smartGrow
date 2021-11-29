@@ -3,9 +3,10 @@ from PySide6.QtWidgets import *  # QApplication, QMainWindow, QPushButton, QMess
 from PySide6 import QtCore
 from ui_growMain import Ui_smartGrowGUI
 from growpod import *
+from UDPreceiver_1st_version.py import UDP_RequestInfoFromGrowPod, UDP_TransferUpdateToGrowPod
+import datetime
 
-# TODO implement a timer for requesting info from growpods
-
+# stylesheets from https://qss-stock.devsecstudio.com/
 styles = ["Toolery.qss", "Remover.qss", "SyNet.qss", "Irrorater.qss"]
 
 # "Toolery.qss" is my favorite, I would have to change the red in the groupbox and spinboxes
@@ -14,6 +15,11 @@ styles = ["Toolery.qss", "Remover.qss", "SyNet.qss", "Irrorater.qss"]
 # "Irrorater.qss" is bold, quirky, and aggressive.. i like it (wildcard)
 
 stylesheetFilePath = f"resources/stylesheets/{styles[0]}"
+
+# one minute in milliseconds
+minute_ms = 60000
+
+timerTimeoutInterval = 1000
 
 
 DEVELOPMENT = True
@@ -63,6 +69,7 @@ class MainWindow(QMainWindow):
         self.gridCurrentCol = 1
         self.gridCurrentRow = 1
 
+        # create grow pod objects
         self.growPod1 = GrowPod()
         self.growPod2 = GrowPod()
         self.growPod3 = GrowPod()
@@ -73,6 +80,7 @@ class MainWindow(QMainWindow):
         # set grow pod IP Addresses
         self.assignIpAddressesToGrowPods()
 
+        # add grow pods to list
         self.growPodsList = [self.growPod1, self.growPod2, self.growPod3]
 
         # styling for when form is saved
@@ -128,20 +136,23 @@ class MainWindow(QMainWindow):
                     if growPod.initializedState == GROWPOD_NOT_INITIALIZED:
                         self.setGrowPod_UI_notInitializedState(growPod.uniqueID)
                         print(f"growPod{growPod.uniqueID}" + GROWPOD_NOT_INITIALIZED)
+
                     elif growPod.initializedState == GROWPOD_SAVED_INIT_LATER:
                         self.setGrowPod_UI_AfterSavedInitLater(growPod.uniqueID)
                         print(f"growPod{growPod.uniqueID}" + GROWPOD_SAVED_INIT_LATER)
-                    else:
+
+                    elif growPod.initializedState == GROWPOD_INITIALIZED:
                         self.setGrowPod_UI_AfterInitialized(growPod.uniqueID)
                         print(f"growPod{growPod.uniqueID}" + GROWPOD_INITIALIZED)
 
+                        # create grow pod timer
+                        self.createGrowPodTimer(growPod.uniqueID, timerTimeoutInterval)
 
-        # set the UI for the three grow pods in the notInitializedState
-        # self.setGrowPod_UI_notInitializedState(1)
-        # self.setGrowPod_UI_notInitializedState(2)
-        # self.setGrowPod_UI_notInitializedState(3)
+                        # start timer
+                        self.startGrowPodTimer(growPod.uniqueID)
 
-
+                    else:
+                        print(f"did not recognize growPod{growPod.uniqueID}'s initialized state")
 
     def assignUniqueIDsToGrowPods(self):
         self.growPod1.uniqueID = 1
@@ -186,6 +197,9 @@ class MainWindow(QMainWindow):
 
         # connect message reset button to action
         self.ui.messageAreaClearButton.clicked.connect(self.messagesResetButtonClicked)
+
+        # connect refresh button to action
+        self.ui.refreshGrowPodInfoButton.clicked.connect(self.refreshInfoButtonClicked)
 
     def setGrowPod_UI_notInitializedState(self, growPodNumber):
 
@@ -345,7 +359,7 @@ class MainWindow(QMainWindow):
         # logic for checking if fields are empty
         if invalidSetupInfo(self.growPod1):
             print(self.invalidFieldMessage + " 1")
-            self.ui.messageAreaText.append(self.invalidFieldMessage + " 1")
+            self.ui.messageAreaText.append(self.getTimeStamp() + self.invalidFieldMessage + " 1")
         else:
             # logic to confirm that user wants to initialize grow pod
             if confirmInitializeGrowPod(self.growPod1):
@@ -358,8 +372,14 @@ class MainWindow(QMainWindow):
                 # save the new information to JSON
                 saveGrowPodJSON(self.growPodsList)
 
-                # TODO: here is the section for sending information over to microcontroller
-                # sendPacketToGrowPod(growPod, command)
+                # sending information over to microcontroller
+                self.sendPacketToGrowPod(self.growPod1, "init")
+
+                # create grow pod timer
+                self.createGrowPodTimer(1, timerTimeoutInterval)
+
+                # start timer
+                self.startGrowPodTimer(1)
 
             else:
                 print("user does not want to initialize growPod")
@@ -381,7 +401,7 @@ class MainWindow(QMainWindow):
         # logic for checking if fields are empty
         if invalidSetupInfo(self.growPod1):
             print(self.invalidFieldMessage + " 1")
-            self.ui.messageAreaText.append(self.invalidFieldMessage + " 1")
+            self.ui.messageAreaText.append(self.getTimeStamp() + self.invalidFieldMessage + " 1")
         else:
             # set initialized status
             self.growPod1.initializedState = GROWPOD_SAVED_INIT_LATER
@@ -396,6 +416,10 @@ class MainWindow(QMainWindow):
         print("edit button 1 clicked")
 
         self.setGrowPod_UI_EditClicked(1)
+
+        # stop timer for getting updates
+        if self.growPod1.initializedState == GROWPOD_INITIALIZED:
+            self.stopGrowPodTimer(1)
 
 
     def saveInfoButton_1_Clicked(self):
@@ -416,7 +440,7 @@ class MainWindow(QMainWindow):
         # logic for checking if fields are empty
         if invalidSetupInfo(tempGrowPod):
             print(self.invalidFieldMessage + " 1")
-            self.ui.messageAreaText.append(self.invalidFieldMessage + " 1")
+            self.ui.messageAreaText.append(self.getTimeStamp() + self.invalidFieldMessage + " 1")
         else:
             # code section for updating the UI
             self.setGrowPod_UI_SavedInfoClicked(1)
@@ -432,8 +456,8 @@ class MainWindow(QMainWindow):
                 # logic to update grow pod
                 print("setup info changed")
 
-                # TODO: section for sending packet to microcontroller
-                # sendPacketToGrowPod(growPod, command)
+                # sending packet to microcontroller
+                self.sendPacketToGrowPod(self.growPod1, "update")
 
         # save information on form
         self.growPod1.plantName = self.ui.plantNameLineEdit_1.text()
@@ -450,8 +474,12 @@ class MainWindow(QMainWindow):
         # save the new information to JSON
         saveGrowPodJSON(self.growPodsList)
 
+        # restart timer for getting updating info from mcu
+        self.createGrowPodTimer(1, timerTimeoutInterval)
+        self.startGrowPodTimer(1)
+
         # printing for debugging
-        self.growPod1.printSetupInfo()
+        # self.growPod1.printSetupInfo()
 
     def enableResetButton_1_Clicked(self):
         print("enable reset button 1 clicked")
@@ -466,11 +494,12 @@ class MainWindow(QMainWindow):
             print("user wants to reset grow pod")
 
             # set message in Messages
-            self.ui.messageAreaText.append(f"Reset of Grow Pod {self.growPod1.plantName} Confirmed")
+            self.ui.messageAreaText.append(self.getTimeStamp() + f"Reset of Grow Pod {self.growPod1.plantName} Confirmed")
 
             self.growPod1.resetGrowPod(1, ipAddress1)
 
-            # TODO: send reset command to grow pod
+            # send reset command to grow pod
+            self.sendPacketToGrowPod(self.growPod1, "reset")
 
             # save the current status of all grow pods
             saveGrowPodJSON(self.growPodsList)
@@ -481,6 +510,9 @@ class MainWindow(QMainWindow):
             # set UI to not initialized state
             self.setGrowPod_UI_notInitializedState(1)
 
+            # kill grow pod timer
+            self.stopGrowPodTimer(1)
+
         else:
             print("user does not want to reset grow pod")
 
@@ -489,7 +521,7 @@ class MainWindow(QMainWindow):
             self.ui.resetGrowPodButton_1.setEnabled(False)
 
             # set message in Messages
-            self.ui.messageAreaText.append(f"Reset of Grow Pod {self.growPod1.plantName} Cancelled")
+            self.ui.messageAreaText.append(self.getTimeStamp() + f"Reset of Grow Pod {self.growPod1.plantName} Cancelled")
 
 
 
@@ -508,7 +540,7 @@ class MainWindow(QMainWindow):
         # logic for checking if fields are empty
         if invalidSetupInfo(self.growPod2):
             print(self.invalidFieldMessage + " 2")
-            self.ui.messageAreaText.append(self.invalidFieldMessage + " 2")
+            self.ui.messageAreaText.append(self.getTimeStamp() + self.invalidFieldMessage + " 2")
         else:
             # logic to confirm that user wants to initialize grow pod
             if confirmInitializeGrowPod(self.growPod2):
@@ -523,12 +555,17 @@ class MainWindow(QMainWindow):
                 # save the new information to JSON
                 saveGrowPodJSON(self.growPodsList)
 
-                # TODO: here is the section for sending information over to microcontroller
-                # sendPacketToGrowPod(growPod, command)
+                # sending information over to microcontroller
+                self.sendPacketToGrowPod(self.growPod2, "init")
+
+                # create grow pod timer
+                self.createGrowPodTimer(2, timerTimeoutInterval)
+
+                # start timer
+                self.startGrowPodTimer(2)
 
             else:
                 print("user does not want to initialize growPod")
-
 
     def saveInitializeLaterButton_20_Clicked(self):
         print("save initialize Later button 20 clicked")
@@ -545,7 +582,7 @@ class MainWindow(QMainWindow):
         # logic for checking if fields are empty
         if invalidSetupInfo(self.growPod2):
             print(self.invalidFieldMessage + " 2")
-            self.ui.messageAreaText.append(self.invalidFieldMessage + " 2")
+            self.ui.messageAreaText.append(self.getTimeStamp() + self.invalidFieldMessage + " 2")
         else:
             # set initialized Status
             self.growPod2.initializedState = GROWPOD_SAVED_INIT_LATER
@@ -561,6 +598,10 @@ class MainWindow(QMainWindow):
         print("edit button 20 clicked")
 
         self.setGrowPod_UI_EditClicked(2)
+
+        # stop timer for getting updates
+        if self.growPod2.initializedState == GROWPOD_INITIALIZED:
+            self.stopGrowPodTimer(2)
 
 
     def saveInfoButton_20_Clicked(self):
@@ -581,7 +622,7 @@ class MainWindow(QMainWindow):
         # logic for checking if fields are empty
         if invalidSetupInfo(tempGrowPod):
             print(self.invalidFieldMessage + " 2")
-            self.ui.messageAreaText.append(self.invalidFieldMessage + " 2")
+            self.ui.messageAreaText.append(self.getTimeStamp() + self.invalidFieldMessage + " 2")
         else:
             # code section for updating the UI
             self.setGrowPod_UI_SavedInfoClicked(2)
@@ -597,8 +638,8 @@ class MainWindow(QMainWindow):
                 # logic to update grow pod
                 print("setup info changed")
 
-                # TODO: section for sending packet to microcontroller
-                # sendPacketToGrowPod(growPod, command)
+                # sending packet to microcontroller
+                self.sendPacketToGrowPod(self.growPod2, "update")
 
         # save information on form
         self.growPod2.plantName = self.ui.plantNameLineEdit_20.text()
@@ -615,8 +656,12 @@ class MainWindow(QMainWindow):
         # save the new information to JSON
         saveGrowPodJSON(self.growPodsList)
 
+        # restart timer for getting updating info from mcu
+        self.createGrowPodTimer(2, timerTimeoutInterval)
+        self.startGrowPodTimer(2)
+
         # printing for debugging
-        self.growPod2.printSetupInfo()
+        # self.growPod2.printSetupInfo()
 
     def enableResetButton_20_Clicked(self):
         print("enable reset button 20 clicked")
@@ -631,11 +676,12 @@ class MainWindow(QMainWindow):
             print("user wants to reset grow pod")
 
             # set message in Messages
-            self.ui.messageAreaText.append(f"Reset of Grow Pod {self.growPod2.plantName} Confirmed")
+            self.ui.messageAreaText.append(self.getTimeStamp() + f"Reset of Grow Pod {self.growPod2.plantName} Confirmed")
 
             self.growPod2.resetGrowPod(2, ipAddress2)
 
-            # TODO: send reset command to grow pod
+            # send reset command to grow pod
+            self.sendPacketToGrowPod(self.growPod2, "reset")
 
             # save the current status of all grow pods
             saveGrowPodJSON(self.growPodsList)
@@ -646,6 +692,9 @@ class MainWindow(QMainWindow):
             # set UI to not initialized state
             self.setGrowPod_UI_notInitializedState(2)
 
+            # stop grow pod timer
+            self.stopGrowPodTimer(2)
+
         else:
             print("user does not want to reset grow pod")
 
@@ -654,7 +703,7 @@ class MainWindow(QMainWindow):
             self.ui.resetGrowPodButton_20.setEnabled(False)
 
             # set message in Messages
-            self.ui.messageAreaText.append(f"Reset of Grow Pod {self.growPod2.plantName} Cancelled")
+            self.ui.messageAreaText.append(self.getTimeStamp() + f"Reset of Grow Pod {self.growPod2.plantName} Cancelled")
 
 ############## stop here ########################
 
@@ -673,7 +722,7 @@ class MainWindow(QMainWindow):
         # logic for checking if fields are empty
         if invalidSetupInfo(self.growPod3):
             print(self.invalidFieldMessage + " 3")
-            self.ui.messageAreaText.append(self.invalidFieldMessage + " 3")
+            self.ui.messageAreaText.append(self.getTimeStamp() + self.invalidFieldMessage + " 3")
         else:
             # logic to confirm that user wants to initialize grow pod
             if confirmInitializeGrowPod(self.growPod3):
@@ -688,8 +737,14 @@ class MainWindow(QMainWindow):
                 # save the new information to JSON
                 saveGrowPodJSON(self.growPodsList)
 
-                # TODO: here is the section for sending information over to microcontroller
-                # sendPacketToGrowPod(growPod, command)
+                # sending information over to microcontroller
+                self.sendPacketToGrowPod(self.growPod3, "init")
+
+                # create grow pod timer
+                self.createGrowPodTimer(3, timerTimeoutInterval)
+
+                # start timer
+                self.startGrowPodTimer(3)
 
             else:
                 print("user does not want to initialize growPod")
@@ -709,7 +764,7 @@ class MainWindow(QMainWindow):
         # logic for checking if fields are empty
         if invalidSetupInfo(self.growPod3):
             print(self.invalidFieldMessage + " 3")
-            self.ui.messageAreaText.append(self.invalidFieldMessage + " 3")
+            self.ui.messageAreaText.append(self.getTimeStamp() + self.invalidFieldMessage + " 3")
         else:
             # set initialized status
             self.growPod3.initializedState = GROWPOD_SAVED_INIT_LATER
@@ -724,6 +779,10 @@ class MainWindow(QMainWindow):
         print("edit button 30 clicked")
 
         self.setGrowPod_UI_EditClicked(3)
+
+        # stop timer for getting updates
+        if self.growPod3.initializedState == GROWPOD_INITIALIZED:
+            self.stopGrowPodTimer(3)
 
 
     def saveInfoButton_30_Clicked(self):
@@ -744,7 +803,7 @@ class MainWindow(QMainWindow):
         # logic for checking if fields are empty
         if invalidSetupInfo(tempGrowPod):
             print(self.invalidFieldMessage + " 3")
-            self.ui.messageAreaText.append(self.invalidFieldMessage + " 3")
+            self.ui.messageAreaText.append(self.getTimeStamp() + self.invalidFieldMessage + " 3")
         else:
             # code section for updating the UI
             self.setGrowPod_UI_SavedInfoClicked(3)
@@ -760,8 +819,8 @@ class MainWindow(QMainWindow):
                 # logic to update grow pod
                 print("setup info changed")
 
-                # TODO: section for sending packet to microcontroller
-                # sendPacketToGrowPod(growPod, command)
+                # sending packet to microcontroller
+                self.sendPacketToGrowPod(self.growPod3, "update")
 
         # save information on form
         self.growPod3.plantName = self.ui.plantNameLineEdit_30.text()
@@ -777,6 +836,10 @@ class MainWindow(QMainWindow):
 
         # save the new information to JSON
         saveGrowPodJSON(self.growPodsList)
+
+        # restart timer for getting updating info from mcu
+        self.createGrowPodTimer(3, timerTimeoutInterval)
+        self.startGrowPodTimer(3)
 
         # printing for debugging
         # self.growPod3.printSetupInfo()
@@ -794,12 +857,13 @@ class MainWindow(QMainWindow):
             print("user wants to reset grow pod")
 
             # set message in Messages
-            self.ui.messageAreaText.append(f"Reset of Grow Pod {self.growPod3.plantName} Confirmed")
+            self.ui.messageAreaText.append(self.getTimeStamp() + f"Reset of Grow Pod {self.growPod3.plantName} Confirmed")
 
             # reset grow pod object
             self.growPod3.resetGrowPod(3, ipAddress3)
 
-            # TODO: send reset command to grow pod
+            # send reset command to grow pod
+            self.sendPacketToGrowPod(self.growPod3, "reset")
 
             # save the current status of all grow pods
             saveGrowPodJSON(self.growPodsList)
@@ -810,6 +874,9 @@ class MainWindow(QMainWindow):
             # set UI to not initialized state
             self.setGrowPod_UI_notInitializedState(3)
 
+            # stop grow pod timer
+            self.stopGrowPodTimer(3)
+
         else:
             print("user does not want to reset grow pod")
 
@@ -818,7 +885,7 @@ class MainWindow(QMainWindow):
             self.ui.resetGrowPodButton_30.setEnabled(False)
 
             # set message in Messages
-            self.ui.messageAreaText.append(f"Reset of Grow Pod {self.growPod3.plantName} Cancelled")
+            self.ui.messageAreaText.append(self.getTimeStamp() + f"Reset of Grow Pod {self.growPod3.plantName} Cancelled")
 
     def messagesResetButtonClicked(self):
         print("Messages Rest button clicked")
@@ -1449,6 +1516,220 @@ class MainWindow(QMainWindow):
             self.ui.initializeGrowPodButton_30.setHidden(True)
             self.ui.saveInitializeLaterButton_30.setHidden(True)
             self.ui.resetGrowPodButton_30.setHidden(True)
+
+    def createGrowPodTimer(self, growPodNumber, timeOutInterval):
+
+        if growPodNumber == 1:
+            # create timer for requesting data from grow pod
+            self.growPodTimer1 = QtCore.QTimer()
+
+            # connect timer to timeout functions
+            self.growPodTimer1.timeout.connect(self.requestInfoFromGrowPod1)
+
+            # set timeout interval
+            self.growPodTimer1.setInterval(timeOutInterval)
+
+        elif growPodNumber == 2:
+            # create timer for requesting data from grow pod
+            self.growPodTimer2 = QtCore.QTimer()
+
+            # connect timer to timeout functions
+            self.growPodTimer2.timeout.connect(self.requestInfoFromGrowPod2)
+
+            # set timeout interval
+            self.growPodTimer2.setInterval(timeOutInterval)
+
+        elif growPodNumber == 3:
+            # create timer for requesting data from grow pod
+            self.growPodTimer3 = QtCore.QTimer()
+
+            # connect timer to timeout functions
+            self.growPodTimer3.timeout.connect(self.requestInfoFromGrowPod3)
+
+            # set timeout interval
+            self.growPodTimer3.setInterval(timeOutInterval)
+
+        else:
+            print("did not recognize grow pod number for setting up timer")
+
+    def startGrowPodTimer(self, growPodNumber):
+
+        if growPodNumber == 1:
+            self.growPodTimer1.start()
+
+        elif growPodNumber == 2:
+            self.growPodTimer2.start()
+
+        elif growPodNumber == 3:
+            self.growPodTimer3.start()
+
+        else:
+            print("did not recognize grow pod number for starting timer")
+
+    def stopGrowPodTimer(self, growPodNumber):
+
+        if growPodNumber == 1:
+            self.growPodTimer1.stop()
+
+        elif growPodNumber == 2:
+            self.growPodTimer2.stop()
+
+        elif growPodNumber == 3:
+            self.growPodTimer3.stop()
+
+        else:
+            print("did not recognize grow pod number for killing timer")
+
+    def requestInfoFromGrowPod1(self):
+        growPodNumber = 1
+        message = f"requesting info from grow pod {growPodNumber}"
+        print(message)
+
+        # get info from the grow pod MCU
+        # format of the packet the growPod will send to GUI
+        # luminosity;temperature;humidity;voltage;amps;lightStatus;airPump;sourcePump;drainPump;nutrientsPump
+        mcuInfo = UDP_RequestInfoFromGrowPod(self.growPod1.ipAddress) # test data "100;100.5;100.5;200.3;400.6;ON;ON;ON;ON;ON"
+
+        # update grow pod object with info from the grow pod MCU
+        self.growPod1.updateWithMCUInfo(mcuInfo)
+
+        # save the new info the JSON
+        saveGrowPodJSON(self.growPodsList)
+
+        # load that info on the GUI
+        self.loadGrowPodInfoForDisplay([self.growPod1])
+
+    def requestInfoFromGrowPod2(self):
+        growPodNumber = 2
+        message = f"requesting info from grow pod {growPodNumber}"
+        print(message)
+
+        # get info from the grow pod MCU
+        # format of the packet the growPod will send to GUI
+        # luminosity;temperature;humidity;voltage;amps;lightStatus;airPump;sourcePump;drainPump;nutrientsPump
+        mcuInfo = UDP_RequestInfoFromGrowPod(self.growPod2.ipAddress)  # test data "2000;100.5;100.5;200.3;400.6;ON;ON;ON;ON;ON"
+
+        # update grow pod object with info from the grow pod MCU
+        self.growPod2.updateWithMCUInfo(mcuInfo)
+
+        # save the new info the JSON
+        saveGrowPodJSON(self.growPodsList)
+
+        # load that info on the GUI
+        self.loadGrowPodInfoForDisplay([self.growPod2])
+
+    def requestInfoFromGrowPod3(self):
+        growPodNumber = 3
+        message = f"requesting info from grow pod {growPodNumber}"
+        print(message)
+
+        # get info from the grow pod MCU
+        # format of the packet the growPod will send to GUI
+        # luminosity;temperature;humidity;voltage;amps;lightStatus;airPump;sourcePump;drainPump;nutrientsPump
+        mcuInfo = UDP_RequestInfoFromGrowPod(self.growPod3.ipAddress)  # test data "3000;100.5;100.5;200.3;400.6;ON;ON;ON;ON;ON"
+
+        # update grow pod object with info from the grow pod MCU
+        self.growPod3.updateWithMCUInfo(mcuInfo)
+
+        # save the new info the JSON
+        saveGrowPodJSON(self.growPodsList)
+
+        # load that info on the GUI
+        self.loadGrowPodInfoForDisplay([self.growPod3])
+
+    def refreshInfoButtonClicked(self):
+
+        if self.growPod1.initializedState == GROWPOD_INITIALIZED and self.growPodTimer1.isActive():
+            # stop timer
+            self.stopGrowPodTimer(1)
+
+            # refresh grow pod UI
+            self.requestInfoFromGrowPod1()
+
+            # restart timer
+            self.createGrowPodTimer(1, timerTimeoutInterval)
+            self.startGrowPodTimer(1)
+
+        else:
+            print("GrowPod1 cannot be refreshed since it is not initialized or is being edited")
+            self.ui.messageAreaText.append(self.getTimeStamp() + "GrowPod1 cannot be refreshed since it is not initialized or is being edited")
+
+        if self.growPod2.initializedState == GROWPOD_INITIALIZED and self.growPodTimer2.isActive():
+            # stop timer
+            self.stopGrowPodTimer(2)
+
+            # refresh grow pod UI
+            self.requestInfoFromGrowPod2()
+
+            # restart timer
+            self.createGrowPodTimer(2, timerTimeoutInterval)
+            self.startGrowPodTimer(2)
+
+        else:
+            print("grow pod 2 cannot be refreshed since it is not initialized or is being edited")
+            self.ui.messageAreaText.append(self.getTimeStamp() + "GrowPod2 cannot be refreshed since it is not initialized or is being edited")
+
+        if self.growPod3.initializedState == GROWPOD_INITIALIZED and self.growPodTimer3.isActive():
+            # stop timer
+            self.stopGrowPodTimer(3)
+
+            # refresh grow pod UI
+            self.requestInfoFromGrowPod2()
+
+            # restart timer
+            self.createGrowPodTimer(3, timerTimeoutInterval)
+            self.startGrowPodTimer(3)
+
+        else:
+            print("grow pod 3 cannot be refreshed since it is not initialized or is being edited")
+            self.ui.messageAreaText.append(self.getTimeStamp() + "GrowPod3 cannot be refreshed since it is not initialized or is being edited")
+
+    # marked for deletion
+    # def getUpdatePacket(self, growPodNumber, command):
+    #
+    #     if growPodNumber == 1:
+    #         return self.growPod1.createUpdatePacket(command)
+    #
+    #     elif growPodNumber == 2:
+    #         return self.growPod2.createUpdatePacket(command)
+    #
+    #     elif growPodNumber == 3:
+    #         return self.growPod3.createUpdatePacket(command)
+    #
+    #     else:
+    #         print(f"did not recognize grow pod number {growPodNumber} for creating update packet")
+
+    def sendPacketToGrowPod(self, growPod, command):
+
+        if growPod.uniqueID == 1:
+            print(f"Sending update packet to grow pod {growPod.plantName} with command: {command}")
+            self.ui.messageAreaText.append(self.getTimeStamp() + f"Sending update packet to grow pod {growPod.plantName} with command: {command}")
+
+            # UPD data transfer here
+            updatePacket = self.growPod1.createUpdatePacket(command)
+            UDP_TransferUpdateToGrowPod(self.growPod1.ipAddress, updatePacket)
+
+        elif growPod.uniqueID == 2:
+            print(f"Sending update packet to grow pod {growPod.plantName} with command: {command}")
+            self.ui.messageAreaText.append(self.getTimeStamp() +
+                f"Sending update packet to grow pod {growPod.plantName} with command: {command}")
+
+            # UPD data transfer here
+            updatePacket = self.growPod2.createUpdatePacket(command)
+            UDP_TransferUpdateToGrowPod(self.growPod2.ipAddress, updatePacket)
+
+        elif growPod.uniqueID == 3:
+            print(f"Sending update packet to grow pod {growPod.plantName} with command: {command}")
+            self.ui.messageAreaText.append(self.getTimeStamp() +
+                f"Sending update packet to grow pod {growPod.plantName} with command: {command}")
+
+            # UPD data transfer here
+            updatePacket = self.growPod3.createUpdatePacket(command)
+            UDP_TransferUpdateToGrowPod(self.growPod3.ipAddress, updatePacket)
+
+    def getTimeStamp(self):
+
+        return f"{datetime.datetime.now():%Y-%b-%d %H:%M:%S}    "
 
 
 if __name__ == '__main__':
