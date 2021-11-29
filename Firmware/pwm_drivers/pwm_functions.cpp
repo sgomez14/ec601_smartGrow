@@ -18,15 +18,15 @@ elapsedMillis turn_on_light;
 elapsedMillis turn_off_light;
 
 /* Networking Variable */
-bool response_requested = true;
+bool response_requested = false;
 byte mac[] = {
-  0x04, 0xe9, 0xe5, 0x0e, 0xcf, 0x0c
+  0x04, 0xe9, 0xe5, 0x10, 0x30, 0x77
 };//04:e9:e5:0e:cf:0c
 int local_port = 80;
 EthernetUDP Udp;
 int server_port = 80;
-IPAddress server_IP(10, 0, 0, 0);
-IPAddress device_ip(10, 0, 0, 1);
+IPAddress server_IP(192, 168, 86, 34);
+IPAddress device_ip(192, 168, 86, 20);
 
 /* Info on multifile variables: 
 https://stackoverflow.com/questions/1433204/how-do-i-use-extern-to-share-variables-between-source-files
@@ -236,7 +236,8 @@ void get_packet()
 {
 	const int input_packet_size = 128; /* Size of buffer in bytes*/
 	char input_packet_buffer[input_packet_size];
-	uint8_t new_water_schedule, new_light_on_schedule, new_light_off_schedule, new_dosage;
+	uint8_t new_water_schedule, new_light_on_schedule, new_light_off_schedule;
+	float new_dosage;
 	char command_packet[6];
 
 	if (Udp.parsePacket()) 
@@ -244,12 +245,17 @@ void get_packet()
 		// We've received a packet, read the data from it
 		Udp.read(input_packet_buffer, input_packet_size);
 
+		Serial.printf("Input packet: %s\n", input_packet_buffer);
+
 		/* sscanf needs \n ? */
-		sscanf(input_packet_buffer, "%s;%hhu;%hhu;%hhu;%hhu", command_packet, &new_water_schedule, &new_dosage, &new_light_on_schedule,&new_light_off_schedule);
+		sscanf(input_packet_buffer, "%s %hhu %f %hhu %hhu", command_packet, &new_water_schedule, &new_dosage, &new_light_on_schedule,&new_light_off_schedule);
+
+		Serial.printf("New Variables:\nCommand: %s|\nNew Water Schedule: %hhu\nNew Dosage: %f\nNew light on: %hhu\nNew light off: %hhu\n", command_packet, new_water_schedule, new_dosage, new_light_on_schedule, new_light_off_schedule);
+
 
 		if (strcmp(command_packet,"init")==0)
 		{
-			initialize();
+			//initialize();
 			/* Converts incoming hours to ms */
 			change_water_threshold = new_water_schedule * 3600000;
 			turn_on_light_threshold = new_light_on_schedule * 3600000;
@@ -275,7 +281,6 @@ void get_packet()
 		{
 			response_requested = true;
 		}
-		Serial.printf("Input Packet: %s", input_packet_buffer);
 	}
 }
 
@@ -284,7 +289,19 @@ void send_packet()
 { 
 	if (response_requested == true)
 	{
-		char output_string[128];
+		/* Printing remote server info. Based on https://github.com/vjmuzik/NativeEthernet/blob/master/examples/UDPSendReceiveString/UDPSendReceiveString.ino */
+		IPAddress remote = Udp.remoteIP();
+		for (int i = 0; i < 4; i++) {
+			Serial.print(remote[i], DEC);
+			if (i < 3) {
+				Serial.print(".");
+			}
+		}
+		Serial.print(", port ");
+		Serial.println(Udp.remotePort());
+
+
+		char output_string[128],test_output_string[128];
 		uint32_t voltage, current, luminosity;
 		float temp, humidity;
 		char lightStatus[4], airPump[4], sourcePump[4], drainPump[4], nutrientsPump[4];
@@ -292,14 +309,14 @@ void send_packet()
 		memset(output_string, 0, 64);
 
 		if (!readTempSensor(&tempSensor, &tempData)) {
-			Serial.printf("ERROR! Temp sensor could not be read.");
+			//Serial.println ("ERROR! Temp sensor could not be read.");
 		}
 
 		voltage =		ina260.readBusVoltage();
 		current =		ina260.readCurrent();
 		temp =			tempData.fahrenheit;
 		humidity =		tempData.humidity;
-		luminosity =	0xFFFFFFFF;
+		luminosity =	tsl.getLuminosity(TSL2591_FULLSPECTRUM);
 		/* Populating light response*/
 		if (digitalRead(LED.pin) == 1)
 		{
@@ -352,6 +369,8 @@ void send_packet()
 		//luminosity;temperature;humidity;voltage;amps;lightStatus;airPump;sourcePump;drainPump;nutrientsPump
 		sprintf(output_string, "%lu;%.1f;%.1f;%lu;%lu;%s;%s;%s;%s;%s", luminosity,temp,humidity, voltage, current, lightStatus, airPump, sourcePump, drainPump, nutrientsPump);
 
+		Serial.println(output_string);
+
 #if DEBUG
 		Serial.printf("\nMeasured Temp: %f\nMeasured Humidity: %f\n", tempData.fahrenheit, tempData.humidity);
 		Serial.printf("Stored Temp: %f\nStored Humidity: %f\n", temp, humidity);
@@ -359,8 +378,9 @@ void send_packet()
 #endif
 
 #if ETHERNET
-		Udp.beginPacket(server_IP, server_port);
-		Udp.print(output_string);
+		strcpy(test_output_string, "42;69;30;420;49;ON;ON;ON;ON;ON");
+		Udp.beginPacket(Udp.remoteIP(), Udp.remotePort());
+		Udp.write(test_output_string);
 		Udp.endPacket();
 #endif
 		response_requested = false;
@@ -401,4 +421,48 @@ void teensyMAC(uint8_t* mac) {
 	for (uint8_t by = 0; by < 2; by++) mac[by] = (HW_OCOTP_MAC1 >> ((1 - by) * 8)) & 0xFF;
 	for (uint8_t by = 0; by < 4; by++) mac[by + 2] = (HW_OCOTP_MAC0 >> ((3 - by) * 8)) & 0xFF;
 	Serial.printf("MAC: %02x:%02x:%02x:%02x:%02x:%02x\n", mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
+}
+
+void print_ethernet_test() {
+	EthernetClient client = server.available();
+	if (client) {
+		Serial.println("new client");
+		// an http request ends with a blank line
+		boolean currentLineIsBlank = true;
+		while (client.connected()) {
+			if (client.available()) {
+				char c = client.read();
+				Serial.write(c);
+				// if you've gotten to the end of the line (received a newline
+				// character) and the line is blank, the http request has ended,
+				// so you can send a reply
+				if (c == '\n' && currentLineIsBlank) {
+					// send a standard http response header
+					client.println("HTTP/1.1 200 OK");
+					client.println("Content-Type: text/html");
+					client.println("Connection: close");  // the connection will be closed after completion of the response
+					client.println("Refresh: 5");  // refresh the page automatically every 5 sec
+					client.println();
+					client.println("<!DOCTYPE HTML>");
+					client.println("<html>");
+					client.println("Hello from Auto Gardener!");
+					client.println("</html>");
+					break;
+				}
+				if (c == '\n') {
+					// you're starting a new line
+					currentLineIsBlank = true;
+				}
+				else if (c != '\r') {
+					// you've gotten a character on the current line
+					currentLineIsBlank = false;
+				}
+			}
+		}
+		// give the web browser time to receive the data
+		delay(1);
+		// close the connection:
+		client.stop();
+		Serial.println("client disconnected");
+	}
 }

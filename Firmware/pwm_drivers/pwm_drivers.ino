@@ -12,20 +12,48 @@
 
 #include "pwm_functions.h"
 
+EthernetServer server(80);
 
 void setup() {
 	Serial.begin(9600);
+
+	teensyMAC(mac);
+
 	while (!Serial) {
 		; // wait for serial port to connect. Needed for native USB
 	}
+	/*
+	if (tsl.begin())
+	{
+		Serial.println(F("Found a TSL2591 sensor"));
+	}
+	else
+	{
+		Serial.println(F("No sensor found ... check your wiring?"));
+		while (1);
+	}
+	if (!ina260.begin()) {
+		Serial.println("Couldn't find INA260 chip");
+		while (1);
+	}
+	Serial.println("Found INA260 chip");
+	*/
 
+	/* Start networking */	
+	Ethernet.begin(mac, device_ip);
+	Udp.begin(local_port);
+	
+
+	init_light_sensor();
+	
 	pinMode(13, OUTPUT);
 	pinMode(LED.pin, OUTPUT);
 	digitalWrite(13, HIGH);
-	pinMode(PLANTER_WATER_SENSOR_PIN, INPUT);
 	pinMode(DHTPIN, INPUT);
 
 	tempSensorInit();
+
+	//initialize();
 
 	Serial.println("Initial 2 sec delay:");
 	delay(2000);
@@ -35,9 +63,11 @@ void setup() {
 	turn_off_light = 0;
 	turn_on_light = 0;
 
-	initialize();
+	server.begin();
+	Serial.print("server is at ");
+	Serial.println(Ethernet.localIP());
 
-	//teensyMAC(mac);
+	//initialize();
 
 #if DEBUG
 	//PWM_calibration(&water_pump_source);
@@ -50,7 +80,8 @@ void setup() {
  
 // the loop function runs over and over again until power down or reset
 void loop() {
-
+	Serial.println("Top of loop");
+	//print_ethernet_test();
 	if (system_attention_flag)
 	{
 		Serial.printf("ERROR IN SYSTEM. CURRENT OVERDRAW PROTECTION ACTIVATED. CHECK FOR PUMP JAMS.\n");
@@ -59,12 +90,16 @@ void loop() {
 	else
 	{
 		/* Receive command packet*/
+		//Serial.println("Getting packet...");
 		get_packet();
 
 		/* Scheduler */
-		scheduler();
+		//Serial.println("Checking Schedule");
+		//scheduler();
 
 		/* Send response packet*/
+		//Serial.println("Sending packet...");
+		//response_requested = 1;
 		send_packet();
 
 		/* Printing timers for debugging */
@@ -79,5 +114,5 @@ void loop() {
 #endif
 
 	}
-	delay(500);
+	delay(2500);
 }

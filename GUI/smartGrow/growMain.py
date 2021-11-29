@@ -1585,6 +1585,7 @@ class MainWindow(QMainWindow):
         # format of the packet the growPod will send to GUI
         # luminosity;temperature;humidity;voltage;amps;lightStatus;airPump;sourcePump;drainPump;nutrientsPump
         mcuInfo = UDP_RequestInfoFromGrowPod(self.growPod1.ipAddress) # test data "100;100.5;100.5;200.3;400.6;ON;ON;ON;ON;ON"
+        print(mcuInfo)
 
         # update grow pod object with info from the grow pod MCU
         self.growPod1.updateWithMCUInfo(mcuInfo)
@@ -1650,6 +1651,11 @@ class MainWindow(QMainWindow):
             print("GrowPod1 cannot be refreshed since it is not initialized or is being edited")
             self.ui.messageAreaText.append(self.getTimeStamp() + "GrowPod1 cannot be refreshed since it is not initialized or is being edited")
 
+            if self.growPod1.initializedState == GROWPOD_INITIALIZED:
+                # restart timer
+                self.createGrowPodTimer(1, timerTimeoutInterval)
+                self.startGrowPodTimer(1)
+
         if self.growPod2.initializedState == GROWPOD_INITIALIZED and self.growPodTimer2.isActive():
             # stop timer
             self.stopGrowPodTimer(2)
@@ -1665,6 +1671,11 @@ class MainWindow(QMainWindow):
             print("grow pod 2 cannot be refreshed since it is not initialized or is being edited")
             self.ui.messageAreaText.append(self.getTimeStamp() + "GrowPod2 cannot be refreshed since it is not initialized or is being edited")
 
+            if self.growPod2.initializedState == GROWPOD_INITIALIZED:
+                # restart timer
+                self.createGrowPodTimer(2, timerTimeoutInterval)
+                self.startGrowPodTimer(2)
+
         if self.growPod3.initializedState == GROWPOD_INITIALIZED and self.growPodTimer3.isActive():
             # stop timer
             self.stopGrowPodTimer(3)
@@ -1679,6 +1690,12 @@ class MainWindow(QMainWindow):
         else:
             print("grow pod 3 cannot be refreshed since it is not initialized or is being edited")
             self.ui.messageAreaText.append(self.getTimeStamp() + "GrowPod3 cannot be refreshed since it is not initialized or is being edited")
+
+            if self.growPod3.initializedState == GROWPOD_INITIALIZED:
+
+                # restart timer
+                self.createGrowPodTimer(3, timerTimeoutInterval)
+                self.startGrowPodTimer(3)
 
     # marked for deletion
     # def getUpdatePacket(self, growPodNumber, command):
