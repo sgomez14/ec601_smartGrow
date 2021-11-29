@@ -30,12 +30,14 @@ void setup() {
 	Serial.println("Initial 2 sec delay:");
 	delay(2000);
 
-	//initialize();
-
 	/* Resetting timers before superloop() */
 	change_water = 0;
 	turn_off_light = 0;
 	turn_on_light = 0;
+
+	initialize();
+
+	//teensyMAC(mac);
 
 #if DEBUG
 	//PWM_calibration(&water_pump_source);
@@ -57,9 +59,10 @@ void loop() {
 	else
 	{
 		/* Receive command packet*/
+		get_packet();
 
 		/* Scheduler */
-		//scheduler();
+		scheduler();
 
 		/* Send response packet*/
 		send_packet();

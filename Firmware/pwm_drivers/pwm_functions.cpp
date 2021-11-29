@@ -20,13 +20,13 @@ elapsedMillis turn_off_light;
 /* Networking Variable */
 bool response_requested = true;
 byte mac[] = {
-  0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-};
-int local_port = 8888;
+  0x04, 0xe9, 0xe5, 0x0e, 0xcf, 0x0c
+};//04:e9:e5:0e:cf:0c
+int local_port = 80;
 EthernetUDP Udp;
-int server_port = 8888;
-IPAddress server_IP(192, 168, 0, 0);
-IPAddress device_ip(192, 168, 0, 1);
+int server_port = 80;
+IPAddress server_IP(10, 0, 0, 0);
+IPAddress device_ip(10, 0, 0, 1);
 
 /* Info on multifile variables: 
 https://stackoverflow.com/questions/1433204/how-do-i-use-extern-to-share-variables-between-source-files
@@ -185,15 +185,19 @@ void reset()
 	PWM_set_percent(&food_pump, 0);
 	PWM_set_percent(&air_pump, 0);
 	PWM_set_percent(&LED, 0);
+	LED_status = 0;
 	change_water = 0;
 	turn_on_light = 0;
 	turn_off_light = 0;
+	change_water_threshold = 0xFFFFFFFF;
+	turn_on_light_threshold = 0xFFFFFFFF;
+	turn_off_light_threshold = 0xFFFFFFFF;
 }
 
 /* Sets up the system. Turns LED & air pump on. */
 void initialize()
 {
-	fill_tank(&water_pump_source);
+	if(tank_is_full_flag == 0) fill_tank(&water_pump_source);
 	toggle_light(&LED);
 	PWM_set_percent(&air_pump, 100);
 }
@@ -230,7 +234,7 @@ void scheduler()
 /* Gets instruction packet via UDP from server. */
 void get_packet()
 {
-	const int input_packet_size = 64; /* Size of buffer in bytes*/
+	const int input_packet_size = 128; /* Size of buffer in bytes*/
 	char input_packet_buffer[input_packet_size];
 	uint8_t new_water_schedule, new_light_on_schedule, new_light_off_schedule, new_dosage;
 	char command_packet[6];
@@ -240,26 +244,38 @@ void get_packet()
 		// We've received a packet, read the data from it
 		Udp.read(input_packet_buffer, input_packet_size);
 
-		response_requested = true;
+		/* sscanf needs \n ? */
+		sscanf(input_packet_buffer, "%s;%hhu;%hhu;%hhu;%hhu", command_packet, &new_water_schedule, &new_dosage, &new_light_on_schedule,&new_light_off_schedule);
 
-		/* Different method without sscanf()? */
-		sscanf(input_packet_buffer, "%s,%hhu,%hhu,%hhu,%hhu", command_packet, &new_water_schedule, &new_dosage, &new_light_on_schedule,&new_light_off_schedule);
-
-		if (strcmp(input_packet_buffer,"init")==0)
+		if (strcmp(command_packet,"init")==0)
 		{
 			initialize();
-		}
-		if (strcmp(input_packet_buffer, "update") == 0)
-		{
-			change_water_threshold = new_water_schedule;
-			turn_on_light_threshold = new_light_on_schedule;
-			turn_off_light_threshold = new_light_off_schedule;
+			/* Converts incoming hours to ms */
+			change_water_threshold = new_water_schedule * 3600000;
+			turn_on_light_threshold = new_light_on_schedule * 3600000;
+			turn_off_light_threshold = new_light_off_schedule * 3600000;
 			dosage = new_dosage;
+			response_requested = false;
 		}
-		if (strcmp(input_packet_buffer, "reset") == 0)
+		if (strcmp(command_packet, "update") == 0)
+		{
+			/* Converts incoming hours to ms */
+			change_water_threshold = new_water_schedule * 3600000;
+			turn_on_light_threshold = new_light_on_schedule * 3600000;
+			turn_off_light_threshold = new_light_off_schedule * 3600000;
+			dosage = new_dosage;
+			response_requested = false;
+		}
+		if (strcmp(command_packet, "reset") == 0)
 		{
 			reset();
+			response_requested = false;
 		}
+		if (strcmp(command_packet, "req") == 0)
+		{
+			response_requested = true;
+		}
+		Serial.printf("Input Packet: %s", input_packet_buffer);
 	}
 }
 
@@ -268,11 +284,10 @@ void send_packet()
 { 
 	if (response_requested == true)
 	{
-		/* We need an output packet for 5 32-bit values. So 5 x 4 bytes = 20 bytes. */
-		char output_string[64];
+		char output_string[128];
 		uint32_t voltage, current, luminosity;
 		float temp, humidity;
-		char lightStatus[3], airPump[3], sourcePump[3], drainPump[3], nutrientsPump[3];
+		char lightStatus[4], airPump[4], sourcePump[4], drainPump[4], nutrientsPump[4];
 
 		memset(output_string, 0, 64);
 
@@ -280,10 +295,10 @@ void send_packet()
 			Serial.printf("ERROR! Temp sensor could not be read.");
 		}
 
-		voltage = ina260.readBusVoltage();
-		current = ina260.readCurrent();
-		temp = tempData.fahrenheit;
-		humidity = tempData.humidity;
+		voltage =		ina260.readBusVoltage();
+		current =		ina260.readCurrent();
+		temp =			tempData.fahrenheit;
+		humidity =		tempData.humidity;
 		luminosity =	0xFFFFFFFF;
 		/* Populating light response*/
 		if (digitalRead(LED.pin) == 1)
@@ -298,44 +313,44 @@ void send_packet()
 		/* Populating air pump response*/
 		if (digitalRead(air_pump.pin) == 1)
 		{
-			strcpy(lightStatus, "ON");
+			strcpy(airPump, "ON");
 		}
 		else if (digitalRead(air_pump.pin) == 0)
 		{
-			strcpy(lightStatus, "OFF");
+			strcpy(airPump, "OFF");
 		}
 
 		/* Populating source pump response*/
 		if (digitalRead(water_pump_source.pin) == 1)
 		{
-			strcpy(lightStatus, "ON");
+			strcpy(sourcePump, "ON");
 		}
 		else if (digitalRead(water_pump_source.pin) == 0)
 		{
-			strcpy(lightStatus, "OFF");
+			strcpy(sourcePump, "OFF");
 		}
 
 		/* Populating drain pump response*/
 		if (digitalRead(water_pump_drain.pin) == 1)
 		{
-			strcpy(lightStatus, "ON");
+			strcpy(drainPump, "ON");
 		}
 		else if (digitalRead(water_pump_drain.pin) == 0)
 		{
-			strcpy(lightStatus, "OFF");
+			strcpy(drainPump, "OFF");
 		}
 
 		/* Populating nutrient response*/
 		if (digitalRead(food_pump.pin) == 1)
 		{
-			strcpy(lightStatus, "ON");
+			strcpy(nutrientsPump, "ON");
 		}
 		else if (digitalRead(food_pump.pin) == 0)
 		{
-			strcpy(lightStatus, "OFF");
+			strcpy(nutrientsPump, "OFF");
 		}
 		//luminosity;temperature;humidity;voltage;amps;lightStatus;airPump;sourcePump;drainPump;nutrientsPump
-		sprintf(output_string, "%lu;%.1f;%.1f;%lu;%lu;%s;%s;%s;%s;%s\n", luminosity,temp,humidity, voltage, current, lightStatus, airPump, sourcePump, drainPump, nutrientsPump);
+		sprintf(output_string, "%lu;%.1f;%.1f;%lu;%lu;%s;%s;%s;%s;%s", luminosity,temp,humidity, voltage, current, lightStatus, airPump, sourcePump, drainPump, nutrientsPump);
 
 #if DEBUG
 		Serial.printf("\nMeasured Temp: %f\nMeasured Humidity: %f\n", tempData.fahrenheit, tempData.humidity);

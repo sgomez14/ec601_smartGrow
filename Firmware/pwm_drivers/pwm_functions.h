@@ -25,7 +25,7 @@
 /* ml per sec, measured by running how long it takes to fill 100 ml. */
 #define FILL_RATE 10 
 #define PLANTER_WATER_SENSOR_PIN 24
-#define DEBUG 1
+#define DEBUG 0
 #define ETHERNET 0
 #define CURRENT_THRESHOLD 7000
 
