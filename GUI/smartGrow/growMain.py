@@ -3,23 +3,19 @@ from PySide6.QtWidgets import *  # QApplication, QMainWindow, QPushButton, QMess
 from PySide6 import QtCore
 from ui_growMain import Ui_smartGrowGUI
 from growpod import *
-from UDPreceiver_1st_version.py import UDP_RequestInfoFromGrowPod, UDP_TransferUpdateToGrowPod
+from UDPreceiver_1st_version import UDP_RequestInfoFromGrowPod, UDP_TransferUpdateToGrowPod
 import datetime
 
 # stylesheets from https://qss-stock.devsecstudio.com/
 styles = ["Toolery.qss", "Remover.qss", "SyNet.qss", "Irrorater.qss"]
-
-# "Toolery.qss" is my favorite, I would have to change the red in the groupbox and spinboxes
-# "Remover.qss" could work, I  like it very much. I just need to edit for saved button
-# "SyNet.qss" is the only dark mode that would work. I would need to change how the groupbox text appears
-# "Irrorater.qss" is bold, quirky, and aggressive.. i like it (wildcard)
 
 stylesheetFilePath = f"resources/stylesheets/{styles[0]}"
 
 # one minute in milliseconds
 minute_ms = 60000
 
-timerTimeoutInterval = 1000
+# this variable is for controlling the length for the timer that requests information from the growPods
+timerTimeoutInterval = minute_ms
 
 
 DEVELOPMENT = True
