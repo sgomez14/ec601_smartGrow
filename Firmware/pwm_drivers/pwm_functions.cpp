@@ -378,6 +378,7 @@ void send_packet()
 
 #if ETHERNET
 		strcpy(test_output_string, "42;69;30;420;49;ON;ON;ON;ON;ON");
+
 		Udp.beginPacket(Udp.remoteIP(), Udp.remotePort());
 		Udp.write(test_output_string);
 		Udp.endPacket();
