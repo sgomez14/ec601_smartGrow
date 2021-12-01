@@ -25,16 +25,16 @@ byte mac[] = {
 int local_port = 80;
 EthernetUDP Udp;
 int server_port = 80;
-IPAddress server_IP(192, 168, 86, 34);
-IPAddress device_ip(192, 168, 86, 20);
+IPAddress server_IP(192, 168, 0, 100);
+IPAddress device_ip(192, 168, 0, 101);
 
 /* Info on multifile variables: 
 https://stackoverflow.com/questions/1433204/how-do-i-use-extern-to-share-variables-between-source-files
 
-Demo: Water changes after 1 minute, light turns off after 1.5 minutes, turns back on after 2 minutes. */
-unsigned int change_water_threshold = 15000;
-unsigned int turn_on_light_threshold = 23000; /* After how long to turn the light back on, when in off state. */
-unsigned int turn_off_light_threshold = 10000; /* After how long to turn light off, when in on state.*/
+Demo: Water changes after 10 minute, light turns off after 15 minutes, turns back on after 20 minutes. */
+unsigned int change_water_threshold = 150000;
+unsigned int turn_on_light_threshold = 230000; /* After how long to turn the light back on, when in off state. */
+unsigned int turn_off_light_threshold = 100000; /* After how long to turn light off, when in on state.*/
 
 uint8_t dosage = 0;
 
@@ -206,15 +206,14 @@ void scheduler()
 {
 	if (change_water >= change_water_threshold) {
 		Serial.println("Changing water!");
-		Serial.print("Time to fill before drain: ");
-		Serial.println(time_to_fill);
 		empty_tank(&water_pump_drain);
 		delay(1000);
 		fill_tank(&water_pump_source);
-		Serial.print("Time to fill after refilling: ");
-		Serial.println(time_to_fill);
 		delay(1000);
 		//dose_food(&food_pump, 5);
+		PWM_set_percent(&food_pump, 100);
+		delay(1500);
+		PWM_set_percent(&food_pump, 0);
 		change_water = 0;
 	}
 	if ((turn_off_light >= turn_off_light_threshold) && LED_status) {

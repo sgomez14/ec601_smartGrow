@@ -1,7 +1,7 @@
 {
     "growPod1": {
         "uniqueID": 1,
-        "ipAddress": "192.168.86.20",
+        "ipAddress": "192.168.0.101",
         "port": 80,
         "initializedState": "initialized",
         "plantName": "asd",

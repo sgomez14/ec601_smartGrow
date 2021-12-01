@@ -67,14 +67,12 @@ void setup() {
 	Serial.print("server is at ");
 	Serial.println(Ethernet.localIP());
 
-	//initialize();
-
 #if DEBUG
-	//PWM_calibration(&water_pump_source);
-	//PWM_calibration(&water_pump_drain);
-	//PWM_calibration(&food_pump);
-	//PWM_calibration(&air_pump);
-	//PWM_calibration(&LED);
+	PWM_calibration(&water_pump_source);
+	PWM_calibration(&water_pump_drain);
+	PWM_calibration(&food_pump);
+	PWM_calibration(&air_pump);
+	PWM_calibration(&LED);
 #endif
 }
  
@@ -90,16 +88,12 @@ void loop() {
 	else
 	{
 		/* Receive command packet*/
-		//Serial.println("Getting packet...");
 		get_packet();
 
 		/* Scheduler */
-		//Serial.println("Checking Schedule");
-		//scheduler();
+		scheduler();
 
 		/* Send response packet*/
-		//Serial.println("Sending packet...");
-		//response_requested = 1;
 		send_packet();
 
 		/* Printing timers for debugging */
@@ -114,5 +108,5 @@ void loop() {
 #endif
 
 	}
-	delay(2500);
+	delay(500);
 }

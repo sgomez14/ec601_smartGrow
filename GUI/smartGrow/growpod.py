@@ -1,10 +1,10 @@
 import json
 
 # list of available IP addresses for the grow pods
-ipAddress1 = "192.168.86.20"
+ipAddress1 = "192.168.0.101"
 # ipAddress2 = "192.168.0.2"
 # ipAddress3 = "192.168.0.3"
-ipAddress4 = "192.168.86.34"
+ipAddress4 = "192.168.0.100"
 
 # ipAddress1 = "10.0.0.1"
 ipAddress2 = "10.0.0.2"
