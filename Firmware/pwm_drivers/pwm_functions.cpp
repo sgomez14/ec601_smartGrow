@@ -5,11 +5,11 @@ power_consumption system_device_health;
 Adafruit_INA260 ina260 = Adafruit_INA260();
 
 /* {Pin Number, min voltage, max voltage} */
-PWM_device water_pump_source = { 36, 145, 255};
-PWM_device water_pump_drain = { 15, 180, 255};
-PWM_device food_pump = { 33, 180, 255};
-PWM_device air_pump = { 14, 230, 255};
-PWM_device LED = { 37, 145, 255};
+PWM_device water_pump_source = { 36, 145, 255,0};
+PWM_device water_pump_drain = { 15, 145, 255,0};
+PWM_device food_pump = { 33, 180, 255,0};
+PWM_device air_pump = { 14, 230, 255,0};
+PWM_device LED = { 37, 145, 255,0};
 String command_packet = "";
 
 /* Variables for timers. */
@@ -20,13 +20,30 @@ elapsedMillis turn_off_light;
 /* Networking Variable */
 bool response_requested = false;
 byte mac[] = {
-  0x04, 0xe9, 0xe5, 0x10, 0x30, 0x77
-};//04:e9:e5:0e:cf:0c
+  //mac for growPod1
+  //0x04, 0xe9, 0xe5, 0x10, 0x30, 0x77
+
+  //mac for growPod2
+  0x04, 0xe9, 0xe5, 0x0e, 0xcf, 0x0c
+
+  //mac for growPod3
+  //insert here for mac growPod3
+  
+};
+
 int local_port = 80;
 EthernetUDP Udp;
 int server_port = 80;
 IPAddress server_IP(192, 168, 0, 100);
-IPAddress device_ip(192, 168, 0, 101);
+
+//ip for growPod1
+//IPAddress device_ip(192, 168, 0, 101);
+
+//ip for growPod2
+IPAddress device_ip(192, 168, 0, 102);
+
+//ip for growPod3
+//IPAddress device_ip(192, 168, 0, 103);
 
 /* Info on multifile variables: 
 https://stackoverflow.com/questions/1433204/how-do-i-use-extern-to-share-variables-between-source-files
@@ -80,16 +97,20 @@ void PWM_set_percent(PWM_device *pwm_device, uint8_t percent)
 	if (percent == 0)
 	{
 		analogWrite(gpio_pin, 0);
+    pwm_device -> motor_status = 0;
+    
 	}
 	/* If percent is 100, turn device to max. */
 	else if (percent == 100)
 	{
 		analogWrite(gpio_pin, max);
+    pwm_device -> motor_status = 1;
 	}
 	/* In between, calculate pulse_width based on offset and percent of max working range for the specific pump. */
 	else if ((percent < 100) && (percent > 0)) {
 		pulse_width = min + ((percent/100) * working_range);
 		analogWrite(gpio_pin, pulse_width);
+    pwm_device -> motor_status = 1;
 	}
 	else
 	{
@@ -102,32 +123,9 @@ void PWM_set_percent(PWM_device *pwm_device, uint8_t percent)
 /* Doses food from a food source via a small (~250 ms) delay based on mL input. Needs the global macro FILL_RATE set depending on physical system measurements. */
 void dose_food(PWM_device *pwm_device, uint8_t ml)
 {
-	/* Making local copies for code readability. */
-	/* dose_run_time is in milliseconds. */
-	uint32_t dose_run_time;
-	uint8_t gpio_pin, min, max, pulse_width, working_range;
-	gpio_pin = pwm_device->pin;
-	min = pwm_device->min;
-	max = pwm_device->max;
-	working_range = max - min;
-
-	dose_run_time = 1000*(ml / FILL_RATE); //(ml / (ml/s) == ml * (s/ml)
-	/* Printing for debug */
-	Serial.print("dose_run_time: ");
-	Serial.println(dose_run_time);
-
-	/* Setting 10% duty cycle for more accurate dosing. Compiler should simplify this. */
-	pulse_width = min + ((10 / 100) * working_range);
-
-	//Need to do: Calibrate pump by measuring how long it takes to does 100 ml of water.
-
-	/* Starts pump for time based on dose_run_time. */
-	Serial.println("Timer Started.");
-	analogWrite(gpio_pin, pulse_width);
-	delay(dose_run_time);
-	Serial.println("Timer Expired.");
-	analogWrite(gpio_pin, 0);
-
+  PWM_set_percent(&food_pump, 50);
+  delay(1500);
+  PWM_set_percent(&food_pump, 0);
 	return;
 }	
 
@@ -144,7 +142,7 @@ void fill_tank(PWM_device* pwm_device)
 /* Starts to empty the tank. Uses the fill time and a constant scalar to calculate how long it will take to empty the tank.  */
 void empty_tank(PWM_device* pwm_device) 
 {
-	unsigned long time_to_empty = time_to_fill  * 1.1;
+	unsigned long time_to_empty = time_to_fill  * 1.05;
 	PWM_set_percent(pwm_device, 80);
 	delay(time_to_empty);
 	PWM_set_percent(pwm_device, 0);
@@ -197,9 +195,11 @@ void reset()
 /* Sets up the system. Turns LED & air pump on. */
 void initialize()
 {
-	if(tank_is_full_flag == 0) fill_tank(&water_pump_source);
+  PWM_set_percent(&air_pump, 100);
+  Serial.println(air_pump.motor_status);
+  empty_tank(&water_pump_drain);
+	fill_tank(&water_pump_source);
 	toggle_light(&LED);
-	PWM_set_percent(&air_pump, 100);
 }
 
 void scheduler()
@@ -210,10 +210,7 @@ void scheduler()
 		delay(1000);
 		fill_tank(&water_pump_source);
 		delay(1000);
-		//dose_food(&food_pump, 5);
-		PWM_set_percent(&food_pump, 100);
-		delay(1500);
-		PWM_set_percent(&food_pump, 0);
+		dose_food(&food_pump, 5);
 		change_water = 0;
 	}
 	if ((turn_off_light >= turn_off_light_threshold) && LED_status) {
@@ -235,7 +232,7 @@ void get_packet()
 {
 	const int input_packet_size = 128; /* Size of buffer in bytes*/
 	char input_packet_buffer[input_packet_size];
-	uint8_t new_water_schedule, new_light_on_schedule, new_light_off_schedule;
+	unsigned int new_water_schedule, new_light_on_schedule, new_light_off_schedule;
 	float new_dosage;
 	char command_packet[6];
 
@@ -247,27 +244,27 @@ void get_packet()
 		Serial.printf("Input packet: %s\n", input_packet_buffer);
 
 		/* sscanf needs \n ? */
-		sscanf(input_packet_buffer, "%s %hhu %f %hhu %hhu", command_packet, &new_water_schedule, &new_dosage, &new_light_on_schedule,&new_light_off_schedule);
+		sscanf(input_packet_buffer, "%s %u %f %u %u", command_packet, &new_water_schedule, &new_dosage, &new_light_on_schedule,&new_light_off_schedule);
 
 		Serial.printf("New Variables:\nCommand: %s|\nNew Water Schedule: %hhu\nNew Dosage: %f\nNew light on: %hhu\nNew light off: %hhu\n", command_packet, new_water_schedule, new_dosage, new_light_on_schedule, new_light_off_schedule);
 
 
 		if (strcmp(command_packet,"init")==0)
 		{
-			//initialize();
+			initialize();
 			/* Converts incoming hours to ms */
-			change_water_threshold = new_water_schedule * 3600000;
-			turn_on_light_threshold = new_light_on_schedule * 3600000;
-			turn_off_light_threshold = new_light_off_schedule * 3600000;
+			change_water_threshold = new_water_schedule * SCHEDULE_CONVERSION_TO_MS;
+			turn_on_light_threshold = new_light_on_schedule * SCHEDULE_CONVERSION_TO_MS;
+			turn_off_light_threshold = new_light_off_schedule * SCHEDULE_CONVERSION_TO_MS;
 			dosage = new_dosage;
 			response_requested = false;
 		}
 		if (strcmp(command_packet, "update") == 0)
 		{
 			/* Converts incoming hours to ms */
-			change_water_threshold = new_water_schedule * 3600000;
-			turn_on_light_threshold = new_light_on_schedule * 3600000;
-			turn_off_light_threshold = new_light_off_schedule * 3600000;
+			change_water_threshold = new_water_schedule * SCHEDULE_CONVERSION_TO_MS;
+			turn_on_light_threshold = new_light_on_schedule * SCHEDULE_CONVERSION_TO_MS;
+			turn_off_light_threshold = new_light_off_schedule * SCHEDULE_CONVERSION_TO_MS;
 			dosage = new_dosage;
 			response_requested = false;
 		}
@@ -317,51 +314,51 @@ void send_packet()
 		humidity =		tempData.humidity;
 		luminosity =	tsl.getLuminosity(TSL2591_FULLSPECTRUM);
 		/* Populating light response*/
-		if (digitalRead(LED.pin) == 1)
+		if (LED_status == 1)
 		{
 			strcpy(lightStatus, "ON");
 		}
-		else if (digitalRead(LED.pin) == 0)
+		else if (LED_status == 0)
 		{
 			strcpy(lightStatus, "OFF");
 		}
 
 		/* Populating air pump response*/
-		if (digitalRead(air_pump.pin) == 1)
+		if (air_pump.motor_status == 1)
 		{
 			strcpy(airPump, "ON");
 		}
-		else if (digitalRead(air_pump.pin) == 0)
+		else if (air_pump.motor_status == 0)
 		{
 			strcpy(airPump, "OFF");
 		}
 
 		/* Populating source pump response*/
-		if (digitalRead(water_pump_source.pin) == 1)
+		if (water_pump_source.motor_status == 1)
 		{
 			strcpy(sourcePump, "ON");
 		}
-		else if (digitalRead(water_pump_source.pin) == 0)
+		else if (water_pump_source.motor_status == 0)
 		{
 			strcpy(sourcePump, "OFF");
 		}
 
 		/* Populating drain pump response*/
-		if (digitalRead(water_pump_drain.pin) == 1)
+		if (water_pump_drain.motor_status == 1)
 		{
 			strcpy(drainPump, "ON");
 		}
-		else if (digitalRead(water_pump_drain.pin) == 0)
+		else if (water_pump_drain.motor_status == 0)
 		{
 			strcpy(drainPump, "OFF");
 		}
 
 		/* Populating nutrient response*/
-		if (digitalRead(food_pump.pin) == 1)
+		if (food_pump.motor_status == 1)
 		{
 			strcpy(nutrientsPump, "ON");
 		}
-		else if (digitalRead(food_pump.pin) == 0)
+		else if (food_pump.motor_status == 0)
 		{
 			strcpy(nutrientsPump, "OFF");
 		}
@@ -380,7 +377,7 @@ void send_packet()
 		strcpy(test_output_string, "42;69;30;420;49;ON;ON;ON;ON;ON");
 
 		Udp.beginPacket(Udp.remoteIP(), Udp.remotePort());
-		Udp.write(test_output_string);
+		Udp.write(output_string);
 		Udp.endPacket();
 #endif
 		response_requested = false;

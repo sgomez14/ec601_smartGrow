@@ -22,7 +22,7 @@ void setup() {
 	while (!Serial) {
 		; // wait for serial port to connect. Needed for native USB
 	}
-	/*
+/*
 	if (tsl.begin())
 	{
 		Serial.println(F("Found a TSL2591 sensor"));
@@ -78,7 +78,7 @@ void setup() {
  
 // the loop function runs over and over again until power down or reset
 void loop() {
-	Serial.println("Top of loop");
+	//Serial.println("Top of loop");
 	//print_ethernet_test();
 	if (system_attention_flag)
 	{

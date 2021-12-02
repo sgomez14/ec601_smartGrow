@@ -378,7 +378,7 @@
                 <property name="geometry">
                  <rect>
                   <x>0</x>
-                  <y>-1644</y>
+                  <y>-1317</y>
                   <width>1246</width>
                   <height>2485</height>
                  </rect>
@@ -486,7 +486,7 @@
                                <item row="0" column="0">
                                 <widget class="QLabel" name="feedScheduleLabel_1">
                                  <property name="text">
-                                  <string>Feed Schedule (every x hours)</string>
+                                  <string>Feed Schedule (every x minutes)</string>
                                  </property>
                                 </widget>
                                </item>
@@ -533,7 +533,7 @@
                                <item row="0" column="0">
                                 <widget class="QLabel" name="hoursOnLabel_1">
                                  <property name="text">
-                                  <string>Hours On</string>
+                                  <string>Minutes On</string>
                                  </property>
                                 </widget>
                                </item>
@@ -550,7 +550,7 @@
                                <item row="1" column="0">
                                 <widget class="QLabel" name="hoursOffLabel_1">
                                  <property name="text">
-                                  <string>Hours Off</string>
+                                  <string>Minutes Off</string>
                                  </property>
                                 </widget>
                                </item>
@@ -1046,7 +1046,7 @@
                                <item row="0" column="0">
                                 <widget class="QLabel" name="feedScheduleLabel_20">
                                  <property name="text">
-                                  <string>Feed Schedule (every x hours)</string>
+                                  <string>Feed Schedule (every x minutes)</string>
                                  </property>
                                 </widget>
                                </item>
@@ -1093,7 +1093,7 @@
                                <item row="0" column="0">
                                 <widget class="QLabel" name="hoursOnLabel_20">
                                  <property name="text">
-                                  <string>Hours On</string>
+                                  <string>Minutes On</string>
                                  </property>
                                 </widget>
                                </item>
@@ -1110,7 +1110,7 @@
                                <item row="1" column="0">
                                 <widget class="QLabel" name="hoursOffLabel_20">
                                  <property name="text">
-                                  <string>Hours Off</string>
+                                  <string>Minutes Off</string>
                                  </property>
                                 </widget>
                                </item>
@@ -1634,7 +1634,7 @@
                                <item row="0" column="0">
                                 <widget class="QLabel" name="feedScheduleLabel_30">
                                  <property name="text">
-                                  <string>Feed Schedule (every x hours)</string>
+                                  <string>Feed Schedule (every x minutes)</string>
                                  </property>
                                 </widget>
                                </item>
@@ -1681,7 +1681,7 @@
                                <item row="0" column="0">
                                 <widget class="QLabel" name="hoursOnLabel_30">
                                  <property name="text">
-                                  <string>Hours On</string>
+                                  <string>Minutes On</string>
                                  </property>
                                 </widget>
                                </item>
@@ -1706,7 +1706,7 @@
                                <item row="1" column="0">
                                 <widget class="QLabel" name="hoursOffLabel_30">
                                  <property name="text">
-                                  <string>Hours Off</string>
+                                  <string>Minutes Off</string>
                                  </property>
                                 </widget>
                                </item>

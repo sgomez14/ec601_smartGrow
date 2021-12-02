@@ -6,6 +6,9 @@ from growpod import *
 from UDPreceiver_1st_version import UDP_RequestInfoFromGrowPod, UDP_TransferUpdateToGrowPod
 import datetime
 
+# app logo source
+# https://www.iconfinder.com/icons/5190724/farming_gardening_hydroponic_irrigation_organic_watering_icon
+
 # stylesheets from https://qss-stock.devsecstudio.com/
 styles = ["Toolery.qss", "Remover.qss", "SyNet.qss", "Irrorater.qss"]
 
@@ -1578,61 +1581,105 @@ class MainWindow(QMainWindow):
 
     def requestInfoFromGrowPod1(self):
         growPodNumber = 1
-        message = f"requesting info from grow pod {growPodNumber}"
+        message = f"Requesting UDP info from GrowPod{growPodNumber}"
         print(message)
+
+        # update messages indicating that UPD packet requested
+        self.ui.messageAreaText.append(self.getTimeStamp() + message)
 
         # get info from the grow pod MCU
         # format of the packet the growPod will send to GUI
         # luminosity;temperature;humidity;voltage;amps;lightStatus;airPump;sourcePump;drainPump;nutrientsPump
         mcuInfo = UDP_RequestInfoFromGrowPod(self.growPod1.ipAddress) # test data "100;100.5;100.5;200.3;400.6;ON;ON;ON;ON;ON"
-        print(mcuInfo)
 
-        # update grow pod object with info from the grow pod MCU
-        self.growPod1.updateWithMCUInfo(mcuInfo)
+        print(f"packet received for GrowPod{growPodNumber}: " + mcuInfo)
 
-        # save the new info the JSON
-        saveGrowPodJSON(self.growPodsList)
+        if (mcuInfo == "fail"):
+            # update messages with failed UPD packet
+            self.ui.messageAreaText.append(
+                self.getTimeStamp() + f"UDP packet from GrowPod{growPodNumber} failed")
 
-        # load that info on the GUI
-        self.loadGrowPodInfoForDisplay([self.growPod1])
+        else:
+            # update grow pod object with info from the grow pod MCU
+            self.growPod1.updateWithMCUInfo(mcuInfo)
+
+            # also post to messages that UDP packet was successful
+            self.ui.messageAreaText.append(
+                self.getTimeStamp() + f"UDP packet from GrowPod{growPodNumber} successful")
+
+            # save the new info the JSON
+            saveGrowPodJSON(self.growPodsList)
+
+            # load that info on the GUI
+            self.loadGrowPodInfoForDisplay([self.growPod1])
 
     def requestInfoFromGrowPod2(self):
         growPodNumber = 2
-        message = f"requesting info from grow pod {growPodNumber}"
+        message = f"requesting info from GrowPod{growPodNumber}"
         print(message)
+
+        # update messages indicating that UPD packet requested
+        self.ui.messageAreaText.append(self.getTimeStamp() + message)
 
         # get info from the grow pod MCU
         # format of the packet the growPod will send to GUI
         # luminosity;temperature;humidity;voltage;amps;lightStatus;airPump;sourcePump;drainPump;nutrientsPump
         mcuInfo = UDP_RequestInfoFromGrowPod(self.growPod2.ipAddress)  # test data "2000;100.5;100.5;200.3;400.6;ON;ON;ON;ON;ON"
 
-        # update grow pod object with info from the grow pod MCU
-        self.growPod2.updateWithMCUInfo(mcuInfo)
+        print(f"packet received for GrowPod{growPodNumber}: " + mcuInfo)
 
-        # save the new info the JSON
-        saveGrowPodJSON(self.growPodsList)
+        if (mcuInfo == "fail"):
+            # update messages with failed UPD packet
+            self.ui.messageAreaText.append(
+                self.getTimeStamp() + f"UDP packet from GrowPod{growPodNumber} failed")
 
-        # load that info on the GUI
-        self.loadGrowPodInfoForDisplay([self.growPod2])
+        else:
+            # update grow pod object with info from the grow pod MCU
+            self.growPod2.updateWithMCUInfo(mcuInfo)
+
+            # also post to messages that UDP packet was successful
+            self.ui.messageAreaText.append(
+                self.getTimeStamp() + f"UDP packet from GrowPod{growPodNumber} successful")
+
+            # save the new info the JSON
+            saveGrowPodJSON(self.growPodsList)
+
+            # load that info on the GUI
+            self.loadGrowPodInfoForDisplay([self.growPod2])
 
     def requestInfoFromGrowPod3(self):
         growPodNumber = 3
         message = f"requesting info from grow pod {growPodNumber}"
         print(message)
 
+        # update messages indicating that UPD packet requested
+        self.ui.messageAreaText.append(self.getTimeStamp() + message)
+
         # get info from the grow pod MCU
         # format of the packet the growPod will send to GUI
         # luminosity;temperature;humidity;voltage;amps;lightStatus;airPump;sourcePump;drainPump;nutrientsPump
         mcuInfo = UDP_RequestInfoFromGrowPod(self.growPod3.ipAddress)  # test data "3000;100.5;100.5;200.3;400.6;ON;ON;ON;ON;ON"
 
-        # update grow pod object with info from the grow pod MCU
-        self.growPod3.updateWithMCUInfo(mcuInfo)
+        print(f"packet received for GrowPod{growPodNumber}: " + mcuInfo)
 
-        # save the new info the JSON
-        saveGrowPodJSON(self.growPodsList)
+        if (mcuInfo == "fail"):
+            # update messages with failed UPD packet
+            self.ui.messageAreaText.append(
+                self.getTimeStamp() + f"UDP packet from GrowPod{growPodNumber} failed")
 
-        # load that info on the GUI
-        self.loadGrowPodInfoForDisplay([self.growPod3])
+        else:
+            # update grow pod object with info from the grow pod MCU
+            self.growPod3.updateWithMCUInfo(mcuInfo)
+
+            # also post to messages that UDP packet was successful
+            self.ui.messageAreaText.append(
+                self.getTimeStamp() + f"UDP packet from GrowPod{growPodNumber} successful")
+
+            # save the new info the JSON
+            saveGrowPodJSON(self.growPodsList)
+
+            # load that info on the GUI
+            self.loadGrowPodInfoForDisplay([self.growPod3])
 
     def refreshInfoButtonClicked(self):
 
@@ -1648,10 +1695,13 @@ class MainWindow(QMainWindow):
             self.startGrowPodTimer(1)
 
         else:
-            print("GrowPod1 cannot be refreshed since it is not initialized or is being edited")
-            self.ui.messageAreaText.append(self.getTimeStamp() + "GrowPod1 cannot be refreshed since it is not initialized or is being edited")
+            print("GrowPod1 cannot be refreshed at this moment")
+            self.ui.messageAreaText.append(self.getTimeStamp() + "GrowPod1 cannot be refreshed at this moment")
 
             if self.growPod1.initializedState == GROWPOD_INITIALIZED:
+                # stop timer
+                self.stopGrowPodTimer(1)
+
                 # restart timer
                 self.createGrowPodTimer(1, timerTimeoutInterval)
                 self.startGrowPodTimer(1)
@@ -1668,10 +1718,13 @@ class MainWindow(QMainWindow):
             self.startGrowPodTimer(2)
 
         else:
-            print("grow pod 2 cannot be refreshed since it is not initialized or is being edited")
-            self.ui.messageAreaText.append(self.getTimeStamp() + "GrowPod2 cannot be refreshed since it is not initialized or is being edited")
+            print("GrowPod2 cannot be refreshed at this moment")
+            self.ui.messageAreaText.append(self.getTimeStamp() + "GrowPod2 cannot be refreshed at this moment")
 
             if self.growPod2.initializedState == GROWPOD_INITIALIZED:
+                # stop timer
+                self.stopGrowPodTimer(2)
+
                 # restart timer
                 self.createGrowPodTimer(2, timerTimeoutInterval)
                 self.startGrowPodTimer(2)
@@ -1688,53 +1741,40 @@ class MainWindow(QMainWindow):
             self.startGrowPodTimer(3)
 
         else:
-            print("grow pod 3 cannot be refreshed since it is not initialized or is being edited")
-            self.ui.messageAreaText.append(self.getTimeStamp() + "GrowPod3 cannot be refreshed since it is not initialized or is being edited")
+            print("GrowPod3 cannot be refreshed at this moment")
+            self.ui.messageAreaText.append(self.getTimeStamp() + "GrowPod3 cannot be refreshed at this moment")
 
             if self.growPod3.initializedState == GROWPOD_INITIALIZED:
+                # stop timer
+                self.stopGrowPodTimer(3)
 
                 # restart timer
                 self.createGrowPodTimer(3, timerTimeoutInterval)
                 self.startGrowPodTimer(3)
 
-    # marked for deletion
-    # def getUpdatePacket(self, growPodNumber, command):
-    #
-    #     if growPodNumber == 1:
-    #         return self.growPod1.createUpdatePacket(command)
-    #
-    #     elif growPodNumber == 2:
-    #         return self.growPod2.createUpdatePacket(command)
-    #
-    #     elif growPodNumber == 3:
-    #         return self.growPod3.createUpdatePacket(command)
-    #
-    #     else:
-    #         print(f"did not recognize grow pod number {growPodNumber} for creating update packet")
-
     def sendPacketToGrowPod(self, growPod, command):
 
         if growPod.uniqueID == 1:
-            print(f"Sending update packet to grow pod {growPod.plantName} with command: {command}")
-            self.ui.messageAreaText.append(self.getTimeStamp() + f"Sending update packet to grow pod {growPod.plantName} with command: {command}")
+            print(f"Sending update packet to GrowPod{growPod.uniqueID} with command: {command}")
+            self.ui.messageAreaText.append(self.getTimeStamp() + f"Sending update packet to GrowPod{growPod.uniqueID} with command: {command}")
 
             # UPD data transfer here
             updatePacket = self.growPod1.createUpdatePacket(command)
             UDP_TransferUpdateToGrowPod(self.growPod1.ipAddress, updatePacket)
 
         elif growPod.uniqueID == 2:
-            print(f"Sending update packet to grow pod {growPod.plantName} with command: {command}")
+            print(f"Sending update packet to GrowPod{growPod.uniqueID} with command: {command}")
             self.ui.messageAreaText.append(self.getTimeStamp() +
-                f"Sending update packet to grow pod {growPod.plantName} with command: {command}")
+                f"Sending update packet to GrowPod{growPod.uniqueID} with command: {command}")
 
             # UPD data transfer here
             updatePacket = self.growPod2.createUpdatePacket(command)
             UDP_TransferUpdateToGrowPod(self.growPod2.ipAddress, updatePacket)
 
         elif growPod.uniqueID == 3:
-            print(f"Sending update packet to grow pod {growPod.plantName} with command: {command}")
+            print(f"Sending update packet to GrowPod{growPod.uniqueID} with command: {command}")
             self.ui.messageAreaText.append(self.getTimeStamp() +
-                f"Sending update packet to grow pod {growPod.plantName} with command: {command}")
+                f"Sending update packet to GrowPod{growPod.uniqueID} with command: {command}")
 
             # UPD data transfer here
             updatePacket = self.growPod3.createUpdatePacket(command)

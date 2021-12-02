@@ -2,13 +2,13 @@ import json
 
 # list of available IP addresses for the grow pods
 ipAddress1 = "192.168.0.101"
-# ipAddress2 = "192.168.0.2"
-# ipAddress3 = "192.168.0.3"
+ipAddress2 = "192.168.0.102"
+ipAddress3 = "192.168.0.103"
 ipAddress4 = "192.168.0.100"
 
 # ipAddress1 = "10.0.0.1"
-ipAddress2 = "10.0.0.2"
-ipAddress3 = "10.0.0.3"
+# ipAddress2 = "10.0.0.2"
+# ipAddress3 = "10.0.0.3"
 
 # file path for JSON contains grow pod data
 filePathJSON = "growPod.json"

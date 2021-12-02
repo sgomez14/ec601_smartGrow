@@ -27,11 +27,13 @@
 #define DEBUG 0
 #define ETHERNET 1
 #define CURRENT_THRESHOLD 7000
+#define SCHEDULE_CONVERSION_TO_MS 60000
 
 typedef struct PWM_device {
 	uint8_t pin;
 	uint8_t min;
 	uint8_t max;
+  uint8_t motor_status;
 } PWM_device;
 
 typedef struct power_consumption
