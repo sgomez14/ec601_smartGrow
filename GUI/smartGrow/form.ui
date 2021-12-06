@@ -104,7 +104,7 @@
              </font>
             </property>
             <property name="text">
-             <string>Smart Grow App</string>
+             <string>SmartGrow App</string>
             </property>
            </widget>
           </item>
@@ -378,7 +378,7 @@
                 <property name="geometry">
                  <rect>
                   <x>0</x>
-                  <y>-207</y>
+                  <y>0</y>
                   <width>1246</width>
                   <height>2485</height>
                  </rect>

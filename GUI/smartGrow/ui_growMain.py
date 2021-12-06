@@ -186,7 +186,7 @@ class Ui_smartGrowGUI(object):
         self.statusScrollArea.setWidgetResizable(True)
         self.statusGrid = QWidget()
         self.statusGrid.setObjectName(u"statusGrid")
-        self.statusGrid.setGeometry(QRect(0, -207, 1246, 2485))
+        self.statusGrid.setGeometry(QRect(0, 0, 1246, 2485))
         sizePolicy.setHeightForWidth(self.statusGrid.sizePolicy().hasHeightForWidth())
         self.statusGrid.setSizePolicy(sizePolicy)
         self.statusGrid.setMinimumSize(QSize(0, 0))
@@ -1431,7 +1431,7 @@ class Ui_smartGrowGUI(object):
 
     def retranslateUi(self, smartGrowGUI):
         smartGrowGUI.setWindowTitle(QCoreApplication.translate("smartGrowGUI", u"smartGrowGUI", None))
-        self.logoName.setText(QCoreApplication.translate("smartGrowGUI", u"Smart Grow App", None))
+        self.logoName.setText(QCoreApplication.translate("smartGrowGUI", u"SmartGrow App", None))
         self.label.setText("")
         self.refreshGrowPodInfoButton.setText(QCoreApplication.translate("smartGrowGUI", u"  Refresh Info", None))
         self.addGrowPodButton.setText(QCoreApplication.translate("smartGrowGUI", u"  Add Grow Pod", None))
