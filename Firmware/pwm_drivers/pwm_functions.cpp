@@ -4,13 +4,38 @@
 power_consumption system_device_health;
 Adafruit_INA260 ina260 = Adafruit_INA260();
 
+#define GROWPOD_NUMBER 2
+
 /* {Pin Number, min voltage, max voltage} */
-PWM_device water_pump_source = { 36, 145, 255,0};
-PWM_device water_pump_drain = { 15, 145, 255,0};
-PWM_device food_pump = { 33, 180, 255,0};
-PWM_device air_pump = { 14, 230, 255,0};
-PWM_device LED = { 37, 145, 255,0};
-String command_packet = "";
+/* Growpod 1 Settings */
+#if GROWPOD_NUMBER == 1
+	PWM_device water_pump_source = { 36, 145, 255,0 };
+	PWM_device water_pump_drain = { 15, 145, 255,0 };
+	PWM_device food_pump = { 33, 180, 255,0 };
+	PWM_device air_pump = { 14, 230, 255,0 };
+	PWM_device LED = { 37, 145, 255,0 };
+	String command_packet = "";
+#endif
+
+/* Growpod 2 Settings */
+#if GROWPOD_NUMBER == 2
+	PWM_device water_pump_source = { 36, 145, 255,0};
+	PWM_device water_pump_drain = { 15, 145, 255,0};
+	PWM_device food_pump = { 33, 180, 255,0};
+	PWM_device air_pump = { 14, 230, 255,0};
+	PWM_device LED = { 37, 145, 255,0};
+	String command_packet = "";
+#endif
+
+/* Growpod 3 Settings */
+#if GROWPOD_NUMBER == 3
+	PWM_device water_pump_source = { 36, 180, 255,0 };
+	PWM_device water_pump_drain = { 15, 180, 255,0 };
+	PWM_device food_pump = { 33, 180, 255,0 };
+	PWM_device air_pump = { 14, 230, 255,0 };
+	PWM_device LED = { 37, 145, 255,0 };
+	String command_packet = "";
+#endif
 
 /* Variables for timers. */
 elapsedMillis change_water;
@@ -20,15 +45,20 @@ elapsedMillis turn_off_light;
 /* Networking Variable */
 bool response_requested = false;
 byte mac[] = {
+#if GROWPOD_NUMBER == 1
   //mac for growPod1
-  //0x04, 0xe9, 0xe5, 0x10, 0x30, 0x77
+  0x04, 0xe9, 0xe5, 0x10, 0x30, 0x77
+#endif
 
+ #if GROWPOD_NUMBER == 2
   //mac for growPod2
   0x04, 0xe9, 0xe5, 0x0e, 0xcf, 0x0c
+#endif
 
+#if GROWPOD_NUMBER == 3
   //mac for growPod3
-  //insert here for mac growPod3
-  
+  0x04, 0xe9,0xe5,0x10,0x7d,0xa2
+#endif
 };
 
 int local_port = 80;
@@ -36,22 +66,28 @@ EthernetUDP Udp;
 int server_port = 80;
 IPAddress server_IP(192, 168, 0, 100);
 
+#if GROWPOD_NUMBER == 1
 //ip for growPod1
-//IPAddress device_ip(192, 168, 0, 101);
+IPAddress device_ip(192, 168, 0, 101);
+#endif
 
+#if GROWPOD_NUMBER == 2
 //ip for growPod2
 IPAddress device_ip(192, 168, 0, 102);
+#endif
 
+#if GROWPOD_NUMBER == 3
 //ip for growPod3
-//IPAddress device_ip(192, 168, 0, 103);
+IPAddress device_ip(192, 168, 0, 103);
+#endif
 
 /* Info on multifile variables: 
 https://stackoverflow.com/questions/1433204/how-do-i-use-extern-to-share-variables-between-source-files
 
 Demo: Water changes after 10 minute, light turns off after 15 minutes, turns back on after 20 minutes. */
-unsigned int change_water_threshold = 150000;
-unsigned int turn_on_light_threshold = 230000; /* After how long to turn the light back on, when in off state. */
-unsigned int turn_off_light_threshold = 100000; /* After how long to turn light off, when in on state.*/
+unsigned int change_water_threshold = 0xFFFFFFFF;
+unsigned int turn_on_light_threshold = 0xFFFFFFFF; /* After how long to turn the light back on, when in off state. */
+unsigned int turn_off_light_threshold = 0xFFFFFFFF; /* After how long to turn light off, when in on state.*/
 
 uint8_t dosage = 0;
 
@@ -178,6 +214,7 @@ void toggle_light(PWM_device* pwm_device)
 /* Resets the system, setting all devices off. */
 void reset()
 {
+	Serial.println("RESETTING!");
 	PWM_set_percent(&water_pump_source, 0);
 	PWM_set_percent(&water_pump_drain, 0);
 	PWM_set_percent(&food_pump, 0);
@@ -195,11 +232,13 @@ void reset()
 /* Sets up the system. Turns LED & air pump on. */
 void initialize()
 {
-  PWM_set_percent(&air_pump, 100);
-  Serial.println(air_pump.motor_status);
-  empty_tank(&water_pump_drain);
-	fill_tank(&water_pump_source);
+	Serial.println("In init!");
+	PWM_set_percent(&air_pump, 100);
 	toggle_light(&LED);
+	Serial.println(air_pump.motor_status);
+	empty_tank(&water_pump_drain);
+	fill_tank(&water_pump_source);
+	
 }
 
 void scheduler()
