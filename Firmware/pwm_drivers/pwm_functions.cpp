@@ -4,7 +4,7 @@
 power_consumption system_device_health;
 Adafruit_INA260 ina260 = Adafruit_INA260();
 
-#define GROWPOD_NUMBER 2
+#define GROWPOD_NUMBER 1
 
 /* {Pin Number, min voltage, max voltage} */
 /* Growpod 1 Settings */
@@ -191,15 +191,21 @@ void toggle_light(PWM_device* pwm_device)
 	/* If pin is HIGH, i.e. light is on... */
 	if (LED_status == 1)
 	{
-		Serial.println("Turning light off...");
-		PWM_set_percent(pwm_device, 0);
+		Serial.print("Turning light off... ");
+		Serial.printf("Old value:  %d   ", LED_status);
 		LED_status = 0;
+		Serial.printf("New value:  %d\n", LED_status);
+		PWM_set_percent(pwm_device, 0);
+		
 	}
 
 	/* If pin is low, i.e. light is off... */
 	else if (LED_status == 0)
 	{
-		Serial.println("Turning light on...");
+		Serial.print("Turning light on... ");
+		Serial.printf("Old value:  %d", LED_status);
+		LED_status = 1;
+		Serial.printf("New value:  %d\n", LED_status);
 		PWM_set_percent(pwm_device, 100);
 		LED_status = 1;
 	}
@@ -234,10 +240,14 @@ void initialize()
 {
 	Serial.println("In init!");
 	PWM_set_percent(&air_pump, 100);
+	LED_status = 0;
 	toggle_light(&LED);
-	Serial.println(air_pump.motor_status);
 	empty_tank(&water_pump_drain);
 	fill_tank(&water_pump_source);
+	/* Resetting timers */
+	change_water = 0;
+	turn_off_light = 0;
+	turn_on_light = 0;
 	
 }
 
@@ -252,13 +262,13 @@ void scheduler()
 		dose_food(&food_pump, 5);
 		change_water = 0;
 	}
-	if ((turn_off_light >= turn_off_light_threshold) && LED_status) {
+	if ((turn_off_light >= turn_on_light_threshold) && LED_status) {
 		Serial.println("Turning off light!");
 		toggle_light(&LED);
 		turn_off_light = 0;
 		turn_on_light = 0;
 	}
-	if ((turn_on_light >= turn_on_light_threshold) && !LED_status) {
+	if ((turn_on_light >= turn_off_light_threshold) && !LED_status) {
 		Serial.println("Turning on light!");
 		toggle_light(&LED);
 		turn_on_light = 0;
@@ -290,13 +300,13 @@ void get_packet()
 
 		if (strcmp(command_packet,"init")==0)
 		{
-			initialize();
 			/* Converts incoming hours to ms */
 			change_water_threshold = new_water_schedule * SCHEDULE_CONVERSION_TO_MS;
 			turn_on_light_threshold = new_light_on_schedule * SCHEDULE_CONVERSION_TO_MS;
 			turn_off_light_threshold = new_light_off_schedule * SCHEDULE_CONVERSION_TO_MS;
 			dosage = new_dosage;
 			response_requested = false;
+			initialize();
 		}
 		if (strcmp(command_packet, "update") == 0)
 		{
@@ -309,8 +319,8 @@ void get_packet()
 		}
 		if (strcmp(command_packet, "reset") == 0)
 		{
-			reset();
 			response_requested = false;
+			reset();
 		}
 		if (strcmp(command_packet, "req") == 0)
 		{

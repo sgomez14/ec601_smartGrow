@@ -97,16 +97,6 @@ void setup() {
 	pinMode(LED.pin, OUTPUT);
 	digitalWrite(13, HIGH);
 	pinMode(DHTPIN, INPUT);
-
-
-
-	/* Resetting timers before superloop() */
-	change_water = 0;
-	turn_off_light = 0;
-	turn_on_light = 0;
-
-
-
 }
  
 // the loop function runs over and over again until power down or reset
@@ -141,5 +131,7 @@ void loop() {
 #endif
 
 	}
-	delay(1000);
+	//Serial.printf("Light Status: %d\n", LED_status);
+	//Serial.printf("Light ON: %u\nLight OFF: %u\n", turn_on_light_threshold, turn_off_light_threshold);
+	delay(200);
 }
