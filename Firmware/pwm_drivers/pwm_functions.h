@@ -24,15 +24,16 @@
 
 /* ml per sec, measured by running how long it takes to fill 100 ml. */
 #define FILL_RATE 10 
-#define PLANTER_WATER_SENSOR_PIN 24
 #define DEBUG 0
-#define ETHERNET 0
+#define ETHERNET 1
 #define CURRENT_THRESHOLD 7000
+#define SCHEDULE_CONVERSION_TO_MS 1000
 
 typedef struct PWM_device {
 	uint8_t pin;
 	uint8_t min;
 	uint8_t max;
+  uint8_t motor_status;
 } PWM_device;
 
 typedef struct power_consumption
@@ -62,6 +63,8 @@ extern elapsedMillis turn_off_light;
 /* Networking Variables */
 extern byte mac[6];
 extern int local_port;
+extern EthernetUDP Udp;
+extern EthernetServer server;
 /*
 extern const int input_packet_size;
 extern byte input_packet_buffer[];
@@ -88,12 +91,13 @@ extern void PWM_set_percent(PWM_device *pwm_device, uint8_t percent);
 extern void dose_food(PWM_device *pwm_device, uint8_t ml);
 extern void fill_tank(PWM_device* pwm_device);
 extern void empty_tank(PWM_device* pwm_device);
-void toggle_light(PWM_device* pwm_device);
-void reset();
-void initialize();
-void scheduler();
-void get_packet();
-void send_packet();
-void calibrate_power_draw();
-void read_current();
-void teensyMAC(uint8_t* mac);
+extern void toggle_light(PWM_device* pwm_device);
+extern void reset();
+extern void initialize();
+extern void scheduler();
+extern void get_packet();
+extern void send_packet();
+extern void calibrate_power_draw();
+extern void read_current();
+extern void teensyMAC(uint8_t* mac);
+extern void print_ethernet_test();

@@ -1,7 +1,7 @@
 {
     "growPod1": {
         "uniqueID": 1,
-        "ipAddress": "10.0.0.1",
+        "ipAddress": "192.168.0.101",
         "port": 80,
         "initializedState": "notInitialized",
         "plantName": "",
@@ -25,7 +25,7 @@
     },
     "growPod2": {
         "uniqueID": 2,
-        "ipAddress": "10.0.0.2",
+        "ipAddress": "192.168.0.102",
         "port": 80,
         "initializedState": "notInitialized",
         "plantName": "",
@@ -49,7 +49,7 @@
     },
     "growPod3": {
         "uniqueID": 3,
-        "ipAddress": "10.0.0.3",
+        "ipAddress": "192.168.0.103",
         "port": 80,
         "initializedState": "notInitialized",
         "plantName": "",
