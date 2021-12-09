@@ -21,8 +21,8 @@ minute_ms = 60000
 timerTimeoutInterval = minute_ms
 
 
-DEVELOPMENT = True
-ReleaseFirstBootUp = False
+DEVELOPMENT = False
+ReleaseFirstBootUp = True
 
 def confirmInitializeGrowPod(growPod):
     # code example for MessageBox from QT PySide6 documentation
@@ -1146,7 +1146,7 @@ class MainWindow(QMainWindow):
             self.ui.growPodNotesText_30.setStyleSheet(self.formFieldColorSaved)
 
             # rename the group box title with new plant name
-            self.ui.growPodContainer_3.setTitle(self.growPod2.plantName + " Status View")
+            self.ui.growPodContainer_3.setTitle(self.growPod3.plantName + " Status View")
 
             # buttons to hide in initialized state
             self.hideButtonsInitializedState(3)
@@ -1649,7 +1649,7 @@ class MainWindow(QMainWindow):
 
     def requestInfoFromGrowPod3(self):
         growPodNumber = 3
-        message = f"requesting info from grow pod {growPodNumber}"
+        message = f"requesting info from GrowPod{growPodNumber}"
         print(message)
 
         # update messages indicating that UPD packet requested
@@ -1734,7 +1734,7 @@ class MainWindow(QMainWindow):
             self.stopGrowPodTimer(3)
 
             # refresh grow pod UI
-            self.requestInfoFromGrowPod2()
+            self.requestInfoFromGrowPod3()
 
             # restart timer
             self.createGrowPodTimer(3, timerTimeoutInterval)
