@@ -18,11 +18,11 @@ stylesheetFilePath = f"resources/stylesheets/{styles[0]}"
 minute_ms = 60000
 
 # this variable is for controlling the length for the timer that requests information from the growPods
-timerTimeoutInterval = minute_ms
+timerTimeoutInterval = minute_ms*5 # request every 5 minutes
 
 
 DEVELOPMENT = False
-ReleaseFirstBootUp = True
+ReleaseFirstBootUp = False  
 
 def confirmInitializeGrowPod(growPod):
     # code example for MessageBox from QT PySide6 documentation
